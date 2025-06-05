@@ -1,0 +1,108 @@
+Iterativ Analytics Web Platform
+Tagline: Democratising financial intelligence and capital access for African startups.
+
+Overview:
+Iterativ Analytics is an integrated Web App designed to support the growth of African startups. It offers a dual-platform approach:
+
+Iterativ Startups: AI-powered business planning and evaluation.
+
+Iterativ Xchange (AEX): Blockchain-based equity tokenisation and capital raising.
+
+Platform Modules
+1. Iterativ Startups
+Build, evaluate, and improve your startup plans using AI-powered tools.
+
+For Entrepreneurs
+Option 1: Upload, Evaluate & Iterate Your Plan
+Transform static plans into dynamic, data-driven roadmaps.
+
+Upload business plans in various formats
+
+Get real-time AI feedback and strategic recommendations
+
+Update assumptions, models, and projections on the fly
+
+Actionable Insights & Validation
+
+Automated financial analysis and diagnostics
+
+Identify strengths, weaknesses, and red flags
+
+Generate data-backed projections to build investor trust
+
+Option 2: Build Investor-Ready Plans — Smarter, Faster
+Co-create business plans using next-gen AI (OpenAI, Gemini, DeepSeek).
+
+Intuitive, guided plan creation from scratch
+
+Live scenario planning and strategic modelling
+
+Instant, visually rich financial models
+
+Insight-Driven Decision Support
+
+AI-powered analysis for key financial metrics
+
+Strengthen your pitch with validated projections
+
+Continuous improvement through iterative AI feedback
+
+For Organisations & Funders
+Streamline evaluation processes and drive fair, data-informed decisions.
+
+Automated Proposal Evaluation & Scoring
+
+Standardised framework using objective, pre-set criteria
+
+AI-powered scoring engine ensures consistency and fairness
+
+Save time and reduce manual review load
+
+Expert Review & Feedback Tools
+
+Enable experts to add targeted qualitative feedback
+
+Deliver consistent, actionable insights to applicants
+
+Access structured reports to improve programme performance
+
+2. Iterativ Xchange (AEX)
+Tokenise startup equity and unlock capital with blockchain-powered tools.
+
+For African Startups
+Headline: Raise Capital & Unlock Liquidity via Tokenised Equity
+
+Equity Tokenisation & Crowdfunding
+
+Seamless equity tokenisation and listing on AEX
+
+Reach Pan-African and global investor communities
+
+Transparent, smart-contract-based capital raising
+
+Secondary Market Liquidity
+
+Enable post-raise trading of equity tokens
+
+Liquidity for early investors and founders
+
+Attract more capital with future trading potential
+
+For Investors
+Headline: Invest in Africa’s Growth with Tokenised Startup Equity
+
+Access High-Growth Opportunities
+
+Discover vetted African startups on a curated platform
+
+Transparent due diligence, metrics, and valuations
+
+Direct, secure blockchain-enabled investment process
+
+Portfolio Liquidity & Diversification
+
+Secondary market access for startup equity tokens
+
+Monitor performance and manage exposure
+
+Diversify holdings across sectors, regions, and maturity stages
