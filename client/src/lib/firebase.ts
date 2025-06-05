@@ -9,7 +9,8 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword
 } from "firebase/auth";
-import { getAnalytics } from "firebase/analytics";
+// Temporarily disable analytics to avoid API key errors
+// import { getAnalytics } from "firebase/analytics";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -28,7 +29,8 @@ if (!getApps().length) {
   app = getApps()[0];
 }
 
-export const analytics = getAnalytics(app);
+// Temporarily disable analytics to avoid API key errors in development
+// export const analytics = getAnalytics(app);
 export const auth = getAuth();
 
 // Demo account credentials
