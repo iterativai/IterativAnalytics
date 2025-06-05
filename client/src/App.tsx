@@ -287,10 +287,10 @@ function AppContent() {
             {/* Tab Navigation */}
             <FadeIn delay={0.2}>
               <div className="flex justify-center mb-8">
-                <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-1 shadow-lg border border-gray-700/50 inline-flex">
+                <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-1 shadow-lg border border-gray-700/50 inline-flex flex-wrap">
                   <button
                     onClick={() => setActiveFeatureTab('founders')}
-                    className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
+                    className={`px-4 py-3 rounded-lg font-medium transition-all duration-200 text-sm ${
                       activeFeatureTab === 'founders'
                         ? 'bg-gradient-to-r from-cyan-600/50 to-blue-700/50 text-white shadow-md border border-cyan-500/30'
                         : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
@@ -300,13 +300,33 @@ function AppContent() {
                   </button>
                   <button
                     onClick={() => setActiveFeatureTab('investors')}
-                    className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
+                    className={`px-4 py-3 rounded-lg font-medium transition-all duration-200 text-sm ${
                       activeFeatureTab === 'investors'
                         ? 'bg-gradient-to-r from-cyan-600/50 to-blue-700/50 text-white shadow-md border border-cyan-500/30'
                         : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
                     }`}
                   >
                     For Investors
+                  </button>
+                  <button
+                    onClick={() => setActiveFeatureTab('partners')}
+                    className={`px-4 py-3 rounded-lg font-medium transition-all duration-200 text-sm ${
+                      activeFeatureTab === 'partners'
+                        ? 'bg-gradient-to-r from-cyan-600/50 to-blue-700/50 text-white shadow-md border border-cyan-500/30'
+                        : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
+                    }`}
+                  >
+                    For Partners
+                  </button>
+                  <button
+                    onClick={() => setActiveFeatureTab('lenders')}
+                    className={`px-4 py-3 rounded-lg font-medium transition-all duration-200 text-sm ${
+                      activeFeatureTab === 'lenders'
+                        ? 'bg-gradient-to-r from-cyan-600/50 to-blue-700/50 text-white shadow-md border border-cyan-500/30'
+                        : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
+                    }`}
+                  >
+                    For Lenders
                   </button>
                 </div>
               </div>
@@ -355,7 +375,7 @@ function AppContent() {
                     </Button>
                   </div>
                 </FadeIn>
-              ) : (
+              ) : activeFeatureTab === 'investors' ? (
                 <FadeIn delay={0.3}>
                   <div className="glass-panel rounded-xl p-8 border border-gray-700/50 hover:border-blue-500/30 transition-all duration-300">
                     <div className="flex items-center mb-4">
@@ -396,6 +416,88 @@ function AppContent() {
                     </Button>
                   </div>
                 </FadeIn>
+              ) : activeFeatureTab === 'partners' ? (
+                <FadeIn delay={0.3}>
+                  <div className="glass-panel rounded-xl p-8 border border-gray-700/50 hover:border-purple-500/30 transition-all duration-300">
+                    <div className="flex items-center mb-4">
+                      <div className="bg-purple-900/30 rounded-xl p-4 w-14 h-14 flex items-center justify-center mr-3">
+                        <Sparkles className="h-8 w-8 text-purple-400" />
+                      </div>
+                      <h3 className="text-2xl font-semibold text-white">Scale Your Impact</h3>
+                    </div>
+                    <p className="text-gray-300 mb-6">
+                      Manage cohorts, track startup progress, and deliver support at scale with AI-enhanced tools.
+                    </p>
+                    <div className="space-y-4 mb-8">
+                      <div className="flex items-start">
+                        <CheckCircle2 className="h-5 w-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <h4 className="font-semibold text-white">Cohort Management</h4>
+                          <p className="text-sm text-gray-400">Streamline program administration and participant tracking</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start">
+                        <CheckCircle2 className="h-5 w-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <h4 className="font-semibold text-white">Progress Analytics</h4>
+                          <p className="text-sm text-gray-400">Monitor startup development with real-time metrics</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start">
+                        <CheckCircle2 className="h-5 w-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <h4 className="font-semibold text-white">Scalable Support Delivery</h4>
+                          <p className="text-sm text-gray-400">Provide personalized guidance to multiple ventures simultaneously</p>
+                        </div>
+                      </div>
+                    </div>
+                    <Button className="w-full bg-gradient-to-r from-purple-600 to-pink-700 hover:from-purple-500 hover:to-pink-600 text-white font-semibold py-3 rounded-lg shadow-lg hover:shadow-purple-500/25 transition-all duration-300">
+                      Partner With Us
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </div>
+                </FadeIn>
+              ) : (
+                <FadeIn delay={0.3}>
+                  <div className="glass-panel rounded-xl p-8 border border-gray-700/50 hover:border-green-500/30 transition-all duration-300">
+                    <div className="flex items-center mb-4">
+                      <div className="bg-green-900/30 rounded-xl p-4 w-14 h-14 flex items-center justify-center mr-3">
+                        <BarChart3 className="h-8 w-8 text-green-400" />
+                      </div>
+                      <h3 className="text-2xl font-semibold text-white">Smart Lending Decisions</h3>
+                    </div>
+                    <p className="text-gray-300 mb-6">
+                      Assess business viability, analyze risk profiles, and provide funding recommendations using standardized, AI-enhanced documentation.
+                    </p>
+                    <div className="space-y-4 mb-8">
+                      <div className="flex items-start">
+                        <CheckCircle2 className="h-5 w-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <h4 className="font-semibold text-white">Business Viability Assessment</h4>
+                          <p className="text-sm text-gray-400">Comprehensive evaluation of business model sustainability</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start">
+                        <CheckCircle2 className="h-5 w-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <h4 className="font-semibold text-white">Risk Profile Analysis</h4>
+                          <p className="text-sm text-gray-400">AI-powered risk scoring and mitigation recommendations</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start">
+                        <CheckCircle2 className="h-5 w-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <h4 className="font-semibold text-white">Standardized Documentation</h4>
+                          <p className="text-sm text-gray-400">Consistent, AI-enhanced business documentation for better decisions</p>
+                        </div>
+                      </div>
+                    </div>
+                    <Button className="w-full bg-gradient-to-r from-green-600 to-teal-700 hover:from-green-500 hover:to-teal-600 text-white font-semibold py-3 rounded-lg shadow-lg hover:shadow-green-500/25 transition-all duration-300">
+                      Explore Lending Tools
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </div>
+                </FadeIn>
               )}
 
               <FadeIn delay={0.4}>
@@ -405,7 +507,9 @@ function AppContent() {
                       <div className="aspect-video bg-gradient-to-r from-cyan-900/20 to-blue-900/20 rounded-lg flex items-center justify-center">
                         <div className="text-center">
                           <div className="text-cyan-400 text-lg mb-2">
-                            {activeFeatureTab === 'founders' ? 'Founder Dashboard' : 'Investor Dashboard'}
+                            {activeFeatureTab === 'founders' ? 'Founder Dashboard' : 
+                             activeFeatureTab === 'investors' ? 'Investor Dashboard' :
+                             activeFeatureTab === 'partners' ? 'Partner Dashboard' : 'Lender Dashboard'}
                           </div>
                           <div className="text-gray-400">Interactive metrics visualization</div>
                         </div>
