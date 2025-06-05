@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import React from 'react';
-import { ArrowRight, BarChart3, CheckCircle2, Rocket, Sparkles, Star, TrendingUp, Zap, Brain, Coins, Users } from 'lucide-react';
+import { ArrowRight, BarChart3, CheckCircle2, Rocket, Sparkles, Star, TrendingUp, Zap, Brain, Coins } from 'lucide-react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -20,7 +20,6 @@ import { DarkModeToggle, ParallaxBackground, ScrollIndicator, EnhancedButton, Re
 import { SectorThemeProvider, ThemeSelectorButton, ThemeSelectionModal, useTheme } from '@/components/ui/sector-theme-selector';
 import { ThemeProvider } from '@/context/ThemeContext';
 import HeroSection from '@/components/sections/HeroSection';
-import { motion } from 'framer-motion';
 
 function AppContent() {
   const [activeFeatureTab, setActiveFeatureTab] = useState('founders');
@@ -168,7 +167,157 @@ function AppContent() {
         </section>
       </div>
 
-      
+      {/* Built for Different Users */}
+      <div id="solutions">
+        <section className="py-20 bg-gradient-to-br from-gray-900/50 to-gray-950/50 backdrop-blur-sm">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <FadeIn>
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                  <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                    Built for the Entire Ecosystem
+                  </span>
+                </h2>
+                <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                  Discover our comprehensive suite of financial intelligence tools and capital access solutions designed specifically for African businesses.
+                </p>
+              </div>
+            </FadeIn>
+
+            {/* Tab Navigation */}
+            <FadeIn delay={0.2}>
+              <div className="flex justify-center mb-8">
+                <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-1 shadow-lg border border-gray-700/50 inline-flex">
+                  <button
+                    onClick={() => setActiveFeatureTab('founders')}
+                    className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
+                      activeFeatureTab === 'founders'
+                        ? 'bg-gradient-to-r from-cyan-600/50 to-blue-700/50 text-white shadow-md border border-cyan-500/30'
+                        : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
+                    }`}
+                  >
+                    For Founders
+                  </button>
+                  <button
+                    onClick={() => setActiveFeatureTab('investors')}
+                    className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
+                      activeFeatureTab === 'investors'
+                        ? 'bg-gradient-to-r from-cyan-600/50 to-blue-700/50 text-white shadow-md border border-cyan-500/30'
+                        : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
+                    }`}
+                  >
+                    For Investors
+                  </button>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Tab Content */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {activeFeatureTab === 'founders' ? (
+                <FadeIn delay={0.3}>
+                  <div className="glass-panel rounded-xl p-8 border border-gray-700/50 hover:border-cyan-500/30 transition-all duration-300">
+                    <div className="flex items-center mb-4">
+                      <div className="bg-cyan-900/30 rounded-xl p-4 w-14 h-14 flex items-center justify-center mr-3">
+                        <Brain className="h-8 w-8 text-cyan-400" />
+                      </div>
+                      <h3 className="text-2xl font-semibold text-white">Unlock Your Startup Potential</h3>
+                    </div>
+                    <p className="text-gray-300 mb-6">
+                      Enhance your financial intelligence and funding readiness with our comprehensive planning tools.
+                    </p>
+                    <div className="space-y-4 mb-8">
+                      <div className="flex items-start">
+                        <CheckCircle2 className="h-5 w-5 text-cyan-500 mr-3 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <h4 className="font-semibold text-white">Venture Readiness Scoring</h4>
+                          <p className="text-sm text-gray-400">Get comprehensive scores across key startup dimensions</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start">
+                        <CheckCircle2 className="h-5 w-5 text-cyan-500 mr-3 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <h4 className="font-semibold text-white">AI Co-Founders & Pitch Copilots</h4>
+                          <p className="text-sm text-gray-400">Get AI assistance for business planning and pitch development</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start">
+                        <CheckCircle2 className="h-5 w-5 text-cyan-500 mr-3 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <h4 className="font-semibold text-white">Startup ID Score™</h4>
+                          <p className="text-sm text-gray-400">Portable, verified startup credentials for all funding rounds</p>
+                        </div>
+                      </div>
+                    </div>
+                    <Button className="w-full bg-gradient-to-r from-cyan-600 to-blue-700 hover:from-cyan-500 hover:to-blue-600 text-white font-semibold py-3 rounded-lg shadow-lg hover:shadow-cyan-500/25 transition-all duration-300">
+                      Start Your Readiness Score
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </div>
+                </FadeIn>
+              ) : (
+                <FadeIn delay={0.3}>
+                  <div className="glass-panel rounded-xl p-8 border border-gray-700/50 hover:border-blue-500/30 transition-all duration-300">
+                    <div className="flex items-center mb-4">
+                      <div className="bg-blue-900/30 rounded-xl p-4 w-14 h-14 flex items-center justify-center mr-3">
+                        <Coins className="h-8 w-8 text-blue-400" />
+                      </div>
+                      <h3 className="text-2xl font-semibold text-white">Find, Filter & Fund Smarter</h3>
+                    </div>
+                    <p className="text-gray-300 mb-6">
+                      Access modern funding solutions and capital through our innovative platform.
+                    </p>
+                    <div className="space-y-4 mb-8">
+                      <div className="flex items-start">
+                        <CheckCircle2 className="h-5 w-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <h4 className="font-semibold text-white">Predictive Deal Discovery</h4>
+                          <p className="text-sm text-gray-400">AI-powered startup identification and screening</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start">
+                        <CheckCircle2 className="h-5 w-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <h4 className="font-semibold text-white">DEI & Risk Benchmarking</h4>
+                          <p className="text-sm text-gray-400">Comprehensive diversity and risk assessment tools</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start">
+                        <CheckCircle2 className="h-5 w-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <h4 className="font-semibold text-white">Tokenized Investment Pools</h4>
+                          <p className="text-sm text-gray-400">Modern capital access through blockchain infrastructure</p>
+                        </div>
+                      </div>
+                    </div>
+                    <Button className="w-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-500 hover:to-indigo-600 text-white font-semibold py-3 rounded-lg shadow-lg hover:shadow-blue-500/25 transition-all duration-300">
+                      Request Investor Access
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </div>
+                </FadeIn>
+              )}
+
+              <FadeIn delay={0.4}>
+                <div className="relative">
+                  <div className="bg-gray-800/30 backdrop-blur rounded-2xl border border-gray-700/50 overflow-hidden">
+                    <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-6">
+                      <div className="aspect-video bg-gradient-to-r from-cyan-900/20 to-blue-900/20 rounded-lg flex items-center justify-center">
+                        <div className="text-center">
+                          <div className="text-cyan-400 text-lg mb-2">
+                            {activeFeatureTab === 'founders' ? 'Founder Dashboard' : 'Investor Dashboard'}
+                          </div>
+                          <div className="text-gray-400">Interactive metrics visualization</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+      </div>
 
       {/* Why Iterativ Comparison Table */}
       <div id="features">
@@ -222,83 +371,6 @@ function AppContent() {
         {renderEnhancedDashboard()}
 
         {/* AI-Native Comparison Section */}
-        {/* Features Section */}
-        
-
-        {/* Built for the Entire Ecosystem - moved from Solutions */}
-        <section className="py-16 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">
-            <FadeIn>
-              <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                  <span className="bg-gradient-to-r from-orange-400 to-pink-400 bg-clip-text text-transparent">
-                    Built for the Entire Ecosystem
-                  </span>
-                </h2>
-                <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                  Whether you're a founder, investor, or ecosystem partner, our platform adapts to your needs.
-                </p>
-              </div>
-            </FadeIn>
-
-            {/* Three Columns for Different User Types */}
-            <Stagger staggerDelay={0.3}>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <FeatureCard
-                  icon={<Rocket className="h-6 w-6 text-cyan-400" />}
-                  title="For Founders"
-                  description="Build, validate, and pitch your business with AI-powered insights and benchmarking."
-                  variant="glass"
-                />
-                <FeatureCard
-                  icon={<TrendingUp className="h-6 w-6 text-blue-400" />}
-                  title="For Investors"
-                  description="Streamline deal flow, assess opportunities, and make data-driven investment decisions."
-                  variant="glass"
-                />
-                <FeatureCard
-                  icon={<Users className="h-6 w-6 text-purple-400" />}
-                  title="For Partners"
-                  description="Support your portfolio companies with advanced analytics and benchmarking tools."
-                  variant="glass"
-                />
-              </div>
-            </Stagger>
-          </div>
-        </section>
-      </div>
-
-      {/* Solutions Section */}
-      <div id="solutions">
-        <section className="py-24">
-          <div className="container mx-auto px-4">
-            <motion.div 
-              className="text-center mb-16"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-pink-400">
-                  Our Solutions
-                </span>
-              </h2>
-              <p className="text-xl text-white/80 max-w-3xl mx-auto">
-                A comprehensive ecosystem of AI-powered tools designed to transform your business and unlock capital opportunities.
-              </p>
-            </motion.div>
-            <div>
-              <h4 className="font-semibold text-white mb-4">Solutions</h4>
-              <ul className="space-y-2 text-white/60">
-                <li><a href="#" className="hover:text-white transition-colors">Iterativ Startups</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Iterativ Xchange</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">AI Analytics</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Business Intelligence</a></li>
-              </ul>
-            </div>
-          </div>
-        </section>
       </div>
 
       {/* Testimonials */}
