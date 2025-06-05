@@ -167,8 +167,108 @@ function AppContent() {
         </section>
       </div>
 
-      {/* Built for Different Users */}
+      {/* Solutions Section */}
       <div id="solutions">
+        <section className="py-24">
+          <div className="container mx-auto px-4">
+            <FadeIn>
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-pink-400">
+                    Our Solutions
+                  </span>
+                </h2>
+                <p className="text-xl text-white/80 max-w-3xl mx-auto">
+                  A comprehensive ecosystem of AI-powered tools designed to transform your business and unlock capital opportunities.
+                </p>
+              </div>
+            </FadeIn>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+              <FadeIn delay={0.2}>
+                <div className="bg-gradient-to-br from-purple-500/10 to-blue-500/10 backdrop-blur-xl rounded-3xl p-8 border border-purple-400/30 hover:border-purple-400/50 transition-all duration-300">
+                  <div className="flex items-center mb-6">
+                    <div className="bg-purple-600 rounded-xl p-3 mr-4">
+                      <Rocket className="h-8 w-8 text-white" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-white">Iterativ Startups</h3>
+                  </div>
+                  
+                  <p className="text-white/70 mb-6 text-lg">
+                    Empower your startup with AI-driven business planning and evaluation tools. Access our comprehensive suite of intelligent planning aid services for fundraising.
+                  </p>
+                  
+                  <div className="space-y-3 mb-8">
+                    <div className="flex items-center text-white/80">
+                      <CheckCircle2 className="h-5 w-5 text-purple-400 mr-3 flex-shrink-0" />
+                      <span>Template business plan development</span>
+                    </div>
+                    <div className="flex items-center text-white/80">
+                      <CheckCircle2 className="h-5 w-5 text-purple-400 mr-3 flex-shrink-0" />
+                      <span>AI-powered business plan evaluation</span>
+                    </div>
+                    <div className="flex items-center text-white/80">
+                      <CheckCircle2 className="h-5 w-5 text-purple-400 mr-3 flex-shrink-0" />
+                      <span>Startup and SME valuations</span>
+                    </div>
+                    <div className="flex items-center text-white/80">
+                      <CheckCircle2 className="h-5 w-5 text-purple-400 mr-3 flex-shrink-0" />
+                      <span>Application selection automation</span>
+                    </div>
+                  </div>
+                  
+                  <Button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold py-3 rounded-lg shadow-lg hover:shadow-purple-500/25 transition-all duration-300">
+                    Explore Startup Solutions
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
+              </FadeIn>
+              
+              <FadeIn delay={0.4}>
+                <div className="bg-gradient-to-br from-pink-500/10 to-red-500/10 backdrop-blur-xl rounded-3xl p-8 border border-pink-400/30 hover:border-pink-400/50 transition-all duration-300">
+                  <div className="flex items-center mb-6">
+                    <div className="bg-pink-600 rounded-xl p-3 mr-4">
+                      <TrendingUp className="h-8 w-8 text-white" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-white">Iterativ Xchange</h3>
+                  </div>
+                  
+                  <p className="text-white/70 mb-6 text-lg">
+                    Revolutionary capital access platform offering new funding mechanisms. Unlock innovative capital opportunities and expand your reach.
+                  </p>
+                  
+                  <div className="space-y-3 mb-8">
+                    <div className="flex items-center text-white/80">
+                      <CheckCircle2 className="h-5 w-5 text-pink-400 mr-3 flex-shrink-0" />
+                      <span>Equity crowdfunding offerings</span>
+                    </div>
+                    <div className="flex items-center text-white/80">
+                      <CheckCircle2 className="h-5 w-5 text-pink-400 mr-3 flex-shrink-0" />
+                      <span>Modern capital funding platforms</span>
+                    </div>
+                    <div className="flex items-center text-white/80">
+                      <CheckCircle2 className="h-5 w-5 text-pink-400 mr-3 flex-shrink-0" />
+                      <span>Investor matchmaking algorithms</span>
+                    </div>
+                    <div className="flex items-center text-white/80">
+                      <CheckCircle2 className="h-5 w-5 text-pink-400 mr-3 flex-shrink-0" />
+                      <span>Curated financial channels</span>
+                    </div>
+                  </div>
+                  
+                  <Button className="w-full bg-gradient-to-r from-pink-600 to-red-600 hover:from-pink-500 hover:to-red-500 text-white font-semibold py-3 rounded-lg shadow-lg hover:shadow-pink-500/25 transition-all duration-300">
+                    Discover Xchange Platform
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {/* Built for the Entire Ecosystem */}
+      <div id="features">
         <section className="py-20 bg-gradient-to-br from-gray-900/50 to-gray-950/50 backdrop-blur-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <FadeIn>
@@ -317,10 +417,8 @@ function AppContent() {
             </div>
           </div>
         </section>
-      </div>
 
-      {/* Why Iterativ Comparison Table */}
-      <div id="features">
+        {/* Why Iterativ Comparison Table */}
         <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-900/50 backdrop-blur">
           <div className="max-w-5xl mx-auto">
             <FadeIn>
