@@ -130,7 +130,7 @@ const HeroSection = () => {
                         </svg>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900">Startup Dashboard</h3>
+                        <h3 className="font-semibold text-gray-900">AI Business Intelligence</h3>
                         <p className="text-xs text-gray-500">Real-time Analytics</p>
                       </div>
                     </div>
