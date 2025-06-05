@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import React from 'react';
 import { ArrowRight, BarChart3, CheckCircle2, Rocket, Sparkles, Star, TrendingUp, Zap, Brain, Coins } from 'lucide-react';
@@ -81,6 +80,32 @@ function AppContent() {
   // Beta launch countdown date (30 days from now)
   const betaLaunchDate = new Date();
   betaLaunchDate.setDate(betaLaunchDate.getDate() + 30);
+
+  // Placeholder function for rendering the enhanced dashboard
+  const renderEnhancedDashboard = () => {
+    return (
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-900/50 backdrop-blur">
+        <div className="max-w-7xl mx-auto">
+          <FadeIn>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                  Enhanced Interactive Dashboard Preview
+                </span>
+              </h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                Explore the power of our interactive dashboards with real-time data visualization.
+              </p>
+            </div>
+          </FadeIn>
+          {/* Add your enhanced dashboard component here */}
+          <p className="text-center text-gray-400">
+            [Enhanced Dashboard Component Placeholder]
+          </p>
+        </div>
+      </section>
+    );
+  };
 
   return (
     <div 
@@ -341,6 +366,11 @@ function AppContent() {
             </SlideUp>
           </div>
         </section>
+
+        {/* Enhanced Interactive Dashboard Preview */}
+        {renderEnhancedDashboard()}
+
+        {/* AI-Native Comparison Section */}
       </div>
 
       {/* Testimonials */}
@@ -419,7 +449,7 @@ function AppContent() {
                   </div>
                   <p className="text-center text-red-300 text-sm mb-4">Secure your spot in our exclusive beta program before it closes</p>
                 </div>
-                
+
                 <div className="flex flex-wrap justify-center gap-2 mb-6">
                   <Badge className="bg-cyan-900/30 text-cyan-400 border border-cyan-800/50">✅ Founders</Badge>
                   <Badge className="bg-blue-900/30 text-blue-400 border border-blue-800/50">✅ Investors</Badge>
@@ -468,7 +498,7 @@ function AppContent() {
               <SlideIn direction="left">
                 <FundingCalculator />
               </SlideIn>
-              
+
               <SlideIn direction="right" delay={0.2}>
                 <RecentActivityFeed />
               </SlideIn>
