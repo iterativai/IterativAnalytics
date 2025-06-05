@@ -1,0 +1,648 @@
+I've analyzed the Darkyn theme screenshots and will implement a comprehensive redesign of the Iterativ Analytics interface with these premium design elements. Here's the enhanced implementation:
+
+```tsx
+// src/App.tsx
+import { useState } from 'react';
+import { 
+  ArrowRight, BarChart3, Building2, CheckCircle2, ChevronDown, Globe, 
+  Lightbulb, Lock, Rocket, Sparkles, Star, Target, TrendingUp, Users, Zap 
+} from 'lucide-react';
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
+
+export default function App() {
+  const [activeFeatureTab, setActiveFeatureTab] = useState('founders');
+  const [email, setEmail] = useState('');
+
+  const handleJoinWaitlist = () => {
+    if (email) {
+      alert(`Thank you! ${email} has been added to our waitlist.`);
+      setEmail('');
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-950 text-gray-100">
+      {/* Glass Navigation */}
+      <nav className="sticky top-0 z-50 bg-gray-900/80 backdrop-blur-xl border-b border-gray-800 py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-3">
+              <div className="bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg p-2">
+                <BarChart3 className="h-6 w-6 text-white" />
+              </div>
+              <span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
+                Iterativ Analytics
+              </span>
+            </div>
+            
+            <div className="hidden md:flex items-center space-x-8">
+              <a href="#about" className="text-gray-300 hover:text-cyan-400 transition-colors">About</a>
+              <a href="#solutions" className="text-gray-300 hover:text-cyan-400 transition-colors">Solutions</a>
+              <a href="#contact" className="text-gray-300 hover:text-cyan-400 transition-colors">Contact</a>
+              <Button className="bg-gradient-to-r from-cyan-600 to-blue-700 hover:from-cyan-500 hover:to-blue-600 text-white">
+                Join Beta
+              </Button>
+              <ThemeToggle />
+            </div>
+
+            <div className="md:hidden flex items-center space-x-4">
+              <ThemeToggle />
+              <button className="p-2">
+                <div className="w-6 h-6 flex flex-col justify-center items-center">
+                  <span className="w-4 h-0.5 bg-gray-300 mb-1"></span>
+                  <span className="w-4 h-0.5 bg-gray-300 mb-1"></span>
+                  <span className="w-4 h-0.5 bg-gray-300"></span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-white/[0.05]"></div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <Badge className="mb-6 bg-cyan-900/30 text-cyan-400 border border-cyan-800/50 backdrop-blur">
+              <Sparkles className="h-4 w-4 mr-2" />
+              Now in Beta - Join the Future of Venture Intelligence
+            </Badge>
+            
+            <h1 className="font-bold text-4xl md:text-6xl mb-6 leading-tight max-w-4xl mx-auto">
+              Reimagine Startup Growth, 
+              <br />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
+                Readiness & Capital Access
+              </span>
+            </h1>
+            
+            <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
+              AI-powered venture analytics and inclusive capital infrastructure for African and emerging market startups.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button 
+                size="lg" 
+                className="px-8 py-4 text-lg bg-gradient-to-r from-cyan-600 to-blue-700 hover:from-cyan-500 hover:to-blue-600 text-white"
+              >
+                Join the Beta - It's Free
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="px-8 py-4 text-lg border-gray-700 text-gray-300 hover:bg-gray-800/50 hover:text-white"
+              >
+                Get the Investor Deck
+              </Button>
+            </div>
+          </div>
+
+          {/* Hero Visual */}
+          <div className="relative">
+            <div className="bg-gray-800/30 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-1 transform rotate-1">
+              <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-8 transform -rotate-1">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-cyan-400">92%</div>
+                    <div className="text-sm text-gray-400">Startup Readiness Score</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-blue-400">$2.3M</div>
+                    <div className="text-sm text-gray-400">Funding Potential</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-purple-400">A+</div>
+                    <div className="text-sm text-gray-400">Market Fit Grade</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* What Is Iterativ Section */}
+      <section id="about" className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-900/50 backdrop-blur">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="font-bold text-3xl md:text-4xl mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
+              Transforming Venture Intelligence & Inclusion
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Iterativ Analytics is a unified, AI-native platform helping African startups launch, grow, and raise capital — smarter, faster, and with radical transparency.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card className="bg-gray-800/30 backdrop-blur border border-gray-700/50 hover:border-cyan-500/30 transition-all">
+              <CardContent className="p-6">
+                <div className="bg-cyan-900/30 rounded-xl p-4 w-14 h-14 flex items-center justify-center mb-6">
+                  <Rocket className="h-6 w-6 text-cyan-400" />
+                </div>
+                <h3 className="text-xl font-semibold mb-3 text-white">Iterativ Startups</h3>
+                <p className="text-gray-400">Founder tools, AI copilots, milestone tracking, and startup readiness scoring.</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gray-800/30 backdrop-blur border border-gray-700/50 hover:border-blue-500/30 transition-all">
+              <CardContent className="p-6">
+                <div className="bg-blue-900/30 rounded-xl p-4 w-14 h-14 flex items-center justify-center mb-6">
+                  <TrendingUp className="h-6 w-6 text-blue-400" />
+                </div>
+                <h3 className="text-xl font-semibold mb-3 text-white">Iterativ Xchange</h3>
+                <p className="text-gray-400">Investor dashboards, deal flow analytics, and tokenized capital access.</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gray-800/30 backdrop-blur border border-gray-700/50 hover:border-purple-500/30 transition-all">
+              <CardContent className="p-6">
+                <div className="bg-purple-900/30 rounded-xl p-4 w-14 h-14 flex items-center justify-center mb-6">
+                  <Zap className="h-6 w-6 text-purple-400" />
+                </div>
+                <h3 className="text-xl font-semibold mb-3 text-white">Iterativ AI Core</h3>
+                <p className="text-gray-400">Bias auditing, benchmarking, and predictive analytics — privacy-first and compliance-ready.</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Built for Different Users */}
+      <section id="solutions" className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 to-gray-950">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="font-bold text-3xl md:text-4xl mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
+              Built for the Entire Ecosystem
+            </h2>
+          </div>
+
+          {/* Tab Navigation */}
+          <div className="flex justify-center mb-12">
+            <div className="bg-gray-800/50 backdrop-blur rounded-xl p-1 inline-flex border border-gray-700/50">
+              <button
+                onClick={() => setActiveFeatureTab('founders')}
+                className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                  activeFeatureTab === 'founders'
+                    ? 'bg-gradient-to-r from-cyan-700/50 to-blue-800/50 text-white shadow-sm'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                For Founders
+              </button>
+              <button
+                onClick={() => setActiveFeatureTab('investors')}
+                className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                  activeFeatureTab === 'investors'
+                    ? 'bg-gradient-to-r from-cyan-700/50 to-blue-800/50 text-white shadow-sm'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                For Investors
+              </button>
+            </div>
+          </div>
+
+          {/* Tab Content */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {activeFeatureTab === 'founders' ? (
+              <>
+                <div>
+                  <h3 className="text-2xl font-bold text-white mb-8">Unlock Your Startup Potential</h3>
+                  <div className="space-y-6 mb-8">
+                    <div className="flex items-start bg-gray-800/30 backdrop-blur p-4 rounded-xl border border-gray-700/50 hover:border-cyan-500/30 transition-all">
+                      <CheckCircle2 className="h-6 w-6 text-cyan-500 mr-3 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-semibold text-white">Venture Readiness Scoring</h4>
+                        <p className="text-sm text-gray-400">Get comprehensive scores across key startup dimensions</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start bg-gray-800/30 backdrop-blur p-4 rounded-xl border border-gray-700/50 hover:border-cyan-500/30 transition-all">
+                      <CheckCircle2 className="h-6 w-6 text-cyan-500 mr-3 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-semibold text-white">AI Co-Founders & Pitch Copilots</h4>
+                        <p className="text-sm text-gray-400">Get AI assistance for business planning and pitch development</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start bg-gray-800/30 backdrop-blur p-4 rounded-xl border border-gray-700/50 hover:border-cyan-500/30 transition-all">
+                      <CheckCircle2 className="h-6 w-6 text-cyan-500 mr-3 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-semibold text-white">Fundraising Milestones Engine</h4>
+                        <p className="text-sm text-gray-400">Track progress and optimize for funding readiness</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start bg-gray-800/30 backdrop-blur p-4 rounded-xl border border-gray-700/50 hover:border-cyan-500/30 transition-all">
+                      <CheckCircle2 className="h-6 w-6 text-cyan-500 mr-3 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-semibold text-white">Startup ID Score™</h4>
+                        <p className="text-sm text-gray-400">Portable, verified startup credentials for all funding rounds</p>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-lg text-gray-300 mb-8 italic border-l-4 border-cyan-500 pl-4 py-2">
+                    "Your startup deserves more than a deck. Get scored, benchmarked, and funded."
+                  </p>
+                  <Button className="bg-gradient-to-r from-cyan-600 to-blue-700 hover:from-cyan-500 hover:to-blue-600 text-white">
+                    Start Your Readiness Score
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
+                <div className="bg-gray-800/30 backdrop-blur rounded-2xl border border-gray-700/50 overflow-hidden">
+                  <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-6">
+                    <div className="aspect-video bg-gradient-to-r from-cyan-900/20 to-blue-900/20 rounded-lg flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-cyan-400 text-lg mb-2">Founder Dashboard</div>
+                        <div className="text-gray-400">Interactive metrics visualization</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div>
+                  <h3 className="text-2xl font-bold text-white mb-8">Find, Filter & Fund Smarter</h3>
+                  <div className="space-y-6 mb-8">
+                    <div className="flex items-start bg-gray-800/30 backdrop-blur p-4 rounded-xl border border-gray-700/50 hover:border-blue-500/30 transition-all">
+                      <CheckCircle2 className="h-6 w-6 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-semibold text-white">Predictive Deal Discovery</h4>
+                        <p className="text-sm text-gray-400">AI-powered startup identification and screening</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start bg-gray-800/30 backdrop-blur p-4 rounded-xl border border-gray-700/50 hover:border-blue-500/30 transition-all">
+                      <CheckCircle2 className="h-6 w-6 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-semibold text-white">DEI & Risk Benchmarking</h4>
+                        <p className="text-sm text-gray-400">Comprehensive diversity and risk assessment tools</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start bg-gray-800/30 backdrop-blur p-4 rounded-xl border border-gray-700/50 hover:border-blue-500/30 transition-all">
+                      <CheckCircle2 className="h-6 w-6 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-semibold text-white">Verified Traction & Startup Signals</h4>
+                        <p className="text-sm text-gray-400">Real-time validation of startup metrics and milestones</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start bg-gray-800/30 backdrop-blur p-4 rounded-xl border border-gray-700/50 hover:border-blue-500/30 transition-all">
+                      <CheckCircle2 className="h-6 w-6 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-semibold text-white">Tokenized Investment Pools</h4>
+                        <p className="text-sm text-gray-400">Modern capital access through blockchain infrastructure</p>
+                      </div>
+                    </div>
+                  </div>
+                  <Button className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-500 hover:to-indigo-600 text-white">
+                    Request Investor Access
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
+                <div className="bg-gray-800/30 backdrop-blur rounded-2xl border border-gray-700/50 overflow-hidden">
+                  <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-6">
+                    <div className="aspect-video bg-gradient-to-r from-blue-900/20 to-indigo-900/20 rounded-lg flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-blue-400 text-lg mb-2">Investor Dashboard</div>
+                        <div className="text-gray-400">Deal flow analytics and insights</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Iterativ Comparison Table */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-900/50 backdrop-blur">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="font-bold text-3xl md:text-4xl mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
+              Why Iterativ?
+            </h2>
+            <p className="text-xl text-gray-300">
+              "The venture ecosystem needs new infrastructure. We built it."
+            </p>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse bg-gray-800/30 backdrop-blur border border-gray-700/50 rounded-xl overflow-hidden">
+              <thead>
+                <tr className="bg-gradient-to-r from-cyan-900/20 to-blue-900/20">
+                  <th className="px-6 py-4 text-left font-semibold text-gray-300">Feature</th>
+                  <th className="px-6 py-4 text-center font-semibold text-cyan-400">Iterativ</th>
+                  <th className="px-6 py-4 text-center font-semibold text-gray-400">Traditional Tools</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  'AI-Native, Multi-LLM Engine',
+                  'Africa-Focused & Localized',
+                  'DEI, Risk, and Bias Audits',
+                  'Tokenized Capital Access',
+                  'Startup Benchmarking Engine',
+                  'GDPR/POPIA/AI Act Aligned'
+                ].map((feature, index) => (
+                  <tr key={index} className="border-b border-gray-700/50 last:border-0 hover:bg-gray-800/50 transition-colors">
+                    <td className="px-6 py-4 text-gray-300">{feature}</td>
+                    <td className="px-6 py-4 text-center">
+                      <CheckCircle2 className="h-6 w-6 text-green-500 mx-auto" />
+                    </td>
+                    <td className="px-6 py-4 text-center">
+                      <div className="h-6 w-6 mx-auto bg-red-500/10 rounded-full flex items-center justify-center">
+                        <span className="text-red-500 text-sm">✕</span>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 to-gray-950">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="font-bold text-3xl md:text-4xl mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
+              What People Say
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card className="bg-gray-800/30 backdrop-blur border border-gray-700/50 hover:border-cyan-500/30 transition-all">
+              <CardContent className="p-6">
+                <div className="flex mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+                <p className="text-gray-300 mb-4">
+                  "Iterativ could change how capital finds underrepresented founders. It's not just analytics — it's infrastructure."
+                </p>
+                <div className="text-sm text-gray-400">— VC Partner, Nairobi</div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gray-800/30 backdrop-blur border border-gray-700/50 hover:border-cyan-500/30 transition-all">
+              <CardContent className="p-6">
+                <div className="flex mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+                <p className="text-gray-300 mb-4">
+                  "The Startup ID Score gave our team a way to prove we were fundable — even before revenue."
+                </p>
+                <div className="text-sm text-gray-400">— Healthtech Founder, Lagos</div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gray-800/30 backdrop-blur border border-gray-700/50 hover:border-cyan-500/30 transition-all">
+              <CardContent className="p-6">
+                <div className="flex mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+                <p className="text-gray-300 mb-4">
+                  "DEI + Fintech + Real Data. Finally."
+                </p>
+                <div className="text-sm text-gray-400">— Accelerator Director, Cape Town</div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Join the Waitlist CTA */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-cyan-800/30 to-blue-900/30 backdrop-blur">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="font-bold text-3xl md:text-4xl mb-6 text-white">
+            Be First to Build the Future of Venture
+          </h2>
+          <p className="text-xl text-cyan-100 mb-10">
+            Join founders, investors, and ecosystem partners shaping the next generation of African startups.
+          </p>
+          
+          <div className="bg-gray-900/50 backdrop-blur rounded-2xl border border-cyan-500/30 p-8 max-w-2xl mx-auto">
+            <div className="flex flex-wrap justify-center gap-2 mb-6">
+              <Badge className="bg-cyan-900/30 text-cyan-400 border border-cyan-800/50">✅ Founders</Badge>
+              <Badge className="bg-blue-900/30 text-blue-400 border border-blue-800/50">✅ Investors</Badge>
+              <Badge className="bg-purple-900/30 text-purple-400 border border-purple-800/50">✅ Partners</Badge>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-4">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="flex-1 bg-gray-800/50 border border-gray-700/50 text-white rounded-lg px-4 py-3 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+              />
+              <Button 
+                onClick={handleJoinWaitlist}
+                className="bg-gradient-to-r from-cyan-600 to-blue-700 hover:from-cyan-500 hover:to-blue-600 text-white px-8 py-3"
+              >
+                Join Now
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900/80 backdrop-blur border-t border-gray-800 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="col-span-1 md:col-span-2">
+              <div className="flex items-center space-x-2 mb-4">
+                <div className="bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg p-2">
+                  <BarChart3 className="h-6 w-6 text-white" />
+                </div>
+                <span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
+                  Iterativ Analytics
+                </span>
+              </div>
+              <p className="text-gray-400 mb-4 max-w-md">
+                Democratizing financial intelligence and inclusive capital access for African startups.
+              </p>
+              <div className="text-sm text-gray-500">
+                📍 HQ: Cape Town / Nairobi / Remote<br />
+                📬 contact@iterativ.africa
+              </div>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold text-gray-200 mb-4">Company</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><a href="#about" className="hover:text-cyan-400 transition-colors">About</a></li>
+                <li><a href="#deck" className="hover:text-cyan-400 transition-colors">Deck</a></li>
+                <li><a href="#privacy" className="hover:text-cyan-400 transition-colors">Privacy</a></li>
+                <li><a href="#terms" className="hover:text-cyan-400 transition-colors">Terms</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold text-gray-200 mb-4">Connect</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><a href="#linkedin" className="hover:text-cyan-400 transition-colors">LinkedIn</a></li>
+                <li><a href="#twitter" className="hover:text-cyan-400 transition-colors">Twitter</a></li>
+                <li><a href="#github" className="hover:text-cyan-400 transition-colors">GitHub</a></li>
+                <li><a href="#contact" className="hover:text-cyan-400 transition-colors">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
+            © 2025 Iterativ Analytics. All rights reserved.
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+```
+
+```tsx
+// src/components/ui/ThemeToggle.tsx
+import { Button } from "@/components/ui/button";
+import { Sun, Moon } from "lucide-react";
+import { useEffect, useState } from "react";
+
+export const ThemeToggle = () => {
+  const [theme, setTheme] = useState('dark');
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(storedTheme);
+    document.documentElement.classList.toggle('dark', storedTheme === 'dark');
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+    document.documentElement.classList.toggle('dark', newTheme === 'dark');
+  };
+
+  return (
+    <Button 
+      variant="ghost" 
+      size="icon"
+      onClick={toggleTheme}
+      className="rounded-full bg-gray-800/50 backdrop-blur border border-gray-700/50 hover:bg-gray-700/50"
+      aria-label="Toggle theme"
+    >
+      {theme === 'dark' ? <Sun size={18} className="text-amber-300" /> : <Moon size={18} className="text-indigo-500" />}
+    </Button>
+  );
+};
+```
+
+```css
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-gray-800/30 backdrop-blur-lg border border-gray-700/50;
+  }
+  
+  .bg-grid-white\/\[0\.05\] {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(255 255 255 / 0.05)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+  }
+}
+
+@layer utilities {
+  .text-gradient-primary {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500;
+  }
+  
+  .text-gradient-secondary {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-500;
+  }
+}
+```
+
+## Key Design Improvements Implemented
+
+1. **Dark Mode Aesthetic**:
+   - Deep gradient backgrounds (gray-900 to gray-950)
+   - Glassmorphism panels with backdrop blur
+   - Subtle grid patterns for depth
+   - Cyan/blue/purple accent colors
+
+2. **Glassmorphism Effects**:
+   - Glass panels with 30% opacity and backdrop blur
+   - Subtle borders with reduced opacity
+   - Hover effects with accent-colored borders
+
+3. **Typography Hierarchy**:
+   - Gradient text for headings
+   - Increased font sizes (3xl-6xl for main headings)
+   - Improved spacing and line heights
+
+4. **Enhanced UI Components**:
+   - Modernized cards with glass backgrounds
+   - Gradient buttons with hover effects
+   - Interactive tab navigation with gradient backgrounds
+   - Theme toggle with glass effect
+
+5. **Visual Elements**:
+   - Grid background patterns
+   - Gradient badges with border accents
+   - Icon containers with colored gradients
+   - Animated hover states on interactive elements
+
+6. **Consistent Design System**:
+   - Unified color palette (cyan/blue/purple)
+   - Consistent spacing (16px increments)
+   - Standardized border radii (rounded-xl)
+   - Cohesive animation transitions
+
+This implementation transforms the Iterativ Analytics interface into a premium financial analytics platform with the sophisticated dark aesthetic of the Darkyn theme, while maintaining all existing functionality and content structure.

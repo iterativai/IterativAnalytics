@@ -1,59 +1,182 @@
-import { users, contactSubmissions, type User, type InsertUser, type ContactSubmission, type InsertContact } from "@shared/schema";
+import { 
+  type User, 
+  type InsertUser, 
+  type Document, 
+  type InsertDocument,
+  type Analysis,
+  type InsertAnalysis,
+  type Activity,
+  type InsertActivity
+} from "@shared/schema";
 
 export interface IStorage {
+  // User operations
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
-  createContactSubmission(contact: InsertContact): Promise<ContactSubmission>;
-  getContactSubmissions(): Promise<ContactSubmission[]>;
+  
+  // Document operations
+  getDocument(id: number): Promise<Document | undefined>;
+  getDocumentsByUserId(userId: number): Promise<Document[]>;
+  createDocument(document: InsertDocument): Promise<Document>;
+  updateDocument(id: number, updates: Partial<Document>): Promise<Document | undefined>;
+  
+  // Analysis operations
+  getAnalysis(id: number): Promise<Analysis | undefined>;
+  getAnalysisByDocumentId(documentId: number): Promise<Analysis | undefined>;
+  createAnalysis(analysis: InsertAnalysis): Promise<Analysis>;
+  
+  // Activity operations
+  getActivities(userId: number, limit?: number): Promise<Activity[]>;
+  createActivity(activity: InsertActivity): Promise<Activity>;
 }
 
 export class MemStorage implements IStorage {
-  private users: Map<number, User>;
-  private contacts: Map<number, ContactSubmission>;
-  private userIdCounter: number;
-  private contactIdCounter: number;
+  private users: User[] = [];
+  private documents: Document[] = [];
+  private analyses: Analysis[] = [];
+  private activities: Activity[] = [];
+  private nextId = 1;
 
-  constructor() {
-    this.users = new Map();
-    this.contacts = new Map();
-    this.userIdCounter = 1;
-    this.contactIdCounter = 1;
-  }
-
+  // User operations
   async getUser(id: number): Promise<User | undefined> {
-    return this.users.get(id);
+    return this.users.find(user => user.id === id);
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+    return this.users.find(user => user.username === username);
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const id = this.userIdCounter++;
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
+    const user: User = {
+      id: this.nextId++,
+      username: insertUser.username,
+      password: insertUser.password,
+      name: insertUser.name,
+      userType: insertUser.userType || "startup",
+      avatarUrl: insertUser.avatarUrl || null,
+      createdAt: new Date()
+    };
+    this.users.push(user);
     return user;
   }
 
-  async createContactSubmission(insertContact: InsertContact): Promise<ContactSubmission> {
-    const id = this.contactIdCounter++;
-    const contact: ContactSubmission = {
-      ...insertContact,
-      id,
-      submittedAt: new Date(),
-    };
-    this.contacts.set(id, contact);
-    return contact;
+  // Document operations
+  async getDocument(id: number): Promise<Document | undefined> {
+    return this.documents.find(doc => doc.id === id);
   }
 
-  async getContactSubmissions(): Promise<ContactSubmission[]> {
-    return Array.from(this.contacts.values()).sort(
-      (a, b) => b.submittedAt!.getTime() - a.submittedAt!.getTime()
-    );
+  async getDocumentsByUserId(userId: number): Promise<Document[]> {
+    return this.documents.filter(doc => doc.userId === userId);
+  }
+
+  async createDocument(insertDocument: InsertDocument): Promise<Document> {
+    const document: Document = {
+      id: this.nextId++,
+      ...insertDocument,
+      pageCount: insertDocument.pageCount ?? null,
+      score: insertDocument.score ?? null,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.documents.push(document);
+    return document;
+  }
+
+  async updateDocument(id: number, updates: Partial<Document>): Promise<Document | undefined> {
+    const index = this.documents.findIndex(doc => doc.id === id);
+    if (index === -1) return undefined;
+    
+    this.documents[index] = { ...this.documents[index], ...updates, updatedAt: new Date() };
+    return this.documents[index];
+  }
+
+  // Analysis operations
+  async getAnalysis(id: number): Promise<Analysis | undefined> {
+    return this.analyses.find(analysis => analysis.id === id);
+  }
+
+  async getAnalysisByDocumentId(documentId: number): Promise<Analysis | undefined> {
+    return this.analyses.find(analysis => analysis.documentId === documentId);
+  }
+
+  async createAnalysis(insertAnalysis: InsertAnalysis): Promise<Analysis> {
+    const analysis: Analysis = {
+      id: this.nextId++,
+      ...insertAnalysis,
+      createdAt: new Date()
+    };
+    this.analyses.push(analysis);
+    return analysis;
+  }
+
+  // Activity operations
+  async getActivities(userId: number, limit: number = 10): Promise<Activity[]> {
+    return this.activities
+      .filter(activity => activity.userId === userId)
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      .slice(0, limit);
+  }
+
+  async createActivity(insertActivity: InsertActivity): Promise<Activity> {
+    const activity: Activity = {
+      id: this.nextId++,
+      ...insertActivity,
+      createdAt: new Date()
+    };
+    this.activities.push(activity);
+    return activity;
   }
 }
 
-export const storage = new MemStorage();
+// Create hybrid storage with Azure capability when credentials are available
+class HybridStorage extends MemStorage {
+  private azureEnabled = false;
+
+  constructor() {
+    super();
+    this.azureEnabled = !!(
+      process.env.AZURE_COSMOS_ENDPOINT && 
+      process.env.AZURE_COSMOS_KEY
+    );
+    
+    if (this.azureEnabled) {
+      console.log('Azure Cosmos DB enabled - using cloud storage');
+    } else {
+      console.log('Using in-memory storage - add Azure credentials for cloud storage');
+    }
+  }
+
+  // Override methods to use Azure when available
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const user = await super.createUser(insertUser);
+    
+    if (this.azureEnabled) {
+      try {
+        const { azureServices } = await import('./azure-config');
+        await azureServices.cosmos.createDocument('users', { ...user, userId: user.id.toString() });
+      } catch (error) {
+        console.log('Azure sync failed, using local storage');
+      }
+    }
+    
+    return user;
+  }
+
+  async createDocument(insertDocument: InsertDocument): Promise<Document> {
+    const document = await super.createDocument(insertDocument);
+    
+    if (this.azureEnabled) {
+      try {
+        const { azureServices } = await import('./azure-config');
+        await azureServices.cosmos.createDocument('documents', { ...document, userId: document.userId.toString() });
+      } catch (error) {
+        console.log('Azure sync failed, using local storage');
+      }
+    }
+    
+    return document;
+  }
+}
+
+export const storage = new HybridStorage();

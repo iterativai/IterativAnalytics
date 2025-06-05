@@ -1,0 +1,105 @@
+Pasted--Main-Products-Section-section-className-py-20-bg-primary-50-id-solutions-div-classN-1749070188943.txt
+{/* Main Products Section */}
+<section className="py-20 bg-primary-50" id="solutions">
+  <div className="container mx-auto px-6">
+    <h2 className="text-3xl font-bold text-center mb-8 text-secondary-900">Our Solutions</h2>
+    <p className="text-secondary-600 text-center max-w-2xl mx-auto mb-16">
+      Discover our comprehensive suite of financial intelligence tools and capital access solutions designed specifically for African businesses.
+    </p>
+
+    {/* Product Tabs */}
+    <div className="flex justify-center mb-8">
+      <button 
+        className={`px-6 py-2 rounded-l-lg transition ${
+          activeTab === 'startups' 
+            ? 'bg-primary-600 text-white' 
+            : 'bg-white text-secondary-600 hover:bg-primary-50'
+        }`}
+        onClick={() => setActiveTab('startups')}
+      >
+        Iterativ Startups
+      </button>
+      <button 
+        className={`px-6 py-2 rounded-r-lg transition ${
+          activeTab === 'xchange' 
+            ? 'bg-primary-600 text-white' 
+            : 'bg-white text-secondary-600 hover:bg-primary-50'
+        }`}
+        onClick={() => setActiveTab('xchange')}
+      >
+        Iterativ Xchange
+      </button>
+    </div>
+
+    <div className="grid md:grid-cols-2 gap-12">
+      {activeTab === 'startups' ? (
+        <div className="bg-white rounded-xl shadow-lg p-8 border border-primary-100 transform hover:scale-105 transition duration-300">
+          <div className="flex items-center mb-4">
+            <Brain className="h-8 w-8 text-primary-600" />
+            <h3 className="text-2xl font-semibold ml-3 text-secondary-900">Iterativ Startups</h3>
+          </div>
+          <p className="text-secondary-600 mb-6">
+            Enhance your financial intelligence and funding readiness with our comprehensive planning tools.
+          </p>
+          <ul className="space-y-4">
+            <li className="flex items-center text-secondary-700">
+              <CheckCircle2 className="h-5 w-5 text-primary-600 mr-3" />
+              <div>
+                <h4 className="font-semibold">Business Plan Development</h4>
+                <p className="text-sm text-secondary-600">Create dynamic, iterative business plans</p>
+              </div>
+            </li>
+            <li className="flex items-center text-secondary-700">
+              <CheckCircle2 className="h-5 w-5 text-primary-600 mr-3" />
+              <div>
+                <h4 className="font-semibold">Plan Evaluation</h4>
+                <p className="text-sm text-secondary-600">Get expert analysis and feedback</p>
+              </div>
+            </li>
+            <li className="flex items-center text-secondary-700">
+              <CheckCircle2 className="h-5 w-5 text-primary-600 mr-3" />
+              <div>
+                <h4 className="font-semibold">Startup Valuations</h4>
+                <p className="text-sm text-secondary-600">Accurate, data-driven company valuations</p>
+              </div>
+            </li>
+          </ul>
+          <button className="mt-8 w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 rounded-lg transition">
+            Start Planning
+          </button>
+        </div>
+      ) : (
+        <div className="bg-white rounded-xl shadow-lg p-8 border border-primary-100 transform hover:scale-105 transition duration-300">
+          <div className="flex items-center mb-4">
+            <Coins className="h-8 w-8 text-primary-600" />
+            <h3 className="text-2xl font-semibold ml-3 text-secondary-900">Iterativ Xchange</h3>
+          </div>
+          <p className="text-secondary-600 mb-6">
+            Access modern funding solutions and capital through our innovative platform.
+          </p>
+          <ul className="space-y-4">
+            <li className="flex items-center text-secondary-700">
+              <CheckCircle2 className="h-5 w-5 text-primary-600 mr-3" />
+              <div>
+                <h4 className="font-semibold">Crowdfunding Platform</h4>
+                <p className="text-sm text-secondary-600">Connect with multiple investors</p>
+              </div>
+            </li>
+            <li className="flex items-center text-secondary-700">
+              <CheckCircle2 className="h-5 w-5 text-primary-600 mr-3" />
+              <div>
+                <h4 className="font-semibold">Equity Tokenization</h4>
+                <p className="text-sm text-secondary-600">Modernize your capital structure</p>
+              </div>
+            </li>
+            <li className="flex items-center text-secondary-700">
+              <CheckCircle2 className="h-5 w-5 text-primary-600 mr-3" />
+              <div>
+                <h4 className="font-semibold">Capital Access</h4>
+                <p className="text-sm text-secondary-600">Find the right funding options</p>
+              </div>
+            </li>
+          </ul>
+          <button className="mt-8 w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 rounded-lg transition">
+            Access Capital
+          </bu...

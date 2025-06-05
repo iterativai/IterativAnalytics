@@ -1,0 +1,178 @@
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { DemoModal } from '../modals/DemoModal';
+import { Button } from '@/components/ui/button';
+import { ArrowRight, Sparkles } from 'lucide-react';
+import { FadeIn, ScaleIn } from '@/components/ui/animated';
+
+const HeroSection = () => {
+  const [demoModalOpen, setDemoModalOpen] = useState(false);
+
+  return (
+    <>
+      <DemoModal
+        open={demoModalOpen}
+        onOpenChange={setDemoModalOpen}
+      />
+
+      <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-apple-gray-50 to-white pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute inset-0 bg-grid-white/50"></div>
+          <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary-100 rounded-full opacity-20 blur-3xl"></div>
+          <div className="absolute bottom-20 -left-40 w-96 h-96 bg-apple-blue opacity-10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto w-full relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* Text Content */}
+            <div className="text-center lg:text-left">
+              <FadeIn delay={0.2}>
+                <div className="inline-flex items-center mb-6 px-4 py-2 rounded-full bg-blue-100 text-blue-800 border border-blue-200">
+                  <Sparkles className="h-4 w-4 mr-2" />
+                  <span className="font-medium text-sm">AI-Powered Business Planning</span>
+                </div>
+              </FadeIn>
+              
+              <FadeIn delay={0.4}>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                  Transform Your Business Planning with <br />
+                  <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                    AI Intelligence
+                  </span>
+                </h1>
+              </FadeIn>
+              
+              <FadeIn delay={0.6}>
+                <p className="text-xl text-gray-600 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                  Transform business models into actionable strategies with intelligent insights. 
+                  Our AI platform helps you create investor-ready plans and analyses that drive success.
+                </p>
+              </FadeIn>
+              
+              <FadeIn delay={0.8}>
+                <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+                  <Button
+                    onClick={() => setDemoModalOpen(true)}
+                    className="px-8 py-4 text-lg group"
+                    size="lg"
+                  >
+                    Try Free Demo
+                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                  
+                  <Button 
+                    variant="outline" 
+                    size="lg" 
+                    className="px-8 py-4 text-lg border-2 hover:border-blue-300"
+                  >
+                    Get Investor Deck
+                  </Button>
+                </div>
+              </FadeIn>
+            </div>
+
+            {/* Dashboard Visualization */}
+            <ScaleIn delay={1.2}>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="relative"
+              >
+                <div className="absolute -inset-4">
+                  <div className="w-full h-full bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl rotate-2 opacity-70"></div>
+                </div>
+                
+                <div className="relative z-10 w-full aspect-video bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-gray-100">
+                  {/* Dashboard Header */}
+                  <div className="bg-gray-50 border-b border-gray-100 px-5 py-4 flex justify-between items-center">
+                    <div className="flex items-center space-x-3">
+                      <div className="bg-gradient-to-r from-blue-500 to-indigo-600 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                        IP
+                      </div>
+                      <h3 className="font-medium text-gray-900">Business Plan Dashboard</h3>
+                    </div>
+                    <div className="flex space-x-2">
+                      <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+                        <svg className="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        </svg>
+                      </div>
+                      <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+                        <svg className="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Dashboard Content */}
+                  <div className="flex-1 p-5 grid grid-cols-3 gap-4">
+                    {/* Metrics */}
+                    <div className="col-span-3 grid grid-cols-3 gap-3 mb-4">
+                      <div className="dashboard-stat bg-blue-50/50 border border-blue-100 rounded-lg p-3">
+                        <div className="text-xs text-blue-600">Documents</div>
+                        <div className="text-xl font-bold text-blue-900">12</div>
+                      </div>
+                      <div className="dashboard-stat bg-indigo-50/50 border border-indigo-100 rounded-lg p-3">
+                        <div className="text-xs text-indigo-600">Average Score</div>
+                        <div className="text-xl font-bold text-indigo-900">86<span className="text-sm text-indigo-600">/100</span></div>
+                      </div>
+                      <div className="dashboard-stat bg-purple-50/50 border border-purple-100 rounded-lg p-3">
+                        <div className="text-xs text-purple-600">Investor Views</div>
+                        <div className="text-xl font-bold text-purple-900">47</div>
+                      </div>
+                    </div>
+                    
+                    {/* Chart */}
+                    <div className="col-span-2 p-4 bg-white border border-gray-100 rounded-xl">
+                      <div className="h-32 flex items-end space-x-2">
+                        {[40, 60, 30, 90, 50, 70, 40].map((height, index) => (
+                          <motion.div
+                            key={index}
+                            initial={{ height: 0 }}
+                            animate={{ height: `${height}%` }}
+                            transition={{ 
+                              duration: 0.8,
+                              delay: 1.5 + (index * 0.1),
+                              ease: "easeOut"
+                            }}
+                            className="w-8 bg-gradient-to-t from-blue-500 to-indigo-600 rounded-t-lg"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    
+                    {/* Score */}
+                    <div className="col-span-1 p-4 bg-white border border-gray-100 rounded-xl flex justify-center items-center">
+                      <div className="relative">
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ 
+                            duration: 0.8,
+                            delay: 1.8,
+                            ease: "easeOut"
+                          }}
+                          className="w-24 h-24 rounded-full border-8 border-indigo-200 flex items-center justify-center"
+                        >
+                          <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">86</div>
+                        </motion.div>
+                        <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 text-xs font-medium text-gray-600 bg-white px-2">Score</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full opacity-20 blur-xl"></div>
+              </motion.div>
+            </ScaleIn>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default HeroSection;
