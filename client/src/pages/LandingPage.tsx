@@ -1,10 +1,8 @@
-import { Link, useLocation } from "wouter";
+
 import { Button } from "@/components/ui/button";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import SignIn from "@/components/SignIn";
-import { useAuth } from "@/lib/AuthProvider";
 
 export default function LandingPage() {
   const [email, setEmail] = useState("");
@@ -13,15 +11,7 @@ export default function LandingPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
-  const { user } = useAuth();
-  const [_, navigate] = useLocation();
   
-  // Redirect authenticated users to app
-  useEffect(() => {
-    if (user) {
-      navigate('/app');
-    }
-  }, [user, navigate]);
   const testimonials = [
     {
       quote: "Iterativ Startups helped us secure $1.2M in funding by optimizing our pitch deck and business plan metrics.",
@@ -622,11 +612,9 @@ export default function LandingPage() {
             </div>
             
             <div className="mt-8">
-              <Link href="/app">
-                <Button className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white px-8 py-6 text-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5">
-                  Try it for Free
-                </Button>
-              </Link>
+              <Button className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white px-8 py-6 text-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5">
+                Try it for Free
+              </Button>
             </div>
           </motion.div>
           
@@ -937,11 +925,9 @@ export default function LandingPage() {
               whileInView={{ y: 0, opacity: 1, transition: { duration: 0.6, delay: 0.6 } }}
               viewport={{ once: true }}
             >
-              <Link href="/app">
-                <Button className="px-8 py-3 bg-white text-indigo-700 hover:bg-white/90 font-semibold text-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5">
-                  Start Your Free Trial
-                </Button>
-              </Link>
+              <Button className="px-8 py-3 bg-white text-indigo-700 hover:bg-white/90 font-semibold text-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5">
+                Start Your Free Trial
+              </Button>
             </motion.div>
           </div>
           
@@ -1034,7 +1020,12 @@ export default function LandingPage() {
       <Dialog open={isSignInOpen} onOpenChange={setIsSignInOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogTitle className="sr-only">Authentication</DialogTitle>
-          <SignIn />
+          <div className="p-6">
+            <h2 className="text-2xl font-bold mb-4 text-center">Coming Soon!</h2>
+            <p className="text-gray-600 text-center">
+              We're building something amazing. Sign up for our waitlist to be the first to know when we launch.
+            </p>
+          </div>
         </DialogContent>
       </Dialog>
     </div>
