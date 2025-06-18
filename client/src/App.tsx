@@ -145,7 +145,7 @@ function AppContent() {
                   </span>
                 </h2>
                 <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                  Iterativ Analytics is a unified, AI-native platform helping African startups launch, grow, and raise capital — smarter, faster, and with radical transparency.
+                  The complete African startup ecosystem platform integrating three specialized modules: AI-powered business planning, blockchain capital markets, and intelligent supply chain management.
                 </p>
               </div>
             </FadeIn>
@@ -184,18 +184,18 @@ function AppContent() {
               </div>
             </FadeIn>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
               <FadeIn delay={0.2}>
                 <div className="bg-gradient-to-br from-purple-500/10 to-blue-500/10 backdrop-blur-xl rounded-3xl p-8 border border-purple-400/30 hover:border-purple-400/50 transition-all duration-300">
                   <div className="flex items-center mb-6">
                     <div className="bg-purple-600 rounded-xl p-3 mr-4">
                       <Rocket className="h-8 w-8 text-white" />
                     </div>
-                    <h3 className="text-2xl font-bold text-white">Iterativ Startups</h3>
+                    <h3 className="text-2xl font-bold text-white">Iterativ Ventures</h3>
                   </div>
                   
                   <p className="text-white/70 mb-6 text-lg">
-                    Empower your startup with AI-driven business planning and evaluation tools. Access our comprehensive suite of intelligent planning aid services for fundraising.
+                    AI-powered business intelligence & planning with CoFounder AI integration, multi-format plan upload, real-time financial modeling, and investor readiness scoring for African entrepreneurs.
                   </p>
                   
                   <div className="space-y-3 mb-8">
@@ -234,30 +234,69 @@ function AppContent() {
                   </div>
                   
                   <p className="text-white/70 mb-6 text-lg">
-                    Revolutionary capital access platform offering new funding mechanisms. Unlock innovative capital opportunities and expand your reach.
+                    Blockchain-powered capital markets with equity tokenization, African Equity Exchange (AEX), crowdfunding infrastructure, secondary market trading, and integrated supply chain finance solutions.
                   </p>
                   
                   <div className="space-y-3 mb-8">
                     <div className="flex items-center text-white/80">
                       <CheckCircle2 className="h-5 w-5 text-pink-400 mr-3 flex-shrink-0" />
-                      <span>Equity crowdfunding offerings</span>
+                      <span>Equity tokenization platform</span>
                     </div>
                     <div className="flex items-center text-white/80">
                       <CheckCircle2 className="h-5 w-5 text-pink-400 mr-3 flex-shrink-0" />
-                      <span>Modern capital funding platforms</span>
+                      <span>African Equity Exchange (AEX)</span>
                     </div>
                     <div className="flex items-center text-white/80">
                       <CheckCircle2 className="h-5 w-5 text-pink-400 mr-3 flex-shrink-0" />
-                      <span>Investor matchmaking algorithms</span>
+                      <span>Cross-border payment solutions</span>
                     </div>
                     <div className="flex items-center text-white/80">
                       <CheckCircle2 className="h-5 w-5 text-pink-400 mr-3 flex-shrink-0" />
-                      <span>Curated financial channels</span>
+                      <span>Supply chain finance marketplace</span>
                     </div>
                   </div>
                   
                   <Button className="w-full bg-gradient-to-r from-pink-600 to-red-600 hover:from-pink-500 hover:to-red-500 text-white font-semibold py-3 rounded-lg shadow-lg hover:shadow-pink-500/25 transition-all duration-300">
                     Discover Xchange Platform
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
+              </FadeIn>
+              
+              <FadeIn delay={0.6}>
+                <div className="bg-gradient-to-br from-green-500/10 to-teal-500/10 backdrop-blur-xl rounded-3xl p-8 border border-green-400/30 hover:border-green-400/50 transition-all duration-300">
+                  <div className="flex items-center mb-6">
+                    <div className="bg-green-600 rounded-xl p-3 mr-4">
+                      <GitBranch className="h-8 w-8 text-white" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-white">Iterativ Sourcing</h3>
+                  </div>
+                  
+                  <p className="text-white/70 mb-6 text-lg">
+                    Intelligent supply chain management platform with AI-powered supplier matching, procurement optimization, performance analytics, and automated payment management.
+                  </p>
+                  
+                  <div className="space-y-3 mb-8">
+                    <div className="flex items-center text-white/80">
+                      <CheckCircle2 className="h-5 w-5 text-green-400 mr-3 flex-shrink-0" />
+                      <span>Smart supplier matching</span>
+                    </div>
+                    <div className="flex items-center text-white/80">
+                      <CheckCircle2 className="h-5 w-5 text-green-400 mr-3 flex-shrink-0" />
+                      <span>Procurement workflow automation</span>
+                    </div>
+                    <div className="flex items-center text-white/80">
+                      <CheckCircle2 className="h-5 w-5 text-green-400 mr-3 flex-shrink-0" />
+                      <span>Performance analytics & scoring</span>
+                    </div>
+                    <div className="flex items-center text-white/80">
+                      <CheckCircle2 className="h-5 w-5 text-green-400 mr-3 flex-shrink-0" />
+                      <span>Risk intelligence & verification</span>
+                    </div>
+                  </div>
+                  
+                  <Button className="w-full bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-500 hover:to-teal-500 text-white font-semibold py-3 rounded-lg shadow-lg hover:shadow-green-500/25 transition-all duration-300">
+                    Explore Sourcing Platform
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </div>
