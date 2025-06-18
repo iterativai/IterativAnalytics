@@ -1,0 +1,90 @@
+I have redeveloped the landing page to integrate the new information about Iterativ Analytics' modules (Ventures, Xchange, Sourcing), its South African origin, and its strong focus on the African ecosystem and B-BBEE/ESD alignment.
+
+---
+
+# Iterativ Analytics: Fueling Africa's Future. Powered by AI & Blockchain.
+
+---
+
+## Your Vision. Our Intelligence. [cite_start]Africa's Growth. [cite: 3]
+
+[cite_start]As a proud **South African AI-driven company**, Iterativ Analytics is dedicated to democratizing financial intelligence, capital access, and operational efficiency across the African continent. [cite: 1] [cite_start]We transform complex data into clear, **actionable insights**, empowering entrepreneurs, businesses, and financial institutions to thrive. [cite: 3]
+
+[cite_start]Discover how our comprehensive web application seamlessly integrates three specialized modules, forming a unified ecosystem designed to bridge the gap between opportunity and capital, fueling sustainable growth and economic inclusion throughout Africa. [cite: 2]
+
+---
+
+## Your Journey, Accelerated: Our Integrated Ecosystem
+
+### [cite_start]1. Iterativ Ventures: Intelligent Planning & Investor Readiness. [cite: 3]
+
+**Build. Evaluate. Confidently Fundraise.**
+
+[cite_start]This is where your vision takes shape and becomes investor-ready. [cite: 3] [cite_start]Iterativ Ventures empowers you to craft and perfect your business plan with AI-driven intelligence. [cite: 3]
+
+* **For African Entrepreneurs & Startups (Priority for black-owned businesses):**
+    * [cite_start]**Craft Investor-Ready Plans:** Develop **dynamic, iterative business plans** and compelling pitch decks, leveraging **CoFounder AI Integration** (OpenAI, Gemini, DeepSeek) for intelligent creation. [cite: 3, 4]
+    * [cite_start]**Objective AI Evaluation:** Get **instant, data-driven assessment of investment attractiveness** on your plan's strengths, weaknesses, and potential red flags. [cite: 3, 4]
+    * [cite_start]**Real-Time Financial Modeling:** Utilize dynamic scenario planning with instant visualizations for accurate projections. [cite: 4]
+    * [cite_start]**Market Intelligence:** Integrate local African market data for accurate projections. [cite: 4]
+
+* **For B-BBEE Compliant Accelerators, Incubators & Development Agencies:**
+    * [cite_start]**Standardized Evaluation:** Implement a **Proposal Evaluation Engine** for bias-free assessment across your cohorts. [cite: 4]
+    * [cite_start]**Digital Mentorship:** Democratize access to business expertise through AI-powered guidance and expert reviewer networks. [cite: 15]
+
+### [cite_start]2. Iterativ Xchange: Blockchain-Powered Capital & Liquidity. [cite: 5]
+
+**Tokenize. Crowdfund. Invest. Scale.**
+
+[cite_start]Iterativ Xchange is your gateway to modern funding avenues and streamlined investment management, designed to enhance access to capital and provide liquidity. [cite: 5]
+
+* **For African Startups Seeking Funding (Prioritizing black-owned/previously disadvantaged):**
+    * [cite_start]**Equity Tokenization:** Simplify the process to **convert equity into tradeable tokens**. [cite: 6]
+    * [cite_start]**Crowdfunding Campaigns:** Launch regulatory-compliant fundraising campaigns within Africa. [cite: 6]
+    * [cite_start]**Post-Funding Liquidity:** Access **secondary market trading** for early investors and founders. [cite: 6]
+
+* **For Funders & Investors (Angel, VC, Institutional, Family Offices, Diaspora):**
+    * [cite_start]**African Equity Exchange (AEX):** Access a **dedicated marketplace for African startup securities**. [cite: 6]
+    * [cite_start]**Comprehensive Investor Portal:** Utilize due diligence materials, valuation transparency, and portfolio tracking tools. [cite: 6]
+    * [cite_start]**Cross-Border Payments:** Facilitate **blockchain-enabled international investment flows**. [cite: 6]
+    * [cite_start]**Working Capital Solutions:** Leverage AI-powered risk assessment for supplier financing opportunities. [cite: 6]
+
+### [cite_start]3. Iterativ Sourcing: Intelligent Supply Chain & Procurement. [cite: 8]
+
+**Connect. Optimize. Transform.**
+
+[cite_start]Iterativ Sourcing revolutionizes supplier management and procurement, driving efficiency and supporting economic transformation. [cite: 8]
+
+* **For Startups & SMEs (Buyers - focused on B-BBEE compliant procurement):**
+    * [cite_start]**Smart Supplier Matching:** Discover suppliers based on requirements and performance using AI. [cite: 9]
+    * [cite_start]**Workflow Automation:** Streamline RFQ management, bid comparison, and contract processing. [cite: 9]
+
+* **For Black-Owned Suppliers & Vendors:**
+    * [cite_start]**Market Access:** Access a transparent marketplace to demonstrate capabilities and build performance track records. [cite: 9, 15]
+    * [cite_start]**Working Capital Access:** Connect with lenders for **invoice financing solutions** and working capital. [cite: 6, 9]
+
+* **For Corporates with Supplier Development & Transformation Mandates:**
+    * [cite_start]**Supplier Diversification:** Access verified, performance-tracked black-owned suppliers. [cite: 16]
+    * [cite_start]**Automated Compliance:** Support B-BBEE scorecard requirements with automated compliance reporting. [cite: 17]
+
+---
+
+## The Iterativ Analytics Advantage: Built for Africa.
+
+* [cite_start]**End-to-End Ecosystem:** Unlike fragmented solutions, we cover the entire startup lifecycle from planning (Ventures) to funding (Xchange) to operations (Sourcing), with integrated working capital solutions. [cite: 11, 13]
+* [cite_start]**AI & Blockchain Leadership:** Our platform is powered by advanced AI for intelligence and risk assessment, and blockchain for secure, transparent, and efficient tokenization and trading. [cite: 12]
+* [cite_start]**Deep African Focus:** Designed with local regulatory compliance, currency flexibility, cultural sensitivity, and infrastructure adaptability in mind, optimizing for Africa's mobile-centric user base. [cite: 12]
+* [cite_start]**ESD Alignment & Economic Transformation:** Strategically designed to accelerate Enterprise and Supplier Development (ESD) objectives, directly supporting South Africa's B-BBEE framework and broader African economic transformation goals. [cite: 14]
+* [cite_start]**Cross-Platform Data Intelligence:** Business plans inform valuations, procurement data enhances business models, and investment performance influences supplier credit scoring – creating superior insights and decisions across modules. [cite: 10]
+
+---
+
+## Propel Your African Vision Forward.
+
+[cite_start]Whether you're an entrepreneur forging a path, an investor seeking impactful opportunities, or an organization driving economic transformation, Iterativ Analytics is your strategic partner. [cite: 13]
+
+**[Large Call to Action Button: Explore Modules & Get Started]**
+
+---
+
+[cite_start]*Iterativ Analytics: Democratizing financial intelligence, capital access, and operational efficiency for African startups. [cite: 1]*

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import React from 'react';
-import { ArrowRight, BarChart3, CheckCircle2, Rocket, Sparkles, Star, TrendingUp, Zap, Brain, Coins } from 'lucide-react';
+import { ArrowRight, BarChart3, CheckCircle2, Rocket, Sparkles, Star, TrendingUp, Zap, Brain, Coins, GitBranch } from 'lucide-react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -37,19 +37,19 @@ function AppContent() {
 
   const features = [
     {
-      icon: <Rocket className="h-6 w-6 text-cyan-400" />,
-      title: "Iterativ Startups",
-      description: "Founder tools, AI copilots, milestone tracking, and startup readiness scoring."
+      icon: <Brain className="h-6 w-6 text-cyan-400" />,
+      title: "Iterativ Ventures",
+      description: "AI-powered business intelligence & planning with CoFounder AI integration, real-time financial modeling, and investor readiness scoring."
     },
     {
       icon: <TrendingUp className="h-6 w-6 text-blue-400" />,
       title: "Iterativ Xchange", 
-      description: "Investor dashboards, deal flow analytics, and tokenized capital access."
+      description: "Blockchain-powered capital markets with equity tokenization, African Equity Exchange (AEX), and integrated supply chain finance solutions."
     },
     {
-      icon: <Zap className="h-6 w-6 text-purple-400" />,
-      title: "Iterativ AI Core",
-      description: "Bias auditing, benchmarking, and predictive analytics — privacy-first and compliance-ready."
+      icon: <GitBranch className="h-6 w-6 text-purple-400" />,
+      title: "Iterativ Sourcing",
+      description: "Intelligent supply chain management with AI-powered supplier matching, procurement optimization, and performance analytics."
     }
   ];
 

@@ -65,7 +65,7 @@ const HeroSection = () => {
                   }}
                 >
                   <Sparkles className="h-4 w-4 mr-2" />
-                  <span className="font-medium text-sm">AI-Powered Business Planning</span>
+                  <span className="font-medium text-sm">Complete African Startup Ecosystem</span>
                 </div>
               </FadeIn>
 
@@ -77,16 +77,19 @@ const HeroSection = () => {
                       textShadow: '0 0 30px rgba(6, 182, 212, 0.4)'
                     }}
                   >
-                    Democratizing Financial Intelligence
+                    Democratising Financial Intelligence
                   </span>
                   <br />
-                  <span className="text-white/90">Across Africa</span>
+                  <span className="text-white/90">Capital Access & Operations</span>
+                  <br />
+                  <span className="text-3xl md:text-4xl lg:text-5xl text-white/80">for African Startups</span>
                 </h1>
               </FadeIn>
 
               <FadeIn delay={0.6}>
                 <p className="text-xl text-gray-100 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed drop-shadow-lg">
-                  Empowering businesses and entrepreneurs with AI-driven financial solutions and capital access
+                  The complete ecosystem platform integrating AI-powered business planning, blockchain capital markets, 
+                  and intelligent supply chain management - designed for African entrepreneurs.
                 </p>
               </FadeIn>
 
