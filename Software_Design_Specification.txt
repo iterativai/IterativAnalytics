@@ -4,10 +4,10 @@
 ## 1. INTRODUCTION
 
 ### 1.1 Purpose
-This Software Design Specification (SDS) describes the architecture, design, and implementation details for Iterativ Analytics, an AI-powered financial intelligence platform for African startups and investors.
+This Software Design Specification (SDS) describes the architecture, design, and implementation details for Iterativ Analytics, a comprehensive AI-powered ecosystem platform for African startups, investors, and enterprises.
 
 ### 1.2 Scope
-The system provides comprehensive tools for startup evaluation, investor matching, capital access, and business intelligence across the African entrepreneurship ecosystem.
+The system provides an integrated three-module platform covering the entire African entrepreneurship lifecycle: Iterativ Ventures (startup evaluation), Iterativ Xchange (investor marketplace), and Iterativ Sourcing (procurement platform).
 
 ### 1.3 Definitions and Acronyms
 - **SaaS**: Software as a Service
@@ -16,35 +16,49 @@ The system provides comprehensive tools for startup evaluation, investor matchin
 - **UI/UX**: User Interface/User Experience
 - **DEI**: Diversity, Equity, and Inclusion
 - **MVP**: Minimum Viable Product
+- **ORM**: Object-Relational Mapping
 
 ## 2. SYSTEM OVERVIEW
 
-### 2.1 System Architecture
+### 2.1 Platform Architecture
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Client Layer  │    │  Server Layer   │    │  Database Layer │
 │                 │    │                 │    │                 │
-│ React Frontend  │◄──►│ Express.js API  │◄──►│ PostgreSQL DB   │
-│ TypeScript      │    │ Node.js         │    │ Drizzle ORM     │
-│ Tailwind CSS    │    │ TypeScript      │    │                 │
+│ React Frontend  │◄──►│ Express.js API  │◄──►│ In-Memory Store │
+│ TypeScript      │    │ Node.js/TSX     │    │ Drizzle ORM     │
+│ Tailwind CSS    │    │ TypeScript      │    │ (Azure Ready)   │
+│ Framer Motion   │    │ OpenAI API      │    │                 │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
         │                       │                       │
         ▼                       ▼                       ▼
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │ External APIs   │    │ Authentication  │    │ File Storage    │
 │ - Firebase Auth │    │ - JWT Tokens    │    │ - Document Store│
-│ - OpenAI API    │    │ - Role-based    │    │ - Analytics     │
-│ - Payment APIs  │    │ - Session Mgmt  │    │ - Backups       │
+│ - OpenAI GPT    │    │ - Role-based    │    │ - Azure Blob    │
+│ - Payment APIs  │    │ - Session Mgmt  │    │ - PDF Export    │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-### 2.2 Core Modules
-1. **User Management**: Authentication, profiles, role-based access
-2. **Document Analysis**: AI-powered business plan evaluation
-3. **Scoring Engine**: Comprehensive startup assessment algorithms
-4. **Dashboard Interface**: Multi-user type dashboards
-5. **Capital Marketplace**: Investor-startup matching platform
-6. **Analytics Engine**: Performance tracking and insights
+### 2.2 Three-Module Ecosystem
+
+#### 2.2.1 Iterativ Ventures
+- **AI-powered business plan analysis**
+- **Comprehensive scoring algorithms**
+- **Startup evaluation and recommendations**
+- **Performance tracking dashboards**
+
+#### 2.2.2 Iterativ Xchange
+- **Investor-startup matching platform**
+- **Capital marketplace and deal flow**
+- **Investment tracking and portfolio management**
+- **Due diligence automation**
+
+#### 2.2.3 Iterativ Sourcing
+- **Smart supplier matching and discovery**
+- **Procurement workflow automation**
+- **Performance analytics and scoring**
+- **Risk intelligence and verification**
 
 ## 3. DETAILED DESIGN
 
@@ -53,48 +67,70 @@ The system provides comprehensive tools for startup evaluation, investor matchin
 #### 3.1.1 Component Hierarchy
 ```
 App
-├── ThemeProvider
-├── AuthProvider
+├── AuthProvider (Firebase Auth)
+├── QueryClientProvider (React Query)
+├── ThemeProvider (Theme Context)
+├── SectorThemeProvider (Dynamic Theming)
 ├── Router
 │   ├── LandingPage
-│   │   ├── HeroSection
-│   │   ├── SolutionsSection
+│   │   ├── HeroSection (Enhanced Dashboard Preview)
+│   │   ├── SolutionsSection (3 Modules)
 │   │   ├── FeaturesSection
 │   │   ├── TestimonialsSection
+│   │   ├── StatsSection
+│   │   ├── FAQSection
 │   │   └── CTASection
 │   ├── Dashboard
-│   │   ├── Sidebar
+│   │   ├── Sidebar (Role-based Navigation)
 │   │   ├── TopNavbar
 │   │   ├── MetricsCards
+│   │   ├── AIAssistant (Contextual Help)
 │   │   └── ContentArea
 │   └── ProfilePage
 └── GlobalComponents
-    ├── Chatbot
+    ├── AuthModal
+    ├── DemoModal
     ├── FloatingBanners
-    └── ProgressIndicators
+    ├── ProgressIndicators
+    └── StickyHeader
 ```
 
 #### 3.1.2 State Management
-- **Global State**: React Context API for theme, authentication
-- **Server State**: React Query for API data management
+- **Global State**: React Context API for theme, authentication, sector theming
+- **Server State**: React Query for API data management and caching
 - **Local State**: useState and useReducer for component state
 - **Form State**: React Hook Form for complex forms
+- **Animation State**: Framer Motion for UI animations
 
 #### 3.1.3 Styling Architecture
 ```css
-/* Tailwind CSS Configuration */
-- Custom color palette for brand identity
-- Dark theme optimization
-- Glass morphism utilities
-- Animation utilities
-- Responsive breakpoints
+/* Tailwind CSS + Custom Variables */
+:root {
+  /* Brand Colors */
+  --iterativ-blue: 222 84% 58%;
+  --iterativ-purple: 250 60% 66%;
+  --iterativ-green: 145 63% 49%;
+  --iterativ-orange: 25 95% 53%;
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, hsl(var(--iterativ-blue)), hsl(var(--iterativ-purple)));
+  --gradient-secondary: linear-gradient(135deg, hsl(var(--iterativ-green)), hsl(var(--iterativ-blue)));
+}
 
-/* Component Structure */
-- Atomic design principles
-- Reusable UI components (shadcn/ui)
-- Consistent spacing and typography
-- Accessibility compliance (WCAG 2.1)
+/* Sector-based Dynamic Theming */
+- FinTech: Green-focused palette
+- HealthTech: Red-focused palette
+- EdTech: Purple-focused palette
+- Investor: Navy blue palette
+- PropTech: Slate palette
 ```
+
+#### 3.1.4 Advanced UI Features
+- **Glass morphism effects** for modern aesthetics
+- **Animated progress indicators** for engagement
+- **Contextual AI assistance** with floating bubbles
+- **Sector-specific theming** for personalization
+- **Dark/light mode support** with smooth transitions
 
 ### 3.2 Backend Architecture
 
@@ -106,52 +142,35 @@ POST   /api/auth/login             // Authentication
 GET    /api/documents              // Document list
 POST   /api/documents              // Upload document
 GET    /api/analysis/:documentId   // Analysis results
-POST   /api/analysis               // Trigger analysis
-GET    /api/dashboard/metrics      // Dashboard data
+POST   /api/analysis               // Trigger AI analysis
+GET    /api/dashboard/metrics      // Dashboard metrics
 POST   /api/funding/calculate      // Funding calculator
+GET    /api/contact                // Contact submissions
+POST   /api/contact                // Submit contact form
 ```
 
-#### 3.2.2 Database Schema
-```sql
--- Core Tables
-users (id, username, email, user_type, created_at)
-documents (id, user_id, title, content, analysis_id)
-analyses (id, document_id, scores, recommendations)
-activities (id, user_id, action_type, timestamp)
-investments (id, investor_id, startup_id, amount)
-
--- Relationships
-- users 1:many documents
-- documents 1:1 analyses
-- users 1:many activities
-- users many:many investments
-```
-
-#### 3.2.3 Security Implementation
+#### 3.2.2 Data Models
 ```typescript
-// Authentication Middleware
-- JWT token validation
-- Role-based access control
-- Rate limiting
-- Input sanitization
-- CORS configuration
+// Core Interfaces
+interface User {
+  id: string;
+  username: string;
+  email: string;
+  userType: 'startup' | 'investor' | 'enterprise';
+  sector?: string;
+  avatarUrl?: string;
+  createdAt: Date;
+}
 
-// Data Protection
-- Encrypted sensitive data
-- Secure file uploads
-- API key management
-- Environment variable security
-```
+interface Document {
+  id: string;
+  userId: string;
+  title: string;
+  content: string;
+  analysisId?: string;
+  uploadedAt: Date;
+}
 
-### 3.3 AI Integration
-
-#### 3.3.1 Document Analysis Pipeline
-```
-Document Upload → Content Extraction → AI Processing → Score Generation → Recommendation Engine
-```
-
-#### 3.3.2 Scoring Algorithm
-```typescript
 interface StartupScore {
   overall: number;           // 0-100
   feasibility: number;       // Business viability
@@ -163,15 +182,64 @@ interface StartupScore {
 }
 ```
 
-### 3.4 User Interface Design
+#### 3.2.3 Storage Strategy
+```typescript
+// Current: In-Memory Storage
+- Rapid prototyping and development
+- Session-based data persistence
+- Easy testing and iteration
+
+// Future: Azure Integration
+- Blob storage for documents
+- SQL Database for structured data
+- Redis for caching and sessions
+```
+
+### 3.3 AI Integration
+
+#### 3.3.1 OpenAI Integration
+```typescript
+// AI Analysis Pipeline
+Document Upload → Content Extraction → GPT Analysis → Score Calculation → Recommendations
+
+// Current Implementation
+- Demo analysis generation for development
+- Structured scoring across 6 dimensions
+- Improvement area identification
+- Industry comparison data
+```
+
+#### 3.3.2 Scoring Algorithm
+```typescript
+interface DocumentAnalysisResponse {
+  overallScore: number;
+  feasibilityScore: number;
+  scalabilityScore: number;
+  financialHealthScore: number;
+  innovationScore: number;
+  marketFitScore: number;
+  improvementAreas: Array<{
+    area: string;
+    score: number;
+    suggestion: string;
+  }>;
+  comparisonData: {
+    industryAverage: number;
+    topPerformers: number;
+  };
+  summary: string;
+}
+```
+
+### 3.4 User Experience Design
 
 #### 3.4.1 Design System
 ```scss
-// Color Palette
-$primary: #0EA5E9;      // Cyan-500
-$secondary: #8B5CF6;    // Purple-500
-$accent: #F59E0B;       // Orange-500
-$neutral: #374151;      // Gray-700
+// Color Palette (Dynamic by Sector)
+$fintech-primary: #22C55E;    // Green-500
+$healthtech-primary: #EF4444; // Red-500
+$edtech-primary: #8B5CF6;     // Violet-500
+$investor-primary: #1E3A8A;   // Blue-800
 
 // Typography Scale
 $font-xs: 0.75rem;      // 12px
@@ -180,25 +248,24 @@ $font-base: 1rem;       // 16px
 $font-lg: 1.125rem;     // 18px
 $font-xl: 1.25rem;      // 20px
 
-// Spacing System
-$space-1: 0.25rem;      // 4px
-$space-2: 0.5rem;       // 8px
-$space-4: 1rem;         // 16px
-$space-8: 2rem;         // 32px
+// Animation System
+- Framer Motion for page transitions
+- CSS transitions for hover states
+- Progress animations for engagement
 ```
 
 #### 3.4.2 Responsive Design
 ```css
-/* Breakpoint Strategy */
-- Mobile First: 320px+
+/* Mobile-First Approach */
+- Mobile: 320px+ (Primary focus for African market)
 - Tablet: 768px+
 - Desktop: 1024px+
 - Large Desktop: 1440px+
 
-/* Grid System */
+/* Layout Strategy */
 - CSS Grid for complex layouts
 - Flexbox for component alignment
-- Container queries for components
+- Container queries for adaptive components
 ```
 
 ## 4. TECHNICAL SPECIFICATIONS
@@ -210,12 +277,19 @@ $space-8: 2rem;         // 32px
   - LCP < 2.5s
   - FID < 100ms
   - CLS < 0.1
+- **Bundle Size**: Optimized with Vite bundling
 
-### 4.2 Scalability Considerations
-- **Horizontal Scaling**: Microservices architecture ready
-- **Database Optimization**: Indexed queries, connection pooling
-- **CDN Integration**: Static asset optimization
-- **Caching Strategy**: Redis for session and API caching
+### 4.2 Development Environment
+```yaml
+# Current Stack
+Frontend: React 18 + TypeScript + Vite
+Backend: Node.js + Express + TypeScript (TSX)
+Database: In-memory (Azure-ready with Drizzle ORM)
+Styling: Tailwind CSS + Custom CSS Variables
+Animation: Framer Motion
+Auth: Firebase Authentication
+Deployment: Replit (Production Ready)
+```
 
 ### 4.3 Browser Compatibility
 - **Modern Browsers**: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
@@ -223,122 +297,108 @@ $space-8: 2rem;         // 32px
 - **Progressive Enhancement**: Core functionality without JavaScript
 
 ### 4.4 Accessibility Standards
-- **WCAG 2.1 Level AA**: Full compliance
+- **WCAG 2.1 Level AA**: Full compliance target
 - **Keyboard Navigation**: Complete keyboard accessibility
 - **Screen Readers**: ARIA labels and semantic HTML
-- **Color Contrast**: Minimum 4.5:1 ratio
+- **Color Contrast**: Minimum 4.5:1 ratio across all themes
 
 ## 5. DEPLOYMENT ARCHITECTURE
 
-### 5.1 Environment Configuration
+### 5.1 Replit Deployment
+```yaml
+# Production Environment
+Platform: Replit
+Port: 5000 (forwarded to 80/443)
+SSL: Automatic HTTPS
+Domain: Custom domain support
+Scaling: Automatic based on traffic
+```
+
+### 5.2 Build Configuration
+```typescript
+// Vite Configuration
+- TypeScript compilation
+- Tailwind CSS processing
+- Asset optimization
+- Code splitting
+- Tree shaking
+```
+
+### 5.3 Environment Variables
 ```yaml
 # Development
 NODE_ENV: development
 PORT: 5000
-DATABASE_URL: postgresql://localhost:5432/iterativ_dev
+VITE_FIREBASE_API_KEY: ${FIREBASE_CONFIG}
+OPENAI_API_KEY: ${OPENAI_KEY}
 
 # Production
 NODE_ENV: production
 PORT: 5000
-DATABASE_URL: ${REPLIT_DB_URL}
-REDIS_URL: ${REPLIT_REDIS_URL}
+DATABASE_URL: ${AZURE_DATABASE_URL}
+BLOB_STORAGE_URL: ${AZURE_BLOB_URL}
 ```
 
-### 5.2 CI/CD Pipeline
-```yaml
-# Replit Deployment
-1. Code commit to main branch
-2. Automated testing suite
-3. Build optimization
-4. Environment variable injection
-5. Hot deployment to Replit
-6. Health check verification
-```
+## 6. SECURITY CONSIDERATIONS
 
-### 5.3 Monitoring and Logging
+### 6.1 Authentication & Authorization
 ```typescript
-// Application Monitoring
-- Error tracking (Sentry integration)
-- Performance monitoring
-- User analytics
-- API response time tracking
-- Database query optimization
-
-// Logging Strategy
-- Structured JSON logging
-- Error categorization
-- User action tracking
-- Security event logging
+// Firebase Integration
+- Email/password authentication
+- OAuth providers (Google, LinkedIn)
+- Role-based access control
+- Session management
+- Password complexity enforcement
 ```
 
-## 6. TESTING STRATEGY
-
-### 6.1 Testing Pyramid
-```
-┌─────────────────┐
-│  E2E Tests      │ ← Cypress/Playwright
-├─────────────────┤
-│ Integration     │ ← React Testing Library
-├─────────────────┤
-│ Unit Tests      │ ← Jest + Vitest
-└─────────────────┘
-```
-
-### 6.2 Test Coverage Goals
-- **Unit Tests**: >90% code coverage
-- **Integration Tests**: Critical user flows
-- **E2E Tests**: Core business scenarios
-- **Performance Tests**: Load and stress testing
-
-## 7. SECURITY CONSIDERATIONS
-
-### 7.1 Authentication & Authorization
+### 6.2 Data Protection
 ```typescript
-// Security Features
-- Multi-factor authentication (MFA)
-- OAuth integration (Google, LinkedIn)
-- Role-based permissions
-- Session timeout management
-- Password complexity requirements
+// Security Measures
+- Input sanitization
+- XSS protection
+- CSRF protection
+- Rate limiting
+- Secure headers
+- Environment variable protection
 ```
 
-### 7.2 Data Protection
-```typescript
-// Privacy & Compliance
-- GDPR compliance (EU users)
-- POPIA compliance (South African users)
-- Data encryption at rest and in transit
-- Audit logging for sensitive operations
-- Right to deletion implementation
-```
+## 7. FUTURE ENHANCEMENTS
 
-## 8. MAINTENANCE AND UPDATES
-
-### 8.1 Version Control Strategy
-- **Git Flow**: Feature branches → develop → main
-- **Semantic Versioning**: MAJOR.MINOR.PATCH
-- **Release Cycle**: Bi-weekly feature releases
-
-### 8.2 Documentation Standards
-- **Code Documentation**: TSDoc comments
-- **API Documentation**: OpenAPI/Swagger
-- **User Documentation**: Interactive guides
-- **Technical Documentation**: Architecture diagrams
-
-## 9. FUTURE ENHANCEMENTS
-
-### 9.1 Planned Features
-- **Mobile Application**: React Native implementation
+### 7.1 Planned Features
+- **Real-time AI Analysis**: Live document processing
 - **Advanced Analytics**: Machine learning insights
+- **Mobile Application**: React Native implementation
+- **Multi-language Support**: African language localization
 - **Blockchain Integration**: Tokenized investments
-- **Multi-language Support**: Localization for African languages
 
-### 9.2 Scalability Roadmap
-- **Microservices Migration**: Service decomposition
-- **Real-time Features**: WebSocket implementation
+### 7.2 Scalability Roadmap
+- **Azure Migration**: Cloud database and storage
+- **Microservices**: Service decomposition
+- **WebSocket Integration**: Real-time features
 - **API Ecosystem**: Third-party integrations
-- **White-label Solutions**: Partner platform offerings
+- **White-label Solutions**: Partner platforms
+
+## 8. CURRENT STATUS
+
+### 8.1 Implementation Progress
+- ✅ Landing page with three-module architecture
+- ✅ Responsive design and mobile optimization
+- ✅ Authentication system integration
+- ✅ AI analysis pipeline (demo mode)
+- ✅ Dynamic sector theming system
+- ✅ Dashboard framework
+- 🔄 Backend API development
+- 🔄 Real AI integration
+- 🔄 User management system
+
+### 8.2 Recent Updates (2024-12-18)
+- Redesigned platform to showcase three integrated modules
+- Implemented comprehensive ecosystem vision
+- Added Iterativ Sourcing as procurement platform
+- Enhanced hero section with interactive dashboard preview
+- Fixed CSS import order and component integration
+- Updated branding to reflect African market focus
 
 ---
 
-This Software Design Specification serves as the technical blueprint for Iterativ Analytics, ensuring consistent development practices, architectural decisions, and implementation standards across the development lifecycle.
+This Software Design Specification serves as the technical blueprint for Iterativ Analytics, ensuring consistent development practices, architectural decisions, and implementation standards across the comprehensive three-module ecosystem platform.
