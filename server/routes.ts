@@ -2,6 +2,8 @@ import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { analyzeDocument } from "./openai";
+import { azureServices } from "./azure-services";
+import { logger } from "./utils/logger";
 import { insertUserSchema, insertDocumentSchema, insertAnalysisSchema, insertActivitySchema } from "@shared/schema";
 import multer from "multer";
 import { z } from "zod";
@@ -127,14 +129,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (isNaN(userIdNum)) {
         return res.status(400).json({ message: "Invalid user ID format" });
       }
+
+      logger.info("Document upload started", { 
+        userId: userIdNum, 
+        fileName: req.file.originalname, 
+        fileSize: req.file.size 
+      });
+
+      let fileUrl = "";
+      let fileContent = "";
+
+      // Try Azure Blob Storage first
+      try {
+        if (azureServices.blob.isAvailable()) {
+          fileUrl = await azureServices.blob.uploadDocument(
+            req.file.originalname,
+            req.file.buffer,
+            req.file.mimetype
+          );
+          fileContent = req.file.buffer.toString("utf-8").substring(0, 4000); // Extract text for analysis
+          logger.info("File uploaded to Azure Blob Storage", { fileUrl });
+        } else {
+          throw new Error("Azure Blob Storage not available");
+        }
+      } catch (blobError) {
+        logger.warn("Azure Blob Storage failed, using base64 fallback", { error: blobError });
+        fileContent = req.file.buffer.toString("base64");
+      }
       
-      // Get file content and convert to base64
-      const fileContent = req.file.buffer.toString("base64");
       const contentType = req.file.mimetype;
       let pageCount = 0;
       
-      // In a real application, we would parse the document to get the page count
-      // For now, set a random page count between 5 and 30
+      // Estimate page count based on file size and type
       if (contentType.includes("pdf") || contentType.includes("presentation")) {
         pageCount = Math.floor(Math.random() * 25) + 5;
       }
@@ -144,13 +170,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         userId: userIdNum,
         title,
         contentType,
-        fileContent,
+        fileContent: fileUrl || fileContent, // Store URL if available, otherwise base64
         pageCount,
         score: 0, // Will be updated after analysis
       });
       
-      // Analyze the document
-      const analysis = await analyzeDocument(title, fileContent, contentType);
+      // Analyze the document with Azure OpenAI
+      const analysis = await analyzeDocument(title, fileContent, contentType, userIdNum.toString());
       
       // Create analysis record
       await storage.createAnalysis({
@@ -179,7 +205,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
           title: title,
           score: analysis.overallScore,
           summary: analysis.summary,
+          azureEnabled: azureServices.isAzureEnabled(),
         },
+      });
+
+      logger.info("Document analysis completed", { 
+        userId: userIdNum, 
+        documentId: document.id, 
+        overallScore: analysis.overallScore 
       });
       
       // Return the document with its analysis
@@ -188,7 +221,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         analysis,
       });
     } catch (error) {
-      console.error("Error uploading document:", error);
+      logger.error("Error uploading document:", error);
       return res.status(500).json({ message: "Internal server error" });
     }
   });
@@ -277,8 +310,73 @@ export async function registerRoutes(app: Express): Promise<Server> {
         investorViews,
       });
     } catch (error) {
-      console.error("Error fetching stats:", error);
+      logger.error("Error fetching stats:", error);
       return res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Azure health check endpoint
+  app.get("/api/azure/health", async (req: Request, res: Response) => {
+    try {
+      const healthStatus = await azureServices.healthCheck();
+      const isAzureEnabled = azureServices.isAzureEnabled();
+      
+      return res.status(200).json({
+        azureEnabled: isAzureEnabled,
+        services: healthStatus,
+        timestamp: new Date().toISOString(),
+      });
+    } catch (error) {
+      logger.error("Error checking Azure health:", error);
+      return res.status(500).json({ message: "Azure health check failed" });
+    }
+  });
+
+  // Azure insights endpoint
+  app.get("/api/azure/insights", async (req: Request, res: Response) => {
+    try {
+      const userIdParam = req.query.userId;
+      
+      if (!userIdParam) {
+        return res.status(400).json({ message: "User ID is required" });
+      }
+      
+      const userId = parseInt(userIdParam as string, 10);
+      if (isNaN(userId)) {
+        return res.status(400).json({ message: "Invalid user ID format" });
+      }
+
+      // Get user's recent analyses for insights
+      const documents = await storage.getDocumentsByUserId(userId);
+      const analysisHistory = [];
+      
+      for (const doc of documents.slice(0, 5)) {
+        if (doc.score) {
+          const analysis = await storage.getAnalysisByDocumentId(doc.id);
+          if (analysis) {
+            analysisHistory.push({
+              title: doc.title,
+              score: doc.score,
+              analysis: analysis
+            });
+          }
+        }
+      }
+
+      // Generate insights using Azure OpenAI
+      const insights = await azureServices.openai.generateBusinessInsights(
+        userId.toString(),
+        analysisHistory
+      );
+
+      return res.status(200).json({
+        insights,
+        analysisCount: analysisHistory.length,
+        azureEnabled: azureServices.isAzureEnabled(),
+      });
+    } catch (error) {
+      logger.error("Error generating insights:", error);
+      return res.status(500).json({ message: "Failed to generate insights" });
     }
   });
 

@@ -1,6 +1,8 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { azureServices } from "./azure-services";
+import { logger } from "./utils/logger";
 
 const app = express();
 app.use(express.json());
@@ -37,14 +39,53 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  // Initialize Azure services
+  try {
+    logger.info("Initializing Azure services...");
+    const healthStatus = await azureServices.healthCheck();
+    logger.info("Azure services health check:", healthStatus);
+    
+    if (azureServices.isAzureEnabled()) {
+      logger.info("✅ Azure services are enabled and ready");
+    } else {
+      logger.info("⚠️  Running in local mode - Azure services not configured");
+    }
+  } catch (error) {
+    logger.error("Azure services initialization failed:", error);
+  }
+
   const server = await registerRoutes(app);
 
+  // Global error handler
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
 
+    logger.error("Global error handler:", { status, message, stack: err.stack });
     res.status(status).json({ message });
-    throw err;
+  });
+
+  // Health check endpoint
+  app.get("/health", async (_req: Request, res: Response) => {
+    try {
+      const azureHealth = await azureServices.healthCheck();
+      res.status(200).json({
+        status: "healthy",
+        timestamp: new Date().toISOString(),
+        environment: process.env.NODE_ENV || "development",
+        azure: {
+          enabled: azureServices.isAzureEnabled(),
+          services: azureHealth
+        }
+      });
+    } catch (error) {
+      logger.error("Health check failed:", error);
+      res.status(503).json({
+        status: "unhealthy",
+        timestamp: new Date().toISOString(),
+        error: "Health check failed"
+      });
+    }
   });
 
   // importantly only setup vite in development and after
@@ -66,5 +107,10 @@ app.use((req, res, next) => {
     reusePort: true,
   }, () => {
     log(`serving on port ${port}`);
+    logger.info("🚀 Iterativ Analytics server started", {
+      port,
+      environment: process.env.NODE_ENV || "development",
+      azureEnabled: azureServices.isAzureEnabled()
+    });
   });
 })();

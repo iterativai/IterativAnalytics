@@ -135,15 +135,21 @@ class HybridStorage extends MemStorage {
 
   constructor() {
     super();
-    this.azureEnabled = !!(
-      process.env.AZURE_COSMOS_ENDPOINT && 
-      process.env.AZURE_COSMOS_KEY
-    );
-    
-    if (this.azureEnabled) {
-      console.log('Azure Cosmos DB enabled - using cloud storage');
-    } else {
-      console.log('Using in-memory storage - add Azure credentials for cloud storage');
+    this.checkAzureAvailability();
+  }
+
+  private async checkAzureAvailability() {
+    try {
+      const { azureServices } = await import('./azure-services');
+      this.azureEnabled = azureServices.isAzureEnabled();
+      
+      if (this.azureEnabled) {
+        console.log('Azure services enabled - using cloud storage');
+      } else {
+        console.log('Using in-memory storage - add Azure credentials for cloud storage');
+      }
+    } catch (error) {
+      console.log('Azure services not available, using in-memory storage');
     }
   }
 
@@ -153,8 +159,14 @@ class HybridStorage extends MemStorage {
     
     if (this.azureEnabled) {
       try {
-        const { azureServices } = await import('./azure-config');
-        await azureServices.cosmos.createDocument('users', { ...user, userId: user.id.toString() });
+        const { azureServices } = await import('./azure-services');
+        if (azureServices.cosmos.isAvailable()) {
+          await azureServices.cosmos.createDocument('users', { 
+            ...user, 
+            userId: user.id.toString(),
+            createdAt: new Date().toISOString()
+          });
+        }
       } catch (error) {
         console.log('Azure sync failed, using local storage');
       }
@@ -168,14 +180,65 @@ class HybridStorage extends MemStorage {
     
     if (this.azureEnabled) {
       try {
-        const { azureServices } = await import('./azure-config');
-        await azureServices.cosmos.createDocument('documents', { ...document, userId: document.userId.toString() });
+        const { azureServices } = await import('./azure-services');
+        if (azureServices.cosmos.isAvailable()) {
+          await azureServices.cosmos.createDocument('documents', { 
+            ...document, 
+            userId: document.userId.toString(),
+            documentId: document.id.toString(),
+            createdAt: new Date().toISOString()
+          });
+        }
       } catch (error) {
         console.log('Azure sync failed, using local storage');
       }
     }
     
     return document;
+  }
+
+  async createAnalysis(insertAnalysis: InsertAnalysis): Promise<Analysis> {
+    const analysis = await super.createAnalysis(insertAnalysis);
+    
+    if (this.azureEnabled) {
+      try {
+        const { azureServices } = await import('./azure-services');
+        if (azureServices.cosmos.isAvailable()) {
+          await azureServices.cosmos.createDocument('analyses', { 
+            ...analysis, 
+            documentId: analysis.documentId.toString(),
+            analysisId: analysis.id.toString(),
+            createdAt: new Date().toISOString()
+          });
+        }
+      } catch (error) {
+        console.log('Azure sync failed, using local storage');
+      }
+    }
+    
+    return analysis;
+  }
+
+  async createActivity(insertActivity: InsertActivity): Promise<Activity> {
+    const activity = await super.createActivity(insertActivity);
+    
+    if (this.azureEnabled) {
+      try {
+        const { azureServices } = await import('./azure-services');
+        if (azureServices.cosmos.isAvailable()) {
+          await azureServices.cosmos.createDocument('activities', { 
+            ...activity, 
+            userId: activity.userId.toString(),
+            activityId: activity.id.toString(),
+            createdAt: new Date().toISOString()
+          });
+        }
+      } catch (error) {
+        console.log('Azure sync failed, using local storage');
+      }
+    }
+    
+    return activity;
   }
 }
 
