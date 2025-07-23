@@ -3,8 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Sector Theme CSS Variables */
+/* Enhanced Sector Theme CSS Variables */
 :root {
+  /* Dynamic Sector Colors */
   --theme-primary: #10B981;
   --theme-secondary: #059669;
   --theme-accent: #34D399;
@@ -12,11 +13,31 @@
   --theme-text-secondary: #A7F3D0;
   --theme-surface: #065F46;
   --theme-border: #10B981;
+  
+  /* Theme opacity variants */
+  --theme-primary-10: rgba(16, 185, 129, 0.1);
+  --theme-primary-20: rgba(16, 185, 129, 0.2);
+  --theme-primary-30: rgba(16, 185, 129, 0.3);
+  --theme-primary-50: rgba(16, 185, 129, 0.5);
+  --theme-primary-80: rgba(16, 185, 129, 0.8);
+  
+  /* Contextual theme colors */
+  --theme-success: var(--theme-accent);
+  --theme-warning: #F59E0B;
+  --theme-error: #EF4444;
+  --theme-info: var(--theme-primary);
+  
+  /* Semantic theme mappings */
+  --theme-cta-primary: var(--theme-primary);
+  --theme-cta-secondary: var(--theme-secondary);
+  --theme-link: var(--theme-primary);
+  --theme-link-hover: var(--theme-secondary);
 }
 
-/* Dynamic Theme Classes */
+/* Enhanced Dynamic Theme Classes with Transitions */
 .theme-primary {
   color: var(--theme-primary) !important;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .theme-bg-primary {
@@ -55,15 +76,56 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
-/* Theme-aware cards */
+/* Enhanced Theme-aware cards */
 .theme-card {
-  background: rgba(var(--theme-surface), 0.1);
-  border: 1px solid rgba(var(--theme-border), 0.2);
+  background: var(--theme-primary-10);
+  border: 1px solid var(--theme-primary-20);
   backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .theme-card:hover {
+  background: var(--theme-primary-20);
   border-color: var(--theme-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--theme-primary-30);
+}
+
+/* Theme status indicators */
+.theme-status-success {
+  color: var(--theme-success);
+  background: var(--theme-primary-10);
+}
+
+.theme-status-warning {
+  color: var(--theme-warning);
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.theme-status-error {
+  color: var(--theme-error);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* Theme interactive elements */
+.theme-interactive {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-interactive:hover {
+  color: var(--theme-primary);
+  transform: scale(1.02);
+}
+
+/* Theme form elements */
+.theme-input {
+  border-color: var(--theme-primary-30);
+  transition: border-color 0.2s ease;
+}
+
+.theme-input:focus {
+  border-color: var(--theme-primary);
+  box-shadow: 0 0 0 3px var(--theme-primary-20);
 }
 
 /* Animated gradient backgrounds */
@@ -630,6 +692,46 @@ html {
 /* Text selection */
 ::selection {
   @apply bg-blue-500/20 text-blue-900 dark:text-blue-100;
+}
+
+/* Theme Transition System */
+.theme-transitioning * {
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Theme-aware component base classes */
+.theme-component {
+  --local-primary: var(--theme-primary);
+  --local-secondary: var(--theme-secondary);
+  --local-accent: var(--theme-accent);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced theme utilities */
+.theme-bg-gradient {
+  background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary));
+}
+
+.theme-text-gradient {
+  background: linear-gradient(135deg, var(--theme-primary), var(--theme-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.theme-shadow {
+  box-shadow: 0 4px 20px var(--theme-primary-20);
+}
+
+.theme-shadow-lg {
+  box-shadow: 0 10px 40px var(--theme-primary-30);
+}
+
+.theme-ring {
+  box-shadow: 0 0 0 3px var(--theme-primary-20);
 }
 
 /* Performance optimizations */

@@ -237,6 +237,8 @@ export const SectorThemeProvider = ({ children }: { children: React.ReactNode })
 
   const applyThemeToCSS = (theme: SectorTheme) => {
     const root = document.documentElement;
+    
+    // Apply base theme colors
     root.style.setProperty('--theme-primary', theme.colors.primary);
     root.style.setProperty('--theme-secondary', theme.colors.secondary);
     root.style.setProperty('--theme-accent', theme.colors.accent);
@@ -244,6 +246,34 @@ export const SectorThemeProvider = ({ children }: { children: React.ReactNode })
     root.style.setProperty('--theme-text-secondary', theme.colors.textSecondary);
     root.style.setProperty('--theme-surface', theme.colors.surface);
     root.style.setProperty('--theme-border', theme.colors.border);
+    
+    // Generate opacity variants dynamically
+    const hex2rgba = (hex: string, alpha: number) => {
+      const r = parseInt(hex.slice(1, 3), 16);
+      const g = parseInt(hex.slice(3, 5), 16);
+      const b = parseInt(hex.slice(5, 7), 16);
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    };
+    
+    // Apply opacity variants
+    root.style.setProperty('--theme-primary-10', hex2rgba(theme.colors.primary, 0.1));
+    root.style.setProperty('--theme-primary-20', hex2rgba(theme.colors.primary, 0.2));
+    root.style.setProperty('--theme-primary-30', hex2rgba(theme.colors.primary, 0.3));
+    root.style.setProperty('--theme-primary-50', hex2rgba(theme.colors.primary, 0.5));
+    root.style.setProperty('--theme-primary-80', hex2rgba(theme.colors.primary, 0.8));
+    
+    // Apply semantic colors
+    root.style.setProperty('--theme-success', theme.colors.accent);
+    root.style.setProperty('--theme-cta-primary', theme.colors.primary);
+    root.style.setProperty('--theme-cta-secondary', theme.colors.secondary);
+    root.style.setProperty('--theme-link', theme.colors.primary);
+    root.style.setProperty('--theme-link-hover', theme.colors.secondary);
+    
+    // Add theme transition class to body
+    document.body.classList.add('theme-transitioning');
+    setTimeout(() => {
+      document.body.classList.remove('theme-transitioning');
+    }, 300);
   };
 
   return (
