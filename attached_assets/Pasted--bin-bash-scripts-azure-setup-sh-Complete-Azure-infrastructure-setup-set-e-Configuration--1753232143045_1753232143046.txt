@@ -1,0 +1,473 @@
+#!/bin/bash
+# scripts/azure-setup.sh - Complete Azure infrastructure setup
+
+set -e
+
+# Configuration
+RESOURCE_GROUP="rg-iterativ-analytics"
+LOCATION="South Africa North"
+APP_NAME="iterativ-analytics"
+DB_NAME="iterativ-db"
+REDIS_NAME="iterativ-cache"
+STORAGE_NAME="iterativstorage$(date +%s | tail -c 6)"
+KEYVAULT_NAME="iterativ-kv-$(date +%s | tail -c 6)"
+OPENAI_NAME="iterativ-openai"
+INSIGHTS_NAME="iterativ-insights"
+
+echo "🚀 Starting Azure infrastructure setup..."
+
+# Check if logged in
+if ! az account show &> /dev/null; then
+    echo "Please login to Azure first: az login"
+    exit 1
+fi
+
+# Create Resource Group
+echo "📦 Creating resource group..."
+az group create \
+    --name $RESOURCE_GROUP \
+    --location "$LOCATION"
+
+# Create App Service Plan
+echo "🏗️ Creating App Service Plan..."
+az appservice plan create \
+    --name "${APP_NAME}-plan" \
+    --resource-group $RESOURCE_GROUP \
+    --sku B1 \
+    --is-linux
+
+# Create PostgreSQL Server
+echo "🗄️ Creating PostgreSQL Database..."
+az postgres flexible-server create \
+    --name $DB_NAME \
+    --resource-group $RESOURCE_GROUP \
+    --location "$LOCATION" \
+    --admin-user iterativadmin \
+    --admin-password "$(openssl rand -base64 32)" \
+    --sku-name Standard_B1ms \
+    --tier Burstable \
+    --storage-size 32 \
+    --version 14
+
+# Create database
+az postgres flexible-server db create \
+    --resource-group $RESOURCE_GROUP \
+    --server-name $DB_NAME \
+    --database-name iterativ_analytics
+
+# Configure firewall for Azure services
+az postgres flexible-server firewall-rule create \
+    --resource-group $RESOURCE_GROUP \
+    --name $DB_NAME \
+    --rule-name "AllowAzureServices" \
+    --start-ip-address 0.0.0.0 \
+    --end-ip-address 0.0.0.0
+
+# Create Redis Cache
+echo "🔄 Creating Redis Cache..."
+az redis create \
+    --name $REDIS_NAME \
+    --resource-group $RESOURCE_GROUP \
+    --location "$LOCATION" \
+    --sku Basic \
+    --vm-size c0
+
+# Create Storage Account
+echo "💾 Creating Storage Account..."
+az storage account create \
+    --name $STORAGE_NAME \
+    --resource-group $RESOURCE_GROUP \
+    --location "$LOCATION" \
+    --sku Standard_LRS \
+    --kind StorageV2
+
+# Create blob container
+az storage container create \
+    --name documents \
+    --account-name $STORAGE_NAME \
+    --auth-mode login
+
+# Create Key Vault
+echo "🔐 Creating Key Vault..."
+az keyvault create \
+    --name $KEYVAULT_NAME \
+    --resource-group $RESOURCE_GROUP \
+    --location "$LOCATION" \
+    --sku standard
+
+# Create Application Insights
+echo "📊 Creating Application Insights..."
+az monitor app-insights component create \
+    --app $INSIGHTS_NAME \
+    --resource-group $RESOURCE_GROUP \
+    --location "$LOCATION" \
+    --kind web
+
+# Create Azure OpenAI Service
+echo "🤖 Creating Azure OpenAI Service..."
+az cognitiveservices account create \
+    --name $OPENAI_NAME \
+    --resource-group $RESOURCE_GROUP \
+    --location "East US" \
+    --kind OpenAI \
+    --sku S0
+
+# Deploy GPT-4 model
+az cognitiveservices account deployment create \
+    --name $OPENAI_NAME \
+    --resource-group $RESOURCE_GROUP \
+    --deployment-name gpt-4 \
+    --model-name gpt-4 \
+    --model-version "0613" \
+    --model-format OpenAI \
+    --scale-settings-scale-type "Standard"
+
+# Deploy text-embedding-ada-002 model
+az cognitiveservices account deployment create \
+    --name $OPENAI_NAME \
+    --resource-group $RESOURCE_GROUP \
+    --deployment-name text-embedding-ada-002 \
+    --model-name text-embedding-ada-002 \
+    --model-version "2" \
+    --model-format OpenAI \
+    --scale-settings-scale-type "Standard"
+
+# Create Web App
+echo "🌐 Creating Web App..."
+az webapp create \
+    --name $APP_NAME \
+    --resource-group $RESOURCE_GROUP \
+    --plan "${APP_NAME}-plan" \
+    --runtime "NODE:18-lts"
+
+# Get connection strings and keys
+echo "🔑 Retrieving connection strings..."
+
+# PostgreSQL connection string
+DB_CONNECTION_STRING=$(az postgres flexible-server show-connection-string \
+    --server-name $DB_NAME \
+    --database-name iterativ_analytics \
+    --admin-user iterativadmin \
+    --admin-password $(az keyvault secret show --vault-name $KEYVAULT_NAME --name db-password --query value -o tsv 2>/dev/null || echo "PASSWORD_PLACEHOLDER"))
+
+# Redis connection string
+REDIS_CONNECTION_STRING=$(az redis show-connection-string \
+    --name $REDIS_NAME \
+    --resource-group $RESOURCE_GROUP \
+    --auth-type primary \
+    --query primaryConnectionString -o tsv)
+
+# Storage connection string
+STORAGE_CONNECTION_STRING=$(az storage account show-connection-string \
+    --name $STORAGE_NAME \
+    --resource-group $RESOURCE_GROUP \
+    --query connectionString -o tsv)
+
+# OpenAI endpoint and key
+OPENAI_ENDPOINT=$(az cognitiveservices account show \
+    --name $OPENAI_NAME \
+    --resource-group $RESOURCE_GROUP \
+    --query properties.endpoint -o tsv)
+
+OPENAI_KEY=$(az cognitiveservices account keys list \
+    --name $OPENAI_NAME \
+    --resource-group $RESOURCE_GROUP \
+    --query key1 -o tsv)
+
+# Application Insights key
+INSIGHTS_INSTRUMENTATION_KEY=$(az monitor app-insights component show \
+    --app $INSIGHTS_NAME \
+    --resource-group $RESOURCE_GROUP \
+    --query instrumentationKey -o tsv)
+
+# Store secrets in Key Vault
+echo "🔒 Storing secrets in Key Vault..."
+az keyvault secret set --vault-name $KEYVAULT_NAME --name "database-url" --value "$DB_CONNECTION_STRING"
+az keyvault secret set --vault-name $KEYVAULT_NAME --name "redis-url" --value "$REDIS_CONNECTION_STRING"
+az keyvault secret set --vault-name $KEYVAULT_NAME --name "storage-connection" --value "$STORAGE_CONNECTION_STRING"
+az keyvault secret set --vault-name $KEYVAULT_NAME --name "openai-endpoint" --value "$OPENAI_ENDPOINT"
+az keyvault secret set --vault-name $KEYVAULT_NAME --name "openai-key" --value "$OPENAI_KEY"
+az keyvault secret set --vault-name $KEYVAULT_NAME --name "insights-key" --value "$INSIGHTS_INSTRUMENTATION_KEY"
+
+# Create managed identity for the web app
+echo "🆔 Creating managed identity..."
+az webapp identity assign \
+    --name $APP_NAME \
+    --resource-group $RESOURCE_GROUP
+
+# Get the identity principal ID
+PRINCIPAL_ID=$(az webapp identity show \
+    --name $APP_NAME \
+    --resource-group $RESOURCE_GROUP \
+    --query principalId -o tsv)
+
+# Grant Key Vault access to the web app
+az keyvault set-policy \
+    --name $KEYVAULT_NAME \
+    --object-id $PRINCIPAL_ID \
+    --secret-permissions get list
+
+# Configure app settings
+echo "⚙️ Configuring app settings..."
+az webapp config appsettings set \
+    --name $APP_NAME \
+    --resource-group $RESOURCE_GROUP \
+    --settings \
+        NODE_ENV=production \
+        WEBSITES_ENABLE_APP_SERVICE_STORAGE=false \
+        SCM_DO_BUILD_DURING_DEPLOYMENT=true \
+        AZURE_KEY_VAULT_NAME=$KEYVAULT_NAME \
+        AZURE_OPENAI_ENDPOINT="@Microsoft.KeyVault(SecretUri=https://${KEYVAULT_NAME}.vault.azure.net/secrets/openai-endpoint/)" \
+        AZURE_OPENAI_KEY="@Microsoft.KeyVault(SecretUri=https://${KEYVAULT_NAME}.vault.azure.net/secrets/openai-key/)" \
+        DATABASE_URL="@Microsoft.KeyVault(SecretUri=https://${KEYVAULT_NAME}.vault.azure.net/secrets/database-url/)" \
+        REDIS_URL="@Microsoft.KeyVault(SecretUri=https://${KEYVAULT_NAME}.vault.azure.net/secrets/redis-url/)" \
+        AZURE_STORAGE_CONNECTION_STRING="@Microsoft.KeyVault(SecretUri=https://${KEYVAULT_NAME}.vault.azure.net/secrets/storage-connection/)" \
+        APPINSIGHTS_INSTRUMENTATIONKEY="@Microsoft.KeyVault(SecretUri=https://${KEYVAULT_NAME}.vault.azure.net/secrets/insights-key/)"
+
+# Output summary
+echo "✅ Azure infrastructure setup complete!"
+echo ""
+echo "📋 Resource Summary:"
+echo "  Resource Group: $RESOURCE_GROUP"
+echo "  App Service: $APP_NAME"
+echo "  Database: $DB_NAME"
+echo "  Redis Cache: $REDIS_NAME"
+echo "  Storage Account: $STORAGE_NAME"
+echo "  Key Vault: $KEYVAULT_NAME"
+echo "  OpenAI Service: $OPENAI_NAME"
+echo "  Application Insights: $INSIGHTS_NAME"
+echo ""
+echo "🌐 Endpoints:"
+echo "  App URL: https://${APP_NAME}.azurewebsites.net"
+echo "  OpenAI Endpoint: $OPENAI_ENDPOINT"
+echo ""
+echo "🔑 Next Steps:"
+echo "  1. Update your environment variables"
+echo "  2. Run database migrations"
+echo "  3. Deploy your application"
+echo "  4. Configure custom domain (optional)"
+
+# Create environment file for local development
+cat > .env.azure << EOF
+# Azure Environment Configuration
+NODE_ENV=production
+AZURE_KEY_VAULT_NAME=$KEYVAULT_NAME
+AZURE_OPENAI_ENDPOINT=$OPENAI_ENDPOINT
+AZURE_OPENAI_KEY=$OPENAI_KEY
+DATABASE_URL=$DB_CONNECTION_STRING
+REDIS_URL=$REDIS_CONNECTION_STRING
+AZURE_STORAGE_CONNECTION_STRING=$STORAGE_CONNECTION_STRING
+APPINSIGHTS_INSTRUMENTATIONKEY=$INSIGHTS_INSTRUMENTATION_KEY
+
+# Azure Resource Names
+AZURE_RESOURCE_GROUP=$RESOURCE_GROUP
+AZURE_APP_NAME=$APP_NAME
+AZURE_DB_NAME=$DB_NAME
+AZURE_REDIS_NAME=$REDIS_NAME
+AZURE_STORAGE_NAME=$STORAGE_NAME
+AZURE_OPENAI_NAME=$OPENAI_NAME
+EOF
+
+echo "📄 Azure environment configuration saved to .env.azure"
+
+# scripts/azure-deploy.sh - Application deployment script
+#!/bin/bash
+
+set -e
+
+echo "🚀 Deploying to Azure App Service..."
+
+# Build the application
+echo "📦 Building application..."
+npm run build
+
+# Create deployment package
+echo "📦 Creating deployment package..."
+zip -r deployment.zip . -x "node_modules/*" ".git/*" "*.log" ".env*"
+
+# Deploy to Azure
+echo "🌐 Deploying to Azure App Service..."
+az webapp deployment source config-zip \
+    --name $AZURE_APP_NAME \
+    --resource-group $AZURE_RESOURCE_GROUP \
+    --src deployment.zip
+
+# Wait for deployment to complete
+echo "⏳ Waiting for deployment to complete..."
+sleep 30
+
+# Run database migrations
+echo "🗄️ Running database migrations..."
+az webapp ssh --name $AZURE_APP_NAME --resource-group $AZURE_RESOURCE_GROUP << 'EOF'
+cd /home/site/wwwroot
+npm run migrate
+EOF
+
+# Restart the app service
+echo "🔄 Restarting App Service..."
+az webapp restart \
+    --name $AZURE_APP_NAME \
+    --resource-group $AZURE_RESOURCE_GROUP
+
+# Health check
+echo "🔍 Performing health check..."
+sleep 10
+HEALTH_URL="https://${AZURE_APP_NAME}.azurewebsites.net/health"
+if curl -f "$HEALTH_URL" > /dev/null 2>&1; then
+    echo "✅ Deployment successful! Application is healthy."
+    echo "🌐 Application URL: https://${AZURE_APP_NAME}.azurewebsites.net"
+else
+    echo "❌ Health check failed. Please check the application logs."
+    exit 1
+fi
+
+# Clean up
+rm deployment.zip
+
+echo "🎉 Deployment completed successfully!"
+
+# scripts/azure-migrate-db.sh - Database migration script
+#!/bin/bash
+
+set -e
+
+echo "🗄️ Migrating database to Azure PostgreSQL..."
+
+# Check if source database URL is provided
+if [ -z "$SOURCE_DATABASE_URL" ]; then
+    echo "Please set SOURCE_DATABASE_URL environment variable"
+    exit 1
+fi
+
+# Get Azure database connection string from Key Vault
+AZURE_DB_URL=$(az keyvault secret show \
+    --vault-name $AZURE_KEY_VAULT_NAME \
+    --name "database-url" \
+    --query value -o tsv)
+
+# Export data from source database
+echo "📤 Exporting data from source database..."
+pg_dump $SOURCE_DATABASE_URL --no-owner --no-privileges > database_export.sql
+
+# Import data to Azure database
+echo "📥 Importing data to Azure database..."
+psql "$AZURE_DB_URL" < database_export.sql
+
+# Verify migration
+echo "🔍 Verifying migration..."
+SOURCE_COUNT=$(psql $SOURCE_DATABASE_URL -t -c "SELECT COUNT(*) FROM users;")
+AZURE_COUNT=$(psql "$AZURE_DB_URL" -t -c "SELECT COUNT(*) FROM users;")
+
+if [ "$SOURCE_COUNT" -eq "$AZURE_COUNT" ]; then
+    echo "✅ Database migration successful! Migrated $SOURCE_COUNT users."
+else
+    echo "⚠️ Record count mismatch. Source: $SOURCE_COUNT, Azure: $AZURE_COUNT"
+fi
+
+# Clean up
+rm database_export.sql
+
+echo "🎉 Database migration completed!"
+
+# scripts/azure-monitoring.sh - Setup Azure monitoring
+#!/bin/bash
+
+set -e
+
+echo "📊 Setting up Azure monitoring..."
+
+# Create action group for alerts
+az monitor action-group create \
+    --name "iterativ-alerts" \
+    --resource-group $AZURE_RESOURCE_GROUP \
+    --short-name "iterativ"
+
+# Create metric alerts
+echo "🚨 Creating metric alerts..."
+
+# High CPU alert
+az monitor metrics alert create \
+    --name "High CPU Usage" \
+    --resource-group $AZURE_RESOURCE_GROUP \
+    --scopes "/subscriptions/$(az account show --query id -o tsv)/resourceGroups/$AZURE_RESOURCE_GROUP/providers/Microsoft.Web/sites/$AZURE_APP_NAME" \
+    --condition "avg CpuPercentage > 80" \
+    --description "CPU usage is above 80%" \
+    --evaluation-frequency PT1M \
+    --window-size PT5M \
+    --severity 2 \
+    --action-group "/subscriptions/$(az account show --query id -o tsv)/resourceGroups/$AZURE_RESOURCE_GROUP/providers/Microsoft.Insights/actionGroups/iterativ-alerts"
+
+# High memory alert
+az monitor metrics alert create \
+    --name "High Memory Usage" \
+    --resource-group $AZURE_RESOURCE_GROUP \
+    --scopes "/subscriptions/$(az account show --query id -o tsv)/resourceGroups/$AZURE_RESOURCE_GROUP/providers/Microsoft.Web/sites/$AZURE_APP_NAME" \
+    --condition "avg MemoryPercentage > 85" \
+    --description "Memory usage is above 85%" \
+    --evaluation-frequency PT1M \
+    --window-size PT5M \
+    --severity 2 \
+    --action-group "/subscriptions/$(az account show --query id -o tsv)/resourceGroups/$AZURE_RESOURCE_GROUP/providers/Microsoft.Insights/actionGroups/iterativ-alerts"
+
+# HTTP 5xx errors alert
+az monitor metrics alert create \
+    --name "HTTP Server Errors" \
+    --resource-group $AZURE_RESOURCE_GROUP \
+    --scopes "/subscriptions/$(az account show --query id -o tsv)/resourceGroups/$AZURE_RESOURCE_GROUP/providers/Microsoft.Web/sites/$AZURE_APP_NAME" \
+    --condition "total Http5xx > 10" \
+    --description "Too many HTTP 5xx errors" \
+    --evaluation-frequency PT1M \
+    --window-size PT5M \
+    --severity 1 \
+    --action-group "/subscriptions/$(az account show --query id -o tsv)/resourceGroups/$AZURE_RESOURCE_GROUP/providers/Microsoft.Insights/actionGroups/iterativ-alerts"
+
+echo "✅ Azure monitoring setup complete!"
+
+# scripts/azure-backup.sh - Azure backup automation
+#!/bin/bash
+
+set -e
+
+echo "💾 Setting up Azure backups..."
+
+# Enable backup for the web app
+az backup vault create \
+    --name "iterativ-backup-vault" \
+    --resource-group $AZURE_RESOURCE_GROUP \
+    --location "$LOCATION"
+
+# Create backup policy for daily backups
+az backup policy create \
+    --vault-name "iterativ-backup-vault" \
+    --resource-group $AZURE_RESOURCE_GROUP \
+    --name "DailyBackupPolicy" \
+    --policy '{
+        "name": "DailyBackupPolicy",
+        "properties": {
+            "backupManagementType": "AzureIaasVM",
+            "schedulePolicy": {
+                "schedulePolicyType": "SimpleSchedulePolicy",
+                "scheduleRunFrequency": "Daily",
+                "scheduleRunTimes": ["2023-01-01T02:00:00Z"]
+            },
+            "retentionPolicy": {
+                "retentionPolicyType": "LongTermRetentionPolicy",
+                "dailySchedule": {
+                    "retentionTimes": ["2023-01-01T02:00:00Z"],
+                    "retentionDuration": {
+                        "count": 30,
+                        "durationType": "Days"
+                    }
+                }
+            }
+        }
+    }'
+
+# Setup database backup
+echo "🗄️ Setting up database backup..."
+az postgres flexible-server backup create \
+    --name "${AZURE_DB_NAME}-backup-$(date +%Y%m%d)" \
+    --resource-group $AZURE_RESOURCE_GROUP \
+    --server-name $AZURE_DB_NAME
+
+echo "✅ Azure backup setup complete!"

@@ -1,0 +1,108 @@
+# Azure Backend Migration with OpenAI Integration
+
+## Overview
+This guide migrates the Iterativ Analytics backend to Azure using modern cloud-native services with OpenAI integration for AI-powered document analysis.
+
+## 🏗️ Azure Architecture
+
+### Core Services
+- **Azure App Service**: Main application hosting
+- **Azure Database for PostgreSQL**: Managed database
+- **Azure Cache for Redis**: Caching layer
+- **Azure Blob Storage**: File storage
+- **Azure Key Vault**: Secrets management
+- **Azure Application Insights**: Monitoring
+- **Azure OpenAI Service**: AI analysis
+- **Azure Functions**: Serverless processing
+- **Azure Service Bus**: Message queuing
+- **Azure CDN**: Content delivery
+
+### Architecture Diagram
+```
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│   Azure CDN     │    │  Azure App      │    │ Azure OpenAI    │
+│                 │    │  Service         │    │ Service         │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+         │                       │                       │
+         ▼                       ▼                       ▼
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│ Static Content  │    │ Main Backend     │    │ Document        │
+│ (React App)     │    │ API              │    │ Analysis        │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+                                │
+                                ▼
+         ┌──────────────────────────────────────┐
+         │          Azure Services              │
+         │                                      │
+         │ ┌─────────────┐  ┌─────────────────┐ │
+         │ │ PostgreSQL  │  │ Redis Cache     │ │
+         │ │ Database    │  │                 │ │
+         │ └─────────────┘  └─────────────────┘ │
+         │                                      │
+         │ ┌─────────────┐  ┌─────────────────┐ │
+         │ │ Blob        │  │ Key Vault       │ │
+         │ │ Storage     │  │                 │ │
+         │ └─────────────┘  └─────────────────┘ │
+         └──────────────────────────────────────┘
+```
+
+## 📋 Migration Checklist
+
+### Phase 1: Infrastructure Setup
+- [ ] Create Azure Resource Group
+- [ ] Setup Azure Database for PostgreSQL
+- [ ] Configure Azure Cache for Redis
+- [ ] Setup Azure Blob Storage
+- [ ] Create Azure Key Vault
+- [ ] Setup Azure OpenAI Service
+- [ ] Configure Application Insights
+
+### Phase 2: Application Migration
+- [ ] Update database connection to Azure PostgreSQL
+- [ ] Implement Azure Blob Storage for file uploads
+- [ ] Integrate Azure OpenAI for document analysis
+- [ ] Update caching to use Azure Redis
+- [ ] Configure secrets with Key Vault
+- [ ] Setup monitoring with Application Insights
+
+### Phase 3: Deployment
+- [ ] Deploy to Azure App Service
+- [ ] Configure custom domain and SSL
+- [ ] Setup CI/CD with Azure DevOps
+- [ ] Configure auto-scaling
+- [ ] Test all functionality
+
+## 🚀 Quick Start Commands
+
+```bash
+# Login to Azure
+az login
+
+# Create resource group
+az group create --name rg-iterativ-analytics --location "South Africa North"
+
+# Run migration script
+./scripts/azure-setup.sh
+
+# Deploy application
+./scripts/azure-deploy.sh
+```
+
+## 💰 Cost Optimization
+
+### Estimated Monthly Costs (USD)
+- **App Service (B1)**: $13-20
+- **PostgreSQL (B_Gen5_1)**: $25-40  
+- **Redis Cache (Basic C0)**: $16-25
+- **Blob Storage**: $2-10
+- **Key Vault**: $1-3
+- **OpenAI API**: $20-100 (usage-based)
+- **Application Insights**: $5-15
+- **Total**: $82-213/month
+
+### Cost Optimization Tips
+- Use Azure Reserved Instances for 1-3 year commitments (up to 72% savings)
+- Enable auto-shutdown for development environments
+- Use Azure Hybrid Benefit if you have Windows Server licenses
+- Monitor and optimize OpenAI API usage with caching
+- Use Azure Cost Management for budget alerts
