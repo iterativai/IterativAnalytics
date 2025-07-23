@@ -543,14 +543,95 @@ function AppContent() {
                 <div className="relative">
                   <div className="bg-gray-800/30 backdrop-blur rounded-2xl border border-gray-700/50 overflow-hidden">
                     <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-6">
-                      <div className="aspect-video bg-gradient-to-r from-cyan-900/20 to-blue-900/20 rounded-lg flex items-center justify-center">
-                        <div className="text-center">
-                          <div className="text-cyan-400 text-lg mb-2">
-                            {activeFeatureTab === 'founders' ? 'Founder Dashboard' : 
-                             activeFeatureTab === 'investors' ? 'Investor Dashboard' :
-                             activeFeatureTab === 'partners' ? 'Partner Dashboard' : 'Lender Dashboard'}
+                      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-lg p-6">
+                        <div className="flex items-center justify-between mb-6">
+                          <div>
+                            <h3 className="text-cyan-400 text-lg font-semibold mb-1">
+                              {activeFeatureTab === 'founders' ? 'Founder Dashboard' : 
+                               activeFeatureTab === 'investors' ? 'Investor Dashboard' :
+                               activeFeatureTab === 'partners' ? 'Partner Dashboard' : 'Lender Dashboard'}
+                            </h3>
+                            <p className="text-gray-400 text-sm">Real-time business intelligence</p>
                           </div>
-                          <div className="text-gray-400">Interactive metrics visualization</div>
+                          <div className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                            <span className="text-green-400 text-xs font-medium">Live</span>
+                          </div>
+                        </div>
+                        
+                        {/* Interactive Dashboard Cards */}
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                          {/* Analysis Progress Card */}
+                          <div className="bg-slate-800/50 border border-white/10 rounded-lg p-4">
+                            <div className="flex items-center justify-between mb-3">
+                              <h4 className="text-white text-sm font-medium">Analysis Progress</h4>
+                              <TrendingUp className="h-4 w-4 text-primary" />
+                            </div>
+                            <div className="space-y-3">
+                              <div className="flex justify-between text-xs">
+                                <span className="text-slate-400">Document Processing</span>
+                                <span className="text-green-400">Complete</span>
+                              </div>
+                              <div className="w-full bg-slate-700 rounded-full h-1.5">
+                                <div className="bg-gradient-to-r from-primary to-secondary h-1.5 rounded-full w-full"></div>
+                              </div>
+                              <div className="flex justify-between text-xs">
+                                <span className="text-slate-400">Market Analysis</span>
+                                <span className="text-yellow-400">In Progress</span>
+                              </div>
+                              <div className="w-full bg-slate-700 rounded-full h-1.5">
+                                <div className="bg-gradient-to-r from-primary to-secondary h-1.5 rounded-full w-3/4"></div>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Feasibility Score Card */}
+                          <div className="bg-slate-800/50 border border-white/10 rounded-lg p-4 text-center">
+                            <div className="flex items-center justify-between mb-3">
+                              <h4 className="text-white text-sm font-medium">Feasibility Score</h4>
+                              <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+                            </div>
+                            <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent mb-2">
+                              87/100
+                            </div>
+                            <div className="text-xs text-slate-400 mb-3">High Potential</div>
+                            <div className="grid grid-cols-3 gap-2 text-xs">
+                              <div className="text-center">
+                                <div className="text-green-400 font-semibold">92</div>
+                                <div className="text-slate-500">Market</div>
+                              </div>
+                              <div className="text-center">
+                                <div className="text-blue-400 font-semibold">85</div>
+                                <div className="text-slate-500">Tech</div>
+                              </div>
+                              <div className="text-center">
+                                <div className="text-purple-400 font-semibold">84</div>
+                                <div className="text-slate-500">Finance</div>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Azure AI Insights Card */}
+                          <div className="bg-slate-800/50 border border-white/10 rounded-lg p-4">
+                            <div className="flex items-center justify-between mb-3">
+                              <h4 className="text-white text-sm font-medium">Azure AI Insights</h4>
+                              <div className="w-3 h-3 bg-blue-500 rounded"></div>
+                            </div>
+                            <div className="space-y-2 text-xs">
+                              <div className="flex items-start gap-2">
+                                <CheckCircle2 className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                                <span className="text-slate-300">Strong market opportunity in East Africa</span>
+                              </div>
+                              <div className="flex items-start gap-2">
+                                <Sparkles className="h-3 w-3 text-yellow-400 mt-0.5 flex-shrink-0" />
+                                <span className="text-slate-300">Consider B2B pivot for growth</span>
+                              </div>
+                              <div className="flex items-start gap-2">
+                                <div className="w-3 h-3 bg-orange-400 rounded-full mt-0.5 flex-shrink-0"></div>
+                                <span className="text-slate-300">Regulatory compliance review</span>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
