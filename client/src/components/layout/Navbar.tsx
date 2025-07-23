@@ -1,12 +1,28 @@
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-import { Menu, X, BarChart3, ChevronDown } from "lucide-react";
+import { Menu, X, BarChart3, ChevronDown, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
-export const Navbar = () => {
+interface NavItem {
+  id: string;
+  label: string;
+  subItems?: Array<{
+    id: string;
+    label: string;
+    description?: string;
+  }>;
+}
+
+export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [activeSection, setActiveSection] = useState('');
@@ -22,7 +38,7 @@ export const Navbar = () => {
   }, []);
 
   const detectActiveSection = () => {
-    const sections = ['hero', 'about', 'solutions', 'features', 'testimonials', 'waitlist'];
+    const sections = ['hero', 'about', 'solutions', 'features', 'testimonials', 'contact'];
     const currentSection = sections.find(section => {
       const element = document.getElementById(section);
       if (element) {
@@ -34,12 +50,45 @@ export const Navbar = () => {
     setActiveSection(currentSection || '');
   };
 
-  const navItems = [
-    { id: 'about', label: 'About' },
-    { id: 'solutions', label: 'Solutions' },
-    { id: 'features', label: 'Features' },
-    { id: 'testimonials', label: 'Testimonials' },
-    { id: 'contact', label: 'Contact' },
+  // Enhanced navigation structure with dropdowns
+  const navItems: NavItem[] = [
+    {
+      id: 'about',
+      label: 'About'
+    },
+    {
+      id: 'solutions',
+      label: 'Solutions',
+      subItems: [
+        {
+          id: 'ventures',
+          label: 'Iterativ Ventures',
+          description: 'AI-powered business intelligence & planning'
+        },
+        {
+          id: 'xchange',
+          label: 'Iterativ Xchange',
+          description: 'Blockchain capital markets & tokenization'
+        },
+        {
+          id: 'sourcing',
+          label: 'Iterativ Sourcing',
+          description: 'Intelligent supply chain management'
+        }
+      ]
+    },
+    {
+      id: 'features',
+      label: 'Features'
+    },
+    {
+      id: 'testimonials',
+      label: 'Testimonials'
+    },
+    {
+      id: 'contact',
+      label: 'Contact'
+    }
   ];
 
   const scrollToSection = (sectionId: string) => {
@@ -48,6 +97,158 @@ export const Navbar = () => {
       element.scrollIntoView({ behavior: 'smooth' });
     }
     setShowMobileMenu(false);
+  };
+
+  const handleSubItemClick = (subItemId: string) => {
+    scrollToSection('solutions');
+  };
+
+  const NavDropdown: React.FC<{ item: NavItem }> = ({ item }) => {
+    if (!item.subItems) {
+      return (
+        <motion.button
+          onClick={() => scrollToSection(item.id)}
+          className={cn(
+            "px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105",
+            activeSection === item.id
+              ? "text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg"
+              : "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-white/60 dark:hover:bg-gray-700/60"
+          )}
+          whileHover={{ y: -1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          {item.label}
+          {activeSection === item.id && (
+            <motion.div
+              className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600"
+              layoutId="activeNav"
+              transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+              style={{ zIndex: -1 }}
+            />
+          )}
+        </motion.button>
+      );
+    }
+
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <motion.button
+            className={cn(
+              "flex items-center gap-1 px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105",
+              activeSection === item.id
+                ? "text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg"
+                : "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-white/60 dark:hover:bg-gray-700/60"
+            )}
+            whileHover={{ y: -1 }}
+          >
+            {item.label}
+            <ChevronDown className="h-4 w-4" />
+            {activeSection === item.id && (
+              <motion.div
+                className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600"
+                layoutId="activeNav"
+                transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                style={{ zIndex: -1 }}
+              />
+            )}
+          </motion.button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start" className="w-80 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200/20 dark:border-gray-700/20 shadow-2xl">
+          {item.subItems.map((subItem) => (
+            <DropdownMenuItem
+              key={subItem.id}
+              onClick={() => handleSubItemClick(subItem.id)}
+              className="cursor-pointer p-4 hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors"
+            >
+              <div>
+                <div className="font-medium text-gray-900 dark:text-gray-100 flex items-center space-x-2">
+                  <Sparkles className="h-4 w-4 text-blue-500" />
+                  <span>{subItem.label}</span>
+                </div>
+                {subItem.description && (
+                  <div className="text-sm text-gray-500 dark:text-gray-400 mt-1 ml-6">
+                    {subItem.description}
+                  </div>
+                )}
+              </div>
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    );
+  };
+
+  const MobileNavItem: React.FC<{ item: NavItem }> = ({ item }) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    if (!item.subItems) {
+      return (
+        <motion.button
+          onClick={() => scrollToSection(item.id)}
+          className={cn(
+            "w-full text-left py-3 px-4 rounded-xl font-medium transition-all duration-300 hover:scale-[1.02]",
+            activeSection === item.id 
+              ? "text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg" 
+              : "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100/60 dark:hover:bg-gray-800/60"
+          )}
+          whileTap={{ scale: 0.98 }}
+        >
+          {item.label}
+        </motion.button>
+      );
+    }
+
+    return (
+      <div>
+        <motion.button
+          onClick={() => setIsOpen(!isOpen)}
+          className="flex items-center justify-between w-full px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50/50 dark:hover:bg-gray-800/50 font-medium rounded-lg transition-colors"
+          whileTap={{ scale: 0.98 }}
+        >
+          {item.label}
+          <motion.div
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <ChevronDown className="h-4 w-4" />
+          </motion.div>
+        </motion.button>
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="bg-gray-50/50 dark:bg-gray-800/50 rounded-lg mt-1 overflow-hidden"
+            >
+              {item.subItems.map((subItem, index) => (
+                <motion.button
+                  key={subItem.id}
+                  onClick={() => {
+                    handleSubItemClick(subItem.id);
+                    setIsOpen(false);
+                  }}
+                  className="block w-full text-left px-6 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100/50 dark:hover:bg-gray-700/50 transition-colors"
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: index * 0.1 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <div className="font-medium flex items-center space-x-2">
+                    <Sparkles className="h-3 w-3 text-blue-500" />
+                    <span>{subItem.label}</span>
+                  </div>
+                  {subItem.description && (
+                    <div className="text-xs opacity-75 mt-1 ml-5">{subItem.description}</div>
+                  )}
+                </motion.button>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    );
   };
 
   return (
@@ -92,31 +293,14 @@ export const Navbar = () => {
             <div className="hidden lg:flex items-center justify-center flex-1 mx-12">
               <div className="flex items-center space-x-1 bg-gray-50/50 dark:bg-gray-800/50 rounded-full px-2 py-1 backdrop-blur-sm border border-gray-200/20 dark:border-gray-700/20">
                 {navItems.map((item, index) => (
-                  <motion.button 
+                  <motion.div
                     key={item.id}
-                    onClick={() => scrollToSection(item.id)}
-                    className={cn(
-                      "relative px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105",
-                      activeSection === item.id 
-                        ? "text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg" 
-                        : "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-white/60 dark:hover:bg-gray-700/60"
-                    )}
-                    whileHover={{ y: -1 }}
-                    whileTap={{ scale: 0.95 }}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    {item.label}
-                    {activeSection === item.id && (
-                      <motion.div
-                        className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600"
-                        layoutId="activeNav"
-                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                        style={{ zIndex: -1 }}
-                      />
-                    )}
-                  </motion.button>
+                    <NavDropdown item={item} />
+                  </motion.div>
                 ))}
               </div>
             </div>
@@ -198,24 +382,16 @@ export const Navbar = () => {
               exit={{ opacity: 0, height: 0, y: -20 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
-              <div className="px-6 py-6 space-y-4">
+              <div className="px-6 py-6 space-y-2">
                 {navItems.map((item, index) => (
-                  <motion.button 
+                  <motion.div
                     key={item.id}
-                    onClick={() => scrollToSection(item.id)}
-                    className={cn(
-                      "w-full text-left py-3 px-4 rounded-xl font-medium transition-all duration-300 hover:scale-[1.02]",
-                      activeSection === item.id 
-                        ? "text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg" 
-                        : "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100/60 dark:hover:bg-gray-800/60"
-                    )}
                     initial={{ x: -50, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: index * 0.1 }}
-                    whileTap={{ scale: 0.98 }}
                   >
-                    {item.label}
-                  </motion.button>
+                    <MobileNavItem item={item} />
+                  </motion.div>
                 ))}
                 
                 {/* Mobile Actions */}
