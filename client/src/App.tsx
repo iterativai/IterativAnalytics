@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import React from 'react';
+import { Route, Switch } from 'wouter';
 import { ArrowRight, BarChart3, CheckCircle2, Rocket, Sparkles, Star, TrendingUp, Zap, Brain, Coins, GitBranch } from 'lucide-react';
 import { RoleBasedDashboards } from '@/components/ui/role-based-dashboards';
 import { Card, CardContent } from "@/components/ui/card";
@@ -7,6 +8,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Navbar } from '@/components/layout/Navbar';
 import { FeatureCard } from '@/components/ui/feature-card';
+
+// Import pages
+import DashboardDemo from '@/pages/DashboardDemo';
+import EcosystemDemo from '@/pages/EcosystemDemo';
 
 import { FadeIn, ScaleIn, SlideUp, SlideIn, Stagger, HoverScale } from '@/components/ui/animated';
 import { useScrollPosition } from '@/hooks/useScrollPosition';
@@ -820,7 +825,11 @@ export default function App() {
   return (
     <ThemeProvider>
       <SectorThemeProvider>
-        <AppContent />
+        <Switch>
+          <Route path="/dashboard-demo" component={DashboardDemo} />
+          <Route path="/ecosystem-demo" component={EcosystemDemo} />
+          <Route path="/" component={AppContent} />
+        </Switch>
       </SectorThemeProvider>
     </ThemeProvider>
   );

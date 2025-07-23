@@ -7,14 +7,31 @@
 
 /* Enhanced Sector Theme CSS Variables */
 :root {
+  /* Core brand colors */
+  --iterativ-primary: #667eea;
+  --iterativ-secondary: #764ba2;
+  
+  /* Module colors */
+  --ventures-primary: #667eea;
+  --ventures-accent: #5a67d8;
+  
+  --xchange-primary: #764ba2;
+  --xchange-accent: #9f7aea;
+  
+  --sourcing-primary: #8b5cf6;
+  --sourcing-accent: #a78bfa;
+  
+  /* Shared elements */
+  --ecosystem-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #8b5cf6 100%);
+  
   /* Dynamic Sector Colors */
-  --theme-primary: #10B981;
-  --theme-secondary: #059669;
-  --theme-accent: #34D399;
+  --theme-primary: #667eea;
+  --theme-secondary: #764ba2;
+  --theme-accent: #8b5cf6;
   --theme-text-primary: #ECFDF5;
   --theme-text-secondary: #A7F3D0;
   --theme-surface: #065F46;
-  --theme-border: #10B981;
+  --theme-border: #667eea;
   
   /* Theme opacity variants */
   --theme-primary-10: rgba(16, 185, 129, 0.1);

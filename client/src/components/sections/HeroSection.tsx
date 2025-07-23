@@ -7,6 +7,7 @@ import { FadeIn, ScaleIn } from '@/components/ui/animated';
 import { useTheme } from '@/components/ui/sector-theme-selector';
 import { DemoModal } from '@/components/modals/DemoModal';
 import { DashboardCards } from '@/components/ui/dashboard-cards';
+import { ModuleSelector } from '@/components/ecosystem/ModuleSelector';
 
 const HeroSection = () => {
   const [demoModalOpen, setDemoModalOpen] = useState(false);
@@ -100,33 +101,13 @@ const HeroSection = () => {
             </FadeIn>
           </div>
 
-          {/* Module Selector Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-12">
-            {modules.map((module, index) => (
-              <motion.div
-                key={module.id}
-                className={`relative bg-white/5 rounded-2xl p-6 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-300 cursor-pointer group ${
-                  activeModule === module.id ? 'ring-2 ring-blue-400/50 bg-white/10' : ''
-                }`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.8 + (index * 0.1) }}
-                onClick={() => setActiveModule(module.id)}
-                whileHover={{ scale: 1.02, y: -5 }}
-              >
-                <div className="flex items-center mb-4">
-                  <div className={`bg-gradient-to-r ${module.gradient} rounded-xl p-3 mr-4`}>
-                    <module.icon className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-white">{module.name}</h3>
-                    <p className="text-white/60 text-sm">{module.tagline}</p>
-                  </div>
-                </div>
-                <p className="text-white/70 text-sm">{module.description}</p>
-              </motion.div>
-            ))}
-          </div>
+          {/* Enhanced Module Selector */}
+          <FadeIn delay={0.8}>
+            <ModuleSelector 
+              onModuleSelect={setActiveModule}
+              selectedModule={activeModule}
+            />
+          </FadeIn>
 
           {/* CTA Buttons */}
           <FadeIn delay={1.2}>
@@ -149,6 +130,7 @@ const HeroSection = () => {
                 size="lg" 
                 className="px-8 py-4 text-lg border-2 text-white hover:bg-white/10"
                 style={{ borderColor: currentTheme.colors.primary }}
+                onClick={() => window.location.href = '/ecosystem-demo'}
               >
                 Explore Ecosystem
               </Button>
