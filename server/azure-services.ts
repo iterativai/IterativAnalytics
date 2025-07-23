@@ -10,7 +10,7 @@ import { logger } from './utils/logger';
 // Azure Configuration Manager
 export class AzureConfig {
   private static instance: AzureConfig;
-  private credential: DefaultAzureCredential | ClientSecretCredential;
+  private credential: DefaultAzureCredential | ClientSecretCredential | null = null;
   private isAzureConfigured: boolean = false;
 
   private constructor() {
@@ -388,7 +388,7 @@ export class AzureBlobService {
       
       if (downloadResponse.readableStreamBody) {
         for await (const chunk of downloadResponse.readableStreamBody) {
-          chunks.push(chunk);
+          chunks.push(Buffer.from(chunk));
         }
       }
       
@@ -445,7 +445,7 @@ export class AzureRedisService {
         }
       });
 
-      this.client.on('error', (err) => {
+      this.client.on('error', (err: Error) => {
         logger.error('Azure Redis Client Error:', err);
         this.isConnected = false;
       });
