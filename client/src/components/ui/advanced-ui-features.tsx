@@ -14,7 +14,7 @@ export const DarkModeToggle = () => {
   return (
     <motion.button
       onClick={toggleDarkMode}
-      className="fixed top-4 right-20 z-50 p-3 rounded-full bg-orange-500/20 backdrop-blur-sm border border-orange-400/30 text-orange-400 hover:text-orange-300 transition-colors"
+      className="fixed top-4 right-32 z-50 p-3 rounded-full bg-orange-500/20 backdrop-blur-sm border border-orange-400/30 text-orange-400 hover:text-orange-300 transition-colors"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
     >
