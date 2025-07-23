@@ -6,6 +6,7 @@ import { FadeIn, ScaleIn } from '@/components/ui/animated';
 import { useTheme } from '@/components/ui/sector-theme-selector';
 import { Link } from 'wouter';
 import { DemoModal } from '@/components/modals/DemoModal';
+import { DashboardCards } from '@/components/ui/dashboard-cards';
 
 const HeroSection = () => {
   const [demoModalOpen, setDemoModalOpen] = useState(false);
@@ -135,7 +136,7 @@ const HeroSection = () => {
                   ></div>
                 </div>
 
-                <div className="relative z-10 bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/30 shadow-2xl hover:shadow-3xl transition-all duration-500">
+                <div className="relative z-10 bg-black/40 backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-2xl">
                   <div className="flex items-center justify-between mb-8">
                     <div>
                       <h3 className="text-xl font-bold text-white mb-1">AI Business Intelligence</h3>
@@ -147,122 +148,8 @@ const HeroSection = () => {
                     </div>
                   </div>
 
-                  {/* Enhanced Metrics cards with progress bars */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <motion.div 
-                      className="bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-xl p-5 border border-blue-400/30"
-                      whileHover={{ scale: 1.02 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-blue-200 text-sm font-medium">Analysis Progress</span>
-                        <TrendingUp className="w-5 h-5 text-blue-400" />
-                      </div>
-                      <div className="text-3xl font-bold text-blue-400 mb-2">
-                        {Math.round(dashboardMetrics.analysisProgress)}%
-                      </div>
-                      <div className="w-full bg-blue-900/50 rounded-full h-2">
-                        <motion.div 
-                          className="bg-gradient-to-r from-blue-500 to-cyan-400 h-2 rounded-full"
-                          initial={{ width: 0 }}
-                          animate={{ width: `${dashboardMetrics.analysisProgress}%` }}
-                          transition={{ duration: 1.5, ease: "easeOut" }}
-                        />
-                      </div>
-                    </motion.div>
-
-                    <motion.div 
-                      className="bg-gradient-to-br from-violet-500/20 to-purple-500/20 rounded-xl p-5 border border-violet-400/30"
-                      whileHover={{ scale: 1.02 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-violet-200 text-sm font-medium">Feasibility Score</span>
-                        <Target className="w-5 h-5 text-violet-400" />
-                      </div>
-                      <div className="text-3xl font-bold text-violet-400 mb-2">
-                        {Math.round(dashboardMetrics.feasibilityScore)}%
-                      </div>
-                      <div className="w-full bg-violet-900/50 rounded-full h-2">
-                        <motion.div 
-                          className="bg-gradient-to-r from-violet-500 to-purple-400 h-2 rounded-full"
-                          initial={{ width: 0 }}
-                          animate={{ width: `${dashboardMetrics.feasibilityScore}%` }}
-                          transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
-                        />
-                      </div>
-                    </motion.div>
-
-                    <motion.div 
-                      className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-xl p-5 border border-green-400/30"
-                      whileHover={{ scale: 1.02 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-green-200 text-sm font-medium">Azure AI Insights</span>
-                        <DollarSign className="w-5 h-5 text-green-400" />
-                      </div>
-                      <div className="text-3xl font-bold text-green-400 mb-2">
-                        {dashboardMetrics.aiInsightsReady ? 'Ready' : 'Processing'}
-                      </div>
-                      <div className="w-full bg-green-900/50 rounded-full h-2">
-                        <motion.div 
-                          className={`h-2 rounded-full ${dashboardMetrics.aiInsightsReady ? 'bg-gradient-to-r from-green-500 to-emerald-400' : 'bg-gradient-to-r from-orange-500 to-yellow-400'}`}
-                          initial={{ width: 0 }}
-                          animate={{ width: '100%' }}
-                          transition={{ duration: 1.5, ease: "easeOut", delay: 0.4 }}
-                        />
-                      </div>
-                    </motion.div>
-                  </div>
-
-                  {/* Enhanced AI Status */}
-                  <div className="text-center bg-white/5 rounded-xl p-4">
-                    <div className="flex items-center justify-center space-x-2 mb-3">
-                      <Brain className="w-5 h-5 text-orange-400" />
-                      <p className="text-white/80 font-medium">AI Engine Processing</p>
-                    </div>
-                    <div className="flex justify-center space-x-2">
-                      <motion.div 
-                        className="w-3 h-3 bg-orange-400 rounded-full"
-                        animate={{ 
-                          scale: [1, 1.2, 1],
-                          opacity: [0.7, 1, 0.7]
-                        }}
-                        transition={{ 
-                          duration: 1.5, 
-                          repeat: Infinity,
-                          repeatType: "loop"
-                        }}
-                      />
-                      <motion.div 
-                        className="w-3 h-3 bg-pink-400 rounded-full"
-                        animate={{ 
-                          scale: [1, 1.2, 1],
-                          opacity: [0.7, 1, 0.7]
-                        }}
-                        transition={{ 
-                          duration: 1.5, 
-                          repeat: Infinity,
-                          repeatType: "loop",
-                          delay: 0.3
-                        }}
-                      />
-                      <motion.div 
-                        className="w-3 h-3 bg-blue-400 rounded-full"
-                        animate={{ 
-                          scale: [1, 1.2, 1],
-                          opacity: [0.7, 1, 0.7]
-                        }}
-                        transition={{ 
-                          duration: 1.5, 
-                          repeat: Infinity,
-                          repeatType: "loop",
-                          delay: 0.6
-                        }}
-                      />
-                    </div>
-                  </div>
+                  {/* Dashboard Cards matching the exact design from the image */}
+                  <DashboardCards />
                 </div>
 
                 <div 
