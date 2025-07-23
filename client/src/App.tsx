@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import React from 'react';
 import { ArrowRight, BarChart3, CheckCircle2, Rocket, Sparkles, Star, TrendingUp, Zap, Brain, Coins, GitBranch } from 'lucide-react';
+import { RoleBasedDashboards } from '@/components/ui/role-based-dashboards';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -559,79 +560,12 @@ function AppContent() {
                           </div>
                         </div>
                         
-                        {/* Interactive Dashboard Cards */}
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                          {/* Analysis Progress Card */}
-                          <div className="bg-slate-800/50 border border-white/10 rounded-lg p-4">
-                            <div className="flex items-center justify-between mb-3">
-                              <h4 className="text-white text-sm font-medium">Analysis Progress</h4>
-                              <TrendingUp className="h-4 w-4 text-primary" />
-                            </div>
-                            <div className="space-y-3">
-                              <div className="flex justify-between text-xs">
-                                <span className="text-slate-400">Document Processing</span>
-                                <span className="text-green-400">Complete</span>
-                              </div>
-                              <div className="w-full bg-slate-700 rounded-full h-1.5">
-                                <div className="bg-gradient-to-r from-primary to-secondary h-1.5 rounded-full w-full"></div>
-                              </div>
-                              <div className="flex justify-between text-xs">
-                                <span className="text-slate-400">Market Analysis</span>
-                                <span className="text-yellow-400">In Progress</span>
-                              </div>
-                              <div className="w-full bg-slate-700 rounded-full h-1.5">
-                                <div className="bg-gradient-to-r from-primary to-secondary h-1.5 rounded-full w-3/4"></div>
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Feasibility Score Card */}
-                          <div className="bg-slate-800/50 border border-white/10 rounded-lg p-4 text-center">
-                            <div className="flex items-center justify-between mb-3">
-                              <h4 className="text-white text-sm font-medium">Feasibility Score</h4>
-                              <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
-                            </div>
-                            <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent mb-2">
-                              87/100
-                            </div>
-                            <div className="text-xs text-slate-400 mb-3">High Potential</div>
-                            <div className="grid grid-cols-3 gap-2 text-xs">
-                              <div className="text-center">
-                                <div className="text-green-400 font-semibold">92</div>
-                                <div className="text-slate-500">Market</div>
-                              </div>
-                              <div className="text-center">
-                                <div className="text-blue-400 font-semibold">85</div>
-                                <div className="text-slate-500">Tech</div>
-                              </div>
-                              <div className="text-center">
-                                <div className="text-purple-400 font-semibold">84</div>
-                                <div className="text-slate-500">Finance</div>
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Azure AI Insights Card */}
-                          <div className="bg-slate-800/50 border border-white/10 rounded-lg p-4">
-                            <div className="flex items-center justify-between mb-3">
-                              <h4 className="text-white text-sm font-medium">Azure AI Insights</h4>
-                              <div className="w-3 h-3 bg-blue-500 rounded"></div>
-                            </div>
-                            <div className="space-y-2 text-xs">
-                              <div className="flex items-start gap-2">
-                                <CheckCircle2 className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                                <span className="text-slate-300">Strong market opportunity in East Africa</span>
-                              </div>
-                              <div className="flex items-start gap-2">
-                                <Sparkles className="h-3 w-3 text-yellow-400 mt-0.5 flex-shrink-0" />
-                                <span className="text-slate-300">Consider B2B pivot for growth</span>
-                              </div>
-                              <div className="flex items-start gap-2">
-                                <div className="w-3 h-3 bg-orange-400 rounded-full mt-0.5 flex-shrink-0"></div>
-                                <span className="text-slate-300">Regulatory compliance review</span>
-                              </div>
-                            </div>
-                          </div>
+                        {/* Role-Based Interactive Dashboard */}
+                        <div className="min-h-[400px]">
+                          {activeFeatureTab === 'founders' && <RoleBasedDashboards.FounderDashboard />}
+                          {activeFeatureTab === 'investors' && <RoleBasedDashboards.InvestorDashboard />}
+                          {activeFeatureTab === 'partners' && <RoleBasedDashboards.PartnerDashboard />}
+                          {activeFeatureTab === 'lenders' && <RoleBasedDashboards.LenderDashboard />}
                         </div>
                       </div>
                     </div>
