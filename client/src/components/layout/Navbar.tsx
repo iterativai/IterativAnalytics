@@ -66,23 +66,27 @@ export const Navbar = () => {
             <span className="font-bold text-xl text-gray-900 dark:text-gray-100">Iterativ Analytics</span>
           </button>
 
-          <div className="hidden md:flex items-center space-x-6">
-            {navItems.map(item => (
-              <button 
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={cn(
-                  "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors font-medium px-3 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-white/5",
-                  activeSection === item.id ? "text-blue-600 dark:text-cyan-400 bg-blue-50 dark:bg-cyan-500/20" : ""
-                )}
-              >
-                {item.label}
-              </button>
-            ))}
-            <ThemeToggle />
-            <Button variant="gradient" size="lg" className="glass-glow">
-              Join Beta
-            </Button>
+          <div className="hidden md:flex items-center justify-between flex-1 ml-8">
+            <div className="flex items-center space-x-6">
+              {navItems.map(item => (
+                <button 
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={cn(
+                    "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors font-medium px-3 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-white/5",
+                    activeSection === item.id ? "text-blue-600 dark:text-cyan-400 bg-blue-50 dark:bg-cyan-500/20" : ""
+                  )}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+            <div className="flex items-center space-x-4">
+              <ThemeToggle />
+              <Button variant="gradient" size="lg" className="glass-glow">
+                Join Beta
+              </Button>
+            </div>
           </div>
 
           <button 
