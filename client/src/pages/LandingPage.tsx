@@ -21,6 +21,9 @@ import {
   PlayCircle
 } from "lucide-react";
 
+import EnhancedNavbar from '@/components/layout/EnhancedNavbar';
+import EnhancedHeroSection from '@/components/sections/EnhancedHeroSection';
+
 export default function LandingPage() {
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -147,153 +150,10 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 text-white">
       {/* Header */}
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${isScrolled ? 'bg-indigo-900/90 backdrop-blur-md shadow-md' : 'bg-transparent'}`}>
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <motion.div
-              initial={{ rotate: -10, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 rounded-xl p-2.5 shadow-lg">
-                <Sparkles className="h-7 w-7 text-white" />
-              </div>
-            </motion.div>
-            <motion.div
-              initial={{ x: -20, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-200">
-                Iterativ Analytics
-              </span>
-              <div className="text-xs text-white/60 font-medium">African Startup Ecosystem</div>
-            </motion.div>
-          </div>
-
-          {/* Module Switcher */}
-          <div className="hidden md:flex items-center space-x-1 bg-white/10 rounded-full px-2 py-1 backdrop-blur-sm">
-            {modules.map((module) => (
-              <button
-                key={module.id}
-                onClick={() => setActiveModule(module.id)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                  activeModule === module.id 
-                    ? 'bg-white/20 text-white' 
-                    : 'text-white/70 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                {module.name.split(' ')[1]}
-              </button>
-            ))}
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <Button 
-              variant="ghost" 
-              className="text-white hover:bg-white/10 transition-all duration-300"
-              onClick={() => setIsSignInOpen(true)}
-            >
-              Log In
-            </Button>
-            <Button 
-              className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white border-none shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5"
-              onClick={() => setIsSignInOpen(true)}
-            >
-              Get Started
-            </Button>
-          </div>
-        </div>
-      </header>
-
+      <EnhancedNavbar />
+      
       {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-32 pb-16 md:pt-40 md:pb-24 relative overflow-hidden">
-        <div className="text-center mb-16">
-          <motion.div
-            className="inline-block mb-4 px-4 py-1 rounded-full bg-blue-500/10 border border-blue-500/20"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="text-blue-400 font-medium">The Complete African Startup Ecosystem</span>
-          </motion.div>
-
-          <motion.h1 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-violet-400 to-violet-300">
-              Democratising Financial Intelligence
-            </span>
-            <br />
-            <span className="text-white">Capital Access & Operations</span>
-            <br />
-            <span className="text-3xl md:text-4xl lg:text-5xl text-white/80">for African Startups</span>
-          </motion.h1>
-
-          <motion.p 
-            className="text-xl text-white/80 mb-8 max-w-3xl mx-auto"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            Three powerful solutions. One unified vision. Choose the right tool for your startup journey.
-          </motion.p>
-        </div>
-
-        {/* Interactive Module Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
-          {modules.map((module, index) => (
-            <motion.div
-              key={module.id}
-              className={`relative bg-white/5 rounded-2xl p-6 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-300 cursor-pointer group ${
-                activeModule === module.id ? 'ring-2 ring-blue-400/50 bg-white/10' : ''
-              }`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              onClick={() => setActiveModule(module.id)}
-              whileHover={{ scale: 1.02, y: -5 }}
-            >
-              <div className="flex items-center mb-4">
-                <div className={`bg-gradient-to-r ${module.gradient} rounded-xl p-3 mr-4`}>
-                  <module.icon className="h-6 w-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-white">{module.name}</h3>
-                  <p className="text-white/60 text-sm">{module.tagline}</p>
-                </div>
-                {module.status === 'coming-soon' && (
-                  <div className="ml-auto">
-                    <span className="px-2 py-1 bg-violet-500/20 text-violet-300 text-xs rounded-full">
-                      Coming Soon
-                    </span>
-                  </div>
-                )}
-              </div>
-
-              <p className="text-white/70 text-sm mb-4 line-clamp-2">
-                {module.description}
-              </p>
-
-              <div className="flex space-x-2">
-                <Button 
-                  size="sm" 
-                  className={`bg-gradient-to-r ${module.gradient} hover:opacity-90`}
-                  disabled={module.status === 'coming-soon'}
-                >
-                  {module.ctaPrimary}
-                </Button>
-                <Button size="sm" variant="ghost" className="text-white/70 hover:text-white hover:bg-white/10">
-                  {module.ctaSecondary}
-                </Button>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+      <EnhancedHeroSection />
 
       {/* Featured Module Section */}
       <section className="container mx-auto px-4 py-16">
