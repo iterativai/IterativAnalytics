@@ -29,7 +29,14 @@ import {
 } from '@/components/ui/enhanced-visual-components';
 
 // Enhanced Module Card Component
-const ModuleCard = ({ module, isSelected, onSelect, index }) => {
+interface ModuleCardProps {
+  module: any;
+  isSelected: boolean;
+  onSelect: (id: string) => void;
+  index: number;
+}
+
+const ModuleCard = ({ module, isSelected, onSelect, index }: ModuleCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -40,7 +47,7 @@ const ModuleCard = ({ module, isSelected, onSelect, index }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Interactive3DCard 
+      <div 
         className={`
           cursor-pointer transition-all duration-300 h-full
           ${isSelected ? 'ring-2 ring-blue-400 bg-white/10' : ''}
@@ -48,6 +55,7 @@ const ModuleCard = ({ module, isSelected, onSelect, index }) => {
         `}
         onClick={() => onSelect(module.id)}
       >
+        <Interactive3DCard className="h-full">
         {/* Header with Icon and Status */}
         <div className="flex items-center justify-between mb-4">
           <motion.div 
@@ -86,7 +94,7 @@ const ModuleCard = ({ module, isSelected, onSelect, index }) => {
             Key Features:
           </p>
           <div className="flex flex-wrap gap-1">
-            {module.features.map((feature, idx) => (
+            {module.features.map((feature: string, idx: number) => (
               <EnhancedBadge key={idx} variant="outline" className="text-xs">
                 {feature}
               </EnhancedBadge>
@@ -100,7 +108,7 @@ const ModuleCard = ({ module, isSelected, onSelect, index }) => {
             Perfect for:
           </p>
           <div className="flex flex-wrap gap-1">
-            {module.bestFor.map((item, idx) => (
+            {module.bestFor.map((item: string, idx: number) => (
               <EnhancedBadge key={idx} variant="gradient" className="text-xs">
                 {item}
               </EnhancedBadge>
@@ -125,13 +133,19 @@ const ModuleCard = ({ module, isSelected, onSelect, index }) => {
             <ArrowRight className="ml-2 h-4 w-4" />
           </EnhancedButton>
         </motion.div>
-      </Interactive3DCard>
+        </Interactive3DCard>
+      </div>
     </motion.div>
   );
 };
 
 // Enhanced Stats Card
-const StatCard = ({ stat, index }) => (
+interface StatCardProps {
+  stat: any;
+  index: number;
+}
+
+const StatCard = ({ stat, index }: StatCardProps) => (
   <RevealOnScroll delay={index * 0.1}>
     <Interactive3DCard className="text-center">
       <motion.div
@@ -165,7 +179,7 @@ export const EnhancedHeroSection = () => {
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
   
-  const [selectedModule, setSelectedModule] = useState(null);
+  const [selectedModule, setSelectedModule] = useState<string | null>(null);
   const [showDemo, setShowDemo] = useState(false);
 
   const modules = [
@@ -244,7 +258,7 @@ export const EnhancedHeroSection = () => {
                              radial-gradient(circle at 75% 75%, rgba(147, 51, 234, 0.3) 0%, transparent 50%)`,
           }} />
         </motion.div>
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="1"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20" />
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.1%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%221%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20" />
       </div>
 
       <motion.div style={{ opacity }} className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
