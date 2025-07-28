@@ -2,527 +2,828 @@
 # Iterativ Analytics - Complete UI Documentation
 
 ## Table of Contents
-1. [Project Overview](#project-overview)
-2. [Technology Stack](#technology-stack)
-3. [Project Structure](#project-structure)
-4. [Component Library](#component-library)
-5. [Styling System](#styling-system)
-6. [Pages & Routing](#pages--routing)
-7. [State Management](#state-management)
-8. [Utilities & Hooks](#utilities--hooks)
-9. [Configuration Files](#configuration-files)
-10. [Deployment & Build](#deployment--build)
+1. Design Philosophy & Principles
+2. Color System & Theming
+3. Typography Scale
+4. Component Library
+5. Layout System
+6. Animation Guidelines
+7. Responsive Design
+8. Accessibility Standards
+9. User Flow Documentation
+10. Implementation Guidelines
 
-## Project Overview
+---
 
-Iterativ Analytics is a comprehensive African startup ecosystem platform that integrates three specialized modules:
-- **Iterativ Ventures**: AI-powered business intelligence & planning
-- **Iterativ Xchange**: Blockchain-powered capital markets
-- **Iterativ Sourcing**: Intelligent supply chain management
+## 1. DESIGN PHILOSOPHY & PRINCIPLES
 
-The application serves as a landing page that allows users to access these modules with role-based dashboards for Founders, Investors, Partners, and Lenders.
+### Core Design Values
+- **Professional Minimalism**: Clean, focused interfaces that prioritize user tasks
+- **African-First Design**: Mobile-optimized for African market connectivity
+- **Data-Driven Aesthetics**: Visual hierarchy that supports complex business data
+- **Conversion-Focused**: Every element designed to guide users toward key actions
 
-## Technology Stack
+### Design Principles
+1. **Clarity Over Complexity**: Simple, intuitive interfaces
+2. **Consistency Across Modules**: Unified experience across Ventures, Xchange, and Sourcing
+3. **Progressive Disclosure**: Show information when users need it
+4. **Accessible by Default**: WCAG 2.1 AA compliance built-in
+5. **Performance First**: Lightweight components that load quickly
 
-- **Frontend Framework**: React 18 with TypeScript
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS with CSS Variables
-- **UI Components**: shadcn/ui component library
-- **Animations**: Framer Motion
-- **State Management**: React Context + useState/useEffect
-- **Routing**: Wouter (lightweight React router)
-- **Icons**: Lucide React
-- **Backend**: Express.js with TypeScript
-- **Database**: In-memory storage for rapid prototyping
-- **Authentication**: Firebase Auth (configured)
-- **Azure Integration**: Azure OpenAI, Cosmos DB, Blob Storage
+---
 
-## Project Structure
+## 2. COLOR SYSTEM & THEMING
 
+### Primary Color Palette
 ```
-client/src/
-├── components/           # Reusable UI components
-│   ├── AIAssistant/     # AI mentor and contextual help
-│   ├── Analytics/       # Analytics and metrics components
-│   ├── dashboard/       # Dashboard-specific components
-│   ├── dashboards/      # Role-based dashboard components
-│   ├── ecosystem/       # Module selection and comparison
-│   ├── layout/          # Navigation and layout components
-│   ├── modals/          # Modal dialogs
-│   ├── sections/        # Landing page sections
-│   ├── theme/           # Theme management
-│   └── ui/              # Base UI components (shadcn/ui)
-├── context/             # React context providers
-├── hooks/               # Custom React hooks
-├── lib/                 # Utility functions and configurations
-├── pages/               # Page components
-├── styles/              # Global styles and CSS
-├── App.tsx              # Main application component
-├── index.css            # Global CSS imports
-└── main.tsx             # Application entry point
+Primary Blue Scale:
+- primary-50: #F0F7FF (backgrounds, subtle highlights)
+- primary-100: #E0F0FF (hover states, disabled elements)
+- primary-200: #BAE0FF (borders, dividers)
+- primary-300: #7CC4FA (secondary elements)
+- primary-400: #47A3F3 (interactive elements)
+- primary-500: #0A84FF (primary actions, main brand)
+- primary-600: #0071E3 (button hover states)
+- primary-700: #0059B3 (active states)
+- primary-800: #004299 (text on light backgrounds)
+- primary-900: #002D6B (headings, emphasis)
 ```
 
-## Component Library
+### Semantic Colors
+```
+Success: #10B981 (green for positive actions)
+Warning: #F59E0B (amber for cautions)
+Error: #EF4444 (red for errors, destructive actions)
+Info: #06B6D4 (cyan for informational content)
+```
 
-### Core Layout Components
+### Neutral Gray Scale
+```
+- gray-50: #F9F9F9 (page backgrounds)
+- gray-100: #F2F2F7 (card backgrounds)
+- gray-200: #E5E5EA (borders, dividers)
+- gray-300: #D1D1D6 (placeholder text)
+- gray-400: #C7C7CC (disabled text)
+- gray-500: #AEAEB2 (secondary text)
+- gray-600: #8E8E93 (body text)
+- gray-700: #636366 (labels, captions)
+- gray-800: #48484A (headings)
+- gray-900: #1C1C1E (primary text)
+```
 
-#### Navbar.tsx
-Main navigation component with module switching and theme controls.
+### Theme Variables
+```css
+:root {
+  /* Light Theme */
+  --background: 0 0% 100%;
+  --foreground: 210 40% 8%;
+  --card: 0 0% 100%;
+  --card-foreground: 210 40% 8%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 210 40% 8%;
+  --primary: 210 100% 50%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 210 40% 8%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 210 40% 45%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 210 40% 8%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 210 40% 89%;
+  --input: 210 40% 89%;
+  --ring: 210 100% 50%;
+  --radius: 0.75rem;
+}
 
-```typescript
-export const Navbar: React.FC = () => {
-  // Navigation state management
-  // Module switcher functionality
-  // Theme toggle integration
-  // Mobile responsive menu
+.dark {
+  /* Dark Theme */
+  --background: 210 40% 2%;
+  --foreground: 210 40% 98%;
+  --card: 210 40% 4%;
+  --card-foreground: 210 40% 98%;
+  --popover: 210 40% 4%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 210 100% 60%;
+  --primary-foreground: 210 40% 8%;
+  --secondary: 210 40% 8%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 210 40% 8%;
+  --muted-foreground: 210 40% 65%;
+  --accent: 210 40% 8%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 210 40% 14%;
+  --input: 210 40% 14%;
+  --ring: 210 100% 60%;
 }
 ```
 
-#### SimplifiedNavbar.tsx
-Streamlined navigation reducing cognitive load (recommended replacement).
+---
 
-```typescript
-export const SimplifiedNavbar: React.FC = () => {
-  // Simplified 3-item navigation
-  // Reduced visual complexity
-  // Better mobile UX
+## 3. TYPOGRAPHY SCALE
+
+### Font Family
+```css
+font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Segoe UI", 
+             "Roboto", "Helvetica Neue", sans-serif;
+```
+
+### Type Scale
+```css
+/* Headlines */
+.text-h1 { 
+  font-size: 3.5rem; 
+  font-weight: 700; 
+  line-height: 1.1; 
+  letter-spacing: -0.02em;
+}
+
+.text-h2 { 
+  font-size: 2.5rem; 
+  font-weight: 600; 
+  line-height: 1.2; 
+  letter-spacing: -0.01em;
+}
+
+.text-h3 { 
+  font-size: 1.875rem; 
+  font-weight: 600; 
+  line-height: 1.3; 
+}
+
+.text-h4 { 
+  font-size: 1.5rem; 
+  font-weight: 600; 
+  line-height: 1.4; 
+}
+
+.text-h5 { 
+  font-size: 1.25rem; 
+  font-weight: 600; 
+  line-height: 1.5; 
+}
+
+.text-h6 { 
+  font-size: 1.125rem; 
+  font-weight: 600; 
+  line-height: 1.5; 
+}
+
+/* Body Text */
+.text-xl { 
+  font-size: 1.25rem; 
+  line-height: 1.6; 
+}
+
+.text-lg { 
+  font-size: 1.125rem; 
+  line-height: 1.6; 
+}
+
+.text-base { 
+  font-size: 1rem; 
+  line-height: 1.5; 
+}
+
+.text-sm { 
+  font-size: 0.875rem; 
+  line-height: 1.4; 
+}
+
+.text-xs { 
+  font-size: 0.75rem; 
+  line-height: 1.3; 
+}
+
+/* Specialized */
+.text-caption { 
+  font-size: 0.75rem; 
+  font-weight: 500; 
+  text-transform: uppercase; 
+  letter-spacing: 0.05em; 
+}
+
+.text-overline { 
+  font-size: 0.625rem; 
+  font-weight: 600; 
+  text-transform: uppercase; 
+  letter-spacing: 0.1em; 
 }
 ```
 
-### Dashboard Components
+---
 
-#### Role-Based Dashboards
-Specialized dashboards for different user types:
+## 4. COMPONENT LIBRARY
 
-- **FounderDashboard.tsx**: Venture readiness scoring, AI insights
-- **InvestorDashboard.tsx**: Deal discovery, risk analysis
-- **PartnerDashboard.tsx**: Cohort management, progress tracking
-- **LenderDashboard.tsx**: Risk assessment, lending decisions
-
+### Button Components
 ```typescript
-interface DashboardProps {
-  userRole: 'founder' | 'investor' | 'partner' | 'lender';
-  data?: any;
+// Primary Button
+<Button 
+  variant="default" 
+  size="lg" 
+  className="min-w-[140px] h-12 font-semibold"
+>
+  Primary Action
+</Button>
+
+// Secondary Button
+<Button 
+  variant="outline" 
+  size="lg" 
+  className="min-w-[140px] h-12 border-2"
+>
+  Secondary Action
+</Button>
+
+// Ghost Button
+<Button 
+  variant="ghost" 
+  size="lg"
+>
+  Ghost Action
+</Button>
+
+// Gradient Button (Premium)
+<Button 
+  variant="gradient" 
+  size="lg"
+>
+  Premium Action
+</Button>
+
+// Icon Button
+<Button 
+  variant="outline" 
+  size="icon"
+>
+  <Icon className="h-4 w-4" />
+</Button>
+```
+
+### Card Components
+```typescript
+// Standard Feature Card
+<Card className="card-enhanced group">
+  <CardHeader>
+    <CardTitle className="flex items-center gap-2">
+      <Icon className="h-5 w-5 text-primary-500" />
+      Feature Title
+    </CardTitle>
+  </CardHeader>
+  <CardContent>
+    <p className="text-gray-600">Feature description</p>
+  </CardContent>
+</Card>
+
+// Metrics Card
+<Card className="p-6">
+  <div className="flex items-center justify-between">
+    <div>
+      <p className="text-sm font-medium text-gray-600">Metric Label</p>
+      <p className="text-3xl font-bold text-gray-900">$1.2M</p>
+    </div>
+    <div className="h-12 w-12 bg-primary-100 rounded-lg flex items-center justify-center">
+      <Icon className="h-6 w-6 text-primary-600" />
+    </div>
+  </div>
+</Card>
+
+// Dashboard Preview Card
+<Card className="overflow-hidden">
+  <div className="h-48 bg-gradient-to-br from-primary-50 to-primary-100">
+    {/* Dashboard content */}
+  </div>
+  <CardContent className="p-4">
+    <h3 className="font-semibold">Dashboard Title</h3>
+    <p className="text-sm text-gray-600">Dashboard description</p>
+  </CardContent>
+</Card>
+```
+
+### Form Components
+```typescript
+// Input Field
+<div className="space-y-2">
+  <Label htmlFor="input-id">Field Label</Label>
+  <Input 
+    id="input-id"
+    placeholder="Enter value..."
+    className="h-12"
+  />
+</div>
+
+// Select Field
+<div className="space-y-2">
+  <Label htmlFor="select-id">Select Label</Label>
+  <Select>
+    <SelectTrigger className="h-12">
+      <SelectValue placeholder="Choose option..." />
+    </SelectTrigger>
+    <SelectContent>
+      <SelectItem value="option1">Option 1</SelectItem>
+      <SelectItem value="option2">Option 2</SelectItem>
+    </SelectContent>
+  </Select>
+</div>
+
+// Textarea
+<div className="space-y-2">
+  <Label htmlFor="textarea-id">Message</Label>
+  <Textarea 
+    id="textarea-id"
+    placeholder="Enter your message..."
+    rows={4}
+  />
+</div>
+```
+
+### Navigation Components
+```typescript
+// Main Navigation
+<nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex justify-between items-center h-16">
+      {/* Logo */}
+      <div className="flex items-center space-x-2">
+        <div className="bg-gradient-to-br from-primary-600 to-primary-700 rounded-lg p-2">
+          <BarChart3 className="h-6 w-6 text-white" />
+        </div>
+        <span className="font-bold text-xl text-gray-900">Iterativ Analytics</span>
+      </div>
+      
+      {/* Navigation Items */}
+      <div className="hidden md:flex items-center space-x-8">
+        <a href="#solutions" className="text-gray-700 hover:text-primary-600 transition-colors font-medium">
+          Solutions
+        </a>
+        <a href="#how-it-works" className="text-gray-700 hover:text-primary-600 transition-colors font-medium">
+          How It Works
+        </a>
+        <Button variant="default">Get Started</Button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+// Breadcrumb Navigation
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/">Home</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbPage>Analytics</BreadcrumbPage>
+    </BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>
+```
+
+---
+
+## 5. LAYOUT SYSTEM
+
+### Grid System
+```css
+/* 12-column grid */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+}
+
+/* Auto-fit responsive grid */
+.grid-auto-fit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Auto-fill responsive grid */
+.grid-auto-fill {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
 }
 ```
 
-### UI Components (shadcn/ui based)
+### Container Sizes
+```css
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
 
-#### Enhanced Components
+@media (min-width: 640px) {
+  .container { max-width: 640px; }
+}
 
-**advanced-ui-features.tsx**
-```typescript
-export const DarkModeToggle: React.FC
-export const ParallaxBackground: React.FC
-export const ScrollIndicator: React.FC
-export const EnhancedButton: React.FC<ButtonProps>
-export const RevealOnScroll: React.FC<RevealProps>
-export const Interactive3DCard: React.FC<CardProps>
-export const FloatingActionBubble: React.FC
-```
+@media (min-width: 768px) {
+  .container { max-width: 768px; }
+}
 
-**animated.tsx**
-```typescript
-export const FadeIn: React.FC<AnimationProps>
-export const ScaleIn: React.FC<AnimationProps>
-export const SlideUp: React.FC<AnimationProps>
-export const SlideIn: React.FC<AnimationProps>
-export const Stagger: React.FC<StaggerProps>
-export const HoverScale: React.FC<AnimationProps>
-```
+@media (min-width: 1024px) {
+  .container { max-width: 1024px; }
+}
 
-**role-based-dashboards.tsx**
-```typescript
-export const RoleBasedDashboards = {
-  FounderDashboard: React.FC,
-  InvestorDashboard: React.FC,
-  PartnerDashboard: React.FC,
-  LenderDashboard: React.FC
+@media (min-width: 1280px) {
+  .container { max-width: 1280px; }
+}
+
+@media (min-width: 1536px) {
+  .container { max-width: 1536px; }
 }
 ```
 
-#### Interactive Components
-
-**chatbot.tsx**
-AI-powered chatbot for user assistance.
-
-**interactive-calculator.tsx**
-Funding potential calculator with real-time estimates.
-
-**urgency-cues.tsx**
-Activity feed and urgency indicators.
-
-**floating-banner.tsx**
-Countdown timers and promotional banners.
-
-#### Theme & Customization
-
-**sector-theme-selector.tsx**
-```typescript
-export const SectorThemeProvider: React.FC<{children: ReactNode}>
-export const ThemeSelectorButton: React.FC
-export const ThemeSelectionModal: React.FC
-export const useTheme: () => ThemeContextType
+### Spacing Scale
+```css
+/* Spacing utilities based on 4px unit */
+.space-1 { gap: 0.25rem; }  /* 4px */
+.space-2 { gap: 0.5rem; }   /* 8px */
+.space-3 { gap: 0.75rem; }  /* 12px */
+.space-4 { gap: 1rem; }     /* 16px */
+.space-5 { gap: 1.25rem; }  /* 20px */
+.space-6 { gap: 1.5rem; }   /* 24px */
+.space-8 { gap: 2rem; }     /* 32px */
+.space-10 { gap: 2.5rem; }  /* 40px */
+.space-12 { gap: 3rem; }    /* 48px */
+.space-16 { gap: 4rem; }    /* 64px */
+.space-20 { gap: 5rem; }    /* 80px */
+.space-24 { gap: 6rem; }    /* 96px */
 ```
 
-**theme-toggle.tsx**
-Dark/light mode toggle with system preference detection.
+---
 
-### Section Components
+## 6. ANIMATION GUIDELINES
 
-Landing page sections with consistent structure:
+### Motion Principles
+- **Purposeful**: Animations should guide user attention
+- **Performant**: Use transform and opacity for smooth animations
+- **Respectful**: Honor `prefers-reduced-motion` preferences
+- **Subtle**: Micro-interactions enhance, don't distract
 
-- **HeroSection.tsx**: Main value proposition and CTAs
-- **ImprovedHeroSection.tsx**: Enhanced version with progressive disclosure
-- **FeaturesSection.tsx**: Feature highlights with tabs
-- **BenefitsSection.tsx**: User benefits by role
-- **TestimonialsSection.tsx**: Social proof
-- **CTASection.tsx**: Call-to-action sections
-- **FAQSection.tsx**: Frequently asked questions
+### Animation Tokens
+```css
+/* Duration */
+--duration-fast: 0.15s;
+--duration-normal: 0.25s;
+--duration-slow: 0.4s;
+--duration-slower: 0.6s;
 
-### Modal Components
+/* Easing */
+--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+--ease-in: cubic-bezier(0.4, 0, 1, 1);
+--ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+--ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+```
 
-**DemoModal.tsx**
-```typescript
-interface DemoModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  demoType?: 'founder' | 'investor' | 'partner' | 'lender';
+### Common Animations
+```css
+/* Fade In */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scale In */
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Slide Up */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Button Hover */
+.btn-hover {
+  transition: all 0.2s ease-out;
+  transform: translateY(0);
+}
+
+.btn-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-hover:active {
+  transform: translateY(0);
 }
 ```
 
-**AuthModal.tsx**
-Authentication modal with Firebase integration.
+---
 
-## Styling System
+## 7. RESPONSIVE DESIGN
 
-### Tailwind Configuration
+### Breakpoint System
+```css
+/* Mobile First Approach */
+/* Base styles: 320px+ */
 
-**tailwind.config.ts**
-```typescript
-module.exports = {
-  content: ["./client/src/**/*.{js,ts,jsx,tsx}"],
-  theme: {
-    extend: {
-      colors: {
-        // Theme-based color system
-        primary: {...},
-        secondary: {...},
-        accent: {...}
-      },
-      animation: {
-        // Custom animations
-      }
-    }
+/* Small mobile: 480px+ */
+@media (min-width: 30rem) { }
+
+/* Large mobile: 640px+ */
+@media (min-width: 40rem) { }
+
+/* Tablet: 768px+ */
+@media (min-width: 48rem) { }
+
+/* Small desktop: 1024px+ */
+@media (min-width: 64rem) { }
+
+/* Large desktop: 1280px+ */
+@media (min-width: 80rem) { }
+
+/* Extra large: 1536px+ */
+@media (min-width: 96rem) { }
+```
+
+### Mobile-First Component Patterns
+```css
+/* Button stacking on mobile */
+.cta-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+@media (min-width: 40rem) {
+  .cta-group {
+    flex-direction: row;
+    gap: 1rem;
+    width: auto;
+  }
+}
+
+/* Card grid responsive */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 40rem) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 64rem) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
   }
 }
 ```
 
-### CSS Variables
+---
 
-**index.css**
+## 8. ACCESSIBILITY STANDARDS
+
+### WCAG 2.1 AA Compliance
+- Minimum contrast ratio: 4.5:1 for normal text
+- Minimum contrast ratio: 3:1 for large text (18px+ or 14px+ bold)
+- All interactive elements keyboard accessible
+- Focus indicators visible and consistent
+- Screen reader compatible markup
+
+### Accessibility Utilities
 ```css
-:root {
-  /* Primary Brand Colors */
-  --iterativ-primary: #667eea;
-  --iterativ-secondary: #764ba2;
-  
-  /* Module Colors */
-  --ventures-primary: #667eea;
-  --xchange-primary: #764ba2;
-  --sourcing-primary: #8b5cf6;
-  
-  /* Semantic Colors */
-  --success: #10b981;
-  --warning: #f59e0b;
-  --error: #ef4444;
-  --info: #06b6d4;
+/* Screen reader only text */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
-```
 
-### Accessibility Styles
-
-**accessibility-improvements.css**
-```css
-/* Focus indicators */
-.focus-visible {
-  outline: 2px solid var(--focus-color);
+/* Focus visible styles */
+.focus-visible:focus-visible {
+  outline: 2px solid hsl(var(--primary));
   outline-offset: 2px;
 }
 
-/* High contrast mode */
-@media (prefers-contrast: high) {
-  /* Enhanced contrast styles */
-}
-
-/* Reduced motion */
+/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
-  /* Minimal animation styles */
-}
-```
-
-## Pages & Routing
-
-### Main Pages
-
-**App.tsx**
-Main application component with routing logic:
-```typescript
-export default function App() {
-  return (
-    <ThemeProvider>
-      <SectorThemeProvider>
-        <Switch>
-          <Route path="/dashboard-demo" component={DashboardDemo} />
-          <Route path="/ecosystem-demo" component={EcosystemDemo} />
-          <Route path="/" component={AppContent} />
-        </Switch>
-      </SectorThemeProvider>
-    </ThemeProvider>
-  );
-}
-```
-
-**LandingPage.tsx**
-Complete landing page with all sections and features.
-
-**DashboardDemo.tsx**
-Interactive dashboard demonstration.
-
-**EcosystemDemo.tsx**
-Module ecosystem showcase.
-
-## State Management
-
-### Context Providers
-
-**ThemeContext.tsx**
-```typescript
-interface ThemeContextType {
-  theme: 'light' | 'dark' | 'system';
-  setTheme: (theme: 'light' | 'dark' | 'system') => void;
-  systemTheme: 'light' | 'dark';
-}
-```
-
-**AuthProvider.tsx**
-Firebase authentication context with user management.
-
-### Custom Hooks
-
-**useScrollPosition.ts**
-```typescript
-export const useScrollPosition = (): boolean => {
-  // Scroll position tracking for sticky headers
-}
-```
-
-**use-auth.ts**
-Authentication state management with Firebase.
-
-**use-mobile.tsx**
-Mobile device detection and responsive utilities.
-
-**use-toast.ts**
-Toast notification system integration.
-
-## Utilities & Libraries
-
-### Core Utilities
-
-**lib/utils.ts**
-```typescript
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
-
-export const formatCurrency = (value: number): string => {
-  // Currency formatting utilities
-}
-
-export const debounce = <T extends (...args: any[]) => any>(
-  func: T,
-  delay: number
-): T => {
-  // Debounce utility for performance optimization
-}
-```
-
-**lib/constants.ts**
-```typescript
-export const MODULES = {
-  VENTURES: 'ventures',
-  XCHANGE: 'xchange',
-  SOURCING: 'sourcing'
-} as const;
-
-export const USER_ROLES = {
-  FOUNDER: 'founder',
-  INVESTOR: 'investor',
-  PARTNER: 'partner',
-  LENDER: 'lender'
-} as const;
-```
-
-**lib/theme-utils.ts**
-Theme management utilities and color calculations.
-
-### Firebase Integration
-
-**lib/firebase.ts**
-```typescript
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-
-const firebaseConfig = {
-  // Configuration from environment variables
-};
-
-export const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-```
-
-## Configuration Files
-
-### Vite Configuration
-
-**vite.config.ts**
-```typescript
-export default defineConfig({
-  plugins: [
-    react(),
-    runtimeErrorOverlay(),
-    themePlugin(),
-  ],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "client", "src"),
-      "@shared": path.resolve(__dirname, "shared"),
-      "@assets": path.resolve(__dirname, "attached_assets"),
-    },
-  },
-  root: path.resolve(__dirname, "client"),
-  build: {
-    outDir: path.resolve(__dirname, "dist/public"),
-    emptyOutDir: true,
-  },
-});
-```
-
-### Component Configuration
-
-**components.json**
-```json
-{
-  "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "new-york",
-  "rsc": false,
-  "tsx": true,
-  "tailwind": {
-    "config": "tailwind.config.ts",
-    "css": "client/src/index.css",
-    "baseColor": "neutral",
-    "cssVariables": true,
-    "prefix": ""
-  },
-  "aliases": {
-    "components": "@/components",
-    "utils": "@/lib/utils",
-    "ui": "@/components/ui",
-    "lib": "@/lib",
-    "hooks": "@/hooks"
+  *,
+  ::before,
+  ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
   }
 }
 ```
 
-## Key Features
+### ARIA Patterns
+```html
+<!-- Button with description -->
+<button 
+  aria-describedby="button-description"
+  className="btn-primary"
+>
+  Submit Application
+</button>
+<div id="button-description" className="sr-only">
+  This will submit your startup application for review
+</div>
 
-### Design System Features
+<!-- Form with validation -->
+<div>
+  <label htmlFor="email">Email Address</label>
+  <input 
+    id="email"
+    type="email"
+    aria-required="true"
+    aria-invalid={hasError ? "true" : "false"}
+    aria-describedby={hasError ? "email-error" : undefined}
+  />
+  {hasError && (
+    <div id="email-error" role="alert" className="text-red-600">
+      Please enter a valid email address
+    </div>
+  )}
+</div>
 
-1. **Consistent Color System**: Theme-based colors with CSS variables
-2. **Component Variants**: Multiple button and card variants
-3. **Responsive Design**: Mobile-first approach with breakpoints
-4. **Accessibility**: WCAG 2.1 AA compliance features
-5. **Dark Mode**: System preference detection and manual toggle
-6. **Animations**: Framer Motion integration for smooth transitions
-
-### Interactive Elements
-
-1. **Role-Based Dashboards**: Customized views for different user types
-2. **Module Selector**: Interactive exploration of platform modules
-3. **Funding Calculator**: Real-time funding potential estimation
-4. **AI Chatbot**: Contextual assistance and guidance
-5. **Theme Selector**: Multiple theme options for personalization
-
-### Performance Optimizations
-
-1. **Code Splitting**: Route-based code splitting with React.lazy
-2. **Image Optimization**: Responsive images with proper sizing
-3. **Bundle Optimization**: Tree shaking and dead code elimination
-4. **CSS Optimization**: Tailwind CSS purging and minification
-
-## Deployment & Build
-
-### Build Process
-
-```bash
-npm run build    # Production build
-npm run dev      # Development server
-npm run preview  # Preview production build
+<!-- Loading state -->
+<button 
+  disabled={isLoading}
+  aria-label={isLoading ? "Loading..." : "Submit"}
+>
+  {isLoading ? (
+    <span aria-hidden="true">Loading...</span>
+  ) : (
+    "Submit"
+  )}
+</button>
 ```
 
-### Environment Variables
+---
 
-```env
-VITE_FIREBASE_API_KEY=
-VITE_FIREBASE_AUTH_DOMAIN=
-VITE_FIREBASE_PROJECT_ID=
-VITE_AZURE_OPENAI_ENDPOINT=
-VITE_AZURE_OPENAI_API_KEY=
+## 9. USER FLOW DOCUMENTATION
+
+### Current User Journey
+```
+Landing Page → Hero Section → Solutions Overview → Features → Demo → Contact
+     ↓            ↓              ↓                ↓       ↓       ↓
+Entry Point → Value Prop → Service Details → Benefits → Trial → Conversion
 ```
 
-## Best Practices Implemented
+### Improved User Journey
+```
+Landing → Role Selection → Personalized Content → Module Deep Dive → Demo → Signup → Onboarding
+    ↓         ↓              ↓                    ↓             ↓        ↓         ↓
+Entry → Understanding → Personalization → Specific Value → Trial → Convert → Success
+```
 
-### Code Organization
-- Consistent file naming conventions
-- Logical component grouping
-- Clear separation of concerns
-- Reusable utility functions
+### Role-Based Flows
 
-### Performance
-- Lazy loading for route components
-- Optimized re-renders with React.memo
-- Debounced user interactions
-- Efficient state management
+#### Founder Flow
+1. **Landing**: Clear value proposition for startup founders
+2. **Role Selection**: "I'm a startup founder" selection
+3. **Personalized Hero**: Business plan & investor readiness focus
+4. **Features**: Ventures module highlighted
+5. **Demo**: Ventures-specific demo experience
+6. **Signup**: Founder onboarding flow
 
-### Accessibility
-- Semantic HTML structure
-- ARIA labels and roles
-- Keyboard navigation support
-- Screen reader optimization
-- Focus management
+#### Investor Flow
+1. **Landing**: Value proposition for investors/VCs
+2. **Role Selection**: "I'm an investor" selection
+3. **Personalized Hero**: Deal flow & startup intelligence focus
+4. **Features**: Xchange module highlighted
+5. **Demo**: Xchange-specific demo experience
+6. **Signup**: Investor onboarding flow
 
-### Maintainability
-- TypeScript for type safety
-- Consistent coding patterns
-- Comprehensive error handling
-- Clear documentation and comments
+#### Partner Flow
+1. **Landing**: Value proposition for enterprise partners
+2. **Role Selection**: "I'm looking for partnerships" selection
+3. **Personalized Hero**: Partnership opportunities focus
+4. **Features**: Sourcing module highlighted
+5. **Demo**: Sourcing-specific demo experience
+6. **Signup**: Partner onboarding flow
 
-## Future Enhancements
+---
 
-### Planned Improvements
-1. **Advanced Analytics**: User behavior tracking and insights
-2. **Real-time Collaboration**: Multi-user editing capabilities
-3. **Enhanced AI Features**: More sophisticated AI assistance
-4. **Mobile App**: React Native version for mobile platforms
-5. **Advanced Theming**: Custom theme builder for enterprises
+## 10. IMPLEMENTATION GUIDELINES
 
-### Technical Debt
-1. **Navigation Simplification**: Replace Navbar with SimplifiedNavbar
-2. **Performance Optimization**: Implement virtual scrolling for large lists
-3. **Testing Coverage**: Add comprehensive unit and integration tests
-4. **Bundle Size**: Further optimize bundle size with micro-frontends
+### CSS Architecture
+```css
+/* Use CSS custom properties for theming */
+:root {
+  --color-primary: hsl(210, 100%, 50%);
+  --spacing-unit: 0.25rem;
+  --border-radius: 0.75rem;
+}
 
-This documentation provides a comprehensive overview of the Iterativ Analytics UI codebase, including all components, styling systems, utilities, and architectural decisions. The codebase is designed for scalability, maintainability, and excellent user experience across all device types and user roles.
+/* Follow component-scoped styling */
+.component-name {
+  /* Layout properties */
+  display: flex;
+  
+  /* Box model */
+  padding: calc(var(--spacing-unit) * 4);
+  
+  /* Visual properties */
+  background-color: var(--color-primary);
+  border-radius: var(--border-radius);
+  
+  /* Typography */
+  font-size: 1rem;
+  
+  /* Transitions */
+  transition: all 0.2s ease-out;
+}
+```
+
+### Component Guidelines
+1. **Use TypeScript interfaces** for all props
+2. **Include JSDoc comments** for complex components
+3. **Implement proper error boundaries**
+4. **Use React.memo()** for performance optimization
+5. **Include accessibility props** by default
+
+### File Organization
+```
+components/
+├── layout/
+│   ├── Navbar.tsx
+│   ├── Footer.tsx
+│   └── Container.tsx
+├── sections/
+│   ├── HeroSection.tsx
+│   ├── FeaturesSection.tsx
+│   └── CTASection.tsx
+├── ui/
+│   ├── button.tsx
+│   ├── card.tsx
+│   └── input.tsx
+└── hooks/
+    ├── useScrollPosition.ts
+    └── useTheme.ts
+```
+
+### Performance Guidelines
+1. **Lazy load non-critical components**
+2. **Optimize images with proper sizing**
+3. **Use CSS transforms for animations**
+4. **Minimize bundle size with code splitting**
+5. **Implement proper caching strategies**
+
+### Testing Guidelines
+1. **Unit tests for utility functions**
+2. **Component tests with React Testing Library**
+3. **Accessibility tests with axe-core**
+4. **Visual regression tests**
+5. **Performance monitoring**
+
+---
+
+## CONCLUSION
+
+This UI documentation provides the foundation for consistent, accessible, and performant user interfaces across the Iterativ Analytics platform. All components should follow these guidelines to ensure a cohesive user experience that supports business objectives and user needs.
+
+For questions or clarifications, refer to the Design System Guide component or contact the development team.
+
+Last Updated: January 2025
+Version: 1.0.0

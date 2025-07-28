@@ -295,7 +295,7 @@ export const ThemeSelectorButton = () => {
   return (
     <motion.button
       onClick={() => setIsThemeModalOpen(true)}
-      className="fixed top-4 right-80 z-50 p-3 rounded-full backdrop-blur-sm border text-white hover:scale-105 transition-all duration-200"
+      className="fixed top-4 right-36 z-50 p-3 rounded-full backdrop-blur-sm border text-white hover:scale-105 transition-all duration-200"
       style={{
         backgroundColor: `${currentTheme.colors.primary}20`,
         borderColor: `${currentTheme.colors.primary}50`

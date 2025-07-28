@@ -1,17 +1,11 @@
 import { useState } from 'react';
 import React from 'react';
-import { Route, Switch } from 'wouter';
 import { ArrowRight, BarChart3, CheckCircle2, Rocket, Sparkles, Star, TrendingUp, Zap, Brain, Coins, GitBranch } from 'lucide-react';
-import { RoleBasedDashboards } from '@/components/ui/role-based-dashboards';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Navbar } from '@/components/layout/Navbar';
 import { FeatureCard } from '@/components/ui/feature-card';
-
-// Import pages
-import DashboardDemo from '@/pages/DashboardDemo';
-import EcosystemDemo from '@/pages/EcosystemDemo';
 
 import { FadeIn, ScaleIn, SlideUp, SlideIn, Stagger, HoverScale } from '@/components/ui/animated';
 import { useScrollPosition } from '@/hooks/useScrollPosition';
@@ -26,8 +20,6 @@ import { DarkModeToggle, ParallaxBackground, ScrollIndicator, EnhancedButton, Re
 import { SectorThemeProvider, ThemeSelectorButton, ThemeSelectionModal, useTheme } from '@/components/ui/sector-theme-selector';
 import { ThemeProvider } from '@/context/ThemeContext';
 import HeroSection from '@/components/sections/HeroSection';
-import { EnhancedNavbar } from '@/components/layout/EnhancedNavbar';
-import { EnhancedHeroSection } from '@/components/sections/EnhancedHeroSection';
 
 function AppContent() {
   const [activeFeatureTab, setActiveFeatureTab] = useState('founders');
@@ -132,8 +124,9 @@ function AppContent() {
       <SectionNavigationDots />
       <FloatingActionBubble />
       <div id="hero" className={isScrolled ? "pt-16" : ""}>
-        <EnhancedNavbar />
-        <EnhancedHeroSection />
+        <Navbar />
+
+        <HeroSection />
       </div>
 
       {/* Floating Urgency Banners */}
@@ -200,11 +193,11 @@ function AppContent() {
                     </div>
                     <h3 className="text-2xl font-bold text-white">Iterativ Ventures</h3>
                   </div>
-
+                  
                   <p className="text-white/70 mb-6 text-lg">
                     AI-powered business intelligence & planning with CoFounder AI integration, multi-format plan upload, real-time financial modeling, and investor readiness scoring for African entrepreneurs.
                   </p>
-
+                  
                   <div className="space-y-3 mb-8">
                     <div className="flex items-center text-white/80">
                       <CheckCircle2 className="h-5 w-5 text-purple-400 mr-3 flex-shrink-0" />
@@ -223,14 +216,14 @@ function AppContent() {
                       <span>Application selection automation</span>
                     </div>
                   </div>
-
+                  
                   <Button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold py-3 rounded-lg shadow-lg hover:shadow-purple-500/25 transition-all duration-300">
                     Explore Startup Solutions
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </div>
               </FadeIn>
-
+              
               <FadeIn delay={0.4}>
                 <div className="bg-gradient-to-br from-pink-500/10 to-red-500/10 backdrop-blur-xl rounded-3xl p-8 border border-pink-400/30 hover:border-pink-400/50 transition-all duration-300">
                   <div className="flex items-center mb-6">
@@ -239,11 +232,11 @@ function AppContent() {
                     </div>
                     <h3 className="text-2xl font-bold text-white">Iterativ Xchange</h3>
                   </div>
-
+                  
                   <p className="text-white/70 mb-6 text-lg">
                     Blockchain-powered capital markets with equity tokenization, African Equity Exchange (AEX), crowdfunding infrastructure, secondary market trading, and integrated supply chain finance solutions.
                   </p>
-
+                  
                   <div className="space-y-3 mb-8">
                     <div className="flex items-center text-white/80">
                       <CheckCircle2 className="h-5 w-5 text-pink-400 mr-3 flex-shrink-0" />
@@ -262,14 +255,14 @@ function AppContent() {
                       <span>Supply chain finance marketplace</span>
                     </div>
                   </div>
-
+                  
                   <Button className="w-full bg-gradient-to-r from-pink-600 to-red-600 hover:from-pink-500 hover:to-red-500 text-white font-semibold py-3 rounded-lg shadow-lg hover:shadow-pink-500/25 transition-all duration-300">
                     Discover Xchange Platform
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </div>
               </FadeIn>
-
+              
               <FadeIn delay={0.6}>
                 <div className="bg-gradient-to-br from-green-500/10 to-teal-500/10 backdrop-blur-xl rounded-3xl p-8 border border-green-400/30 hover:border-green-400/50 transition-all duration-300">
                   <div className="flex items-center mb-6">
@@ -278,11 +271,11 @@ function AppContent() {
                     </div>
                     <h3 className="text-2xl font-bold text-white">Iterativ Sourcing</h3>
                   </div>
-
+                  
                   <p className="text-white/70 mb-6 text-lg">
                     Intelligent supply chain management platform with AI-powered supplier matching, procurement optimization, performance analytics, and automated payment management.
                   </p>
-
+                  
                   <div className="space-y-3 mb-8">
                     <div className="flex items-center text-white/80">
                       <CheckCircle2 className="h-5 w-5 text-green-400 mr-3 flex-shrink-0" />
@@ -301,7 +294,7 @@ function AppContent() {
                       <span>Risk intelligence & verification</span>
                     </div>
                   </div>
-
+                  
                   <Button className="w-full bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-500 hover:to-teal-500 text-white font-semibold py-3 rounded-lg shadow-lg hover:shadow-green-500/25 transition-all duration-300">
                     Explore Sourcing Platform
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -550,28 +543,14 @@ function AppContent() {
                 <div className="relative">
                   <div className="bg-gray-800/30 backdrop-blur rounded-2xl border border-gray-700/50 overflow-hidden">
                     <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-6">
-                      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-lg p-6">
-                        <div className="flex items-center justify-between mb-6">
-                          <div>
-                            <h3 className="text-cyan-400 text-lg font-semibold mb-1">
-                              {activeFeatureTab === 'founders' ? 'Founder Dashboard' : 
-                               activeFeatureTab === 'investors' ? 'Investor Dashboard' :
-                               activeFeatureTab === 'partners' ? 'Partner Dashboard' : 'Lender Dashboard'}
-                            </h3>
-                            <p className="text-gray-400 text-sm">Real-time business intelligence</p>
+                      <div className="aspect-video bg-gradient-to-r from-cyan-900/20 to-blue-900/20 rounded-lg flex items-center justify-center">
+                        <div className="text-center">
+                          <div className="text-cyan-400 text-lg mb-2">
+                            {activeFeatureTab === 'founders' ? 'Founder Dashboard' : 
+                             activeFeatureTab === 'investors' ? 'Investor Dashboard' :
+                             activeFeatureTab === 'partners' ? 'Partner Dashboard' : 'Lender Dashboard'}
                           </div>
-                          <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                            <span className="text-green-400 text-xs font-medium">Live</span>
-                          </div>
-                        </div>
-
-                        {/* Role-Based Interactive Dashboard */}
-                        <div className="min-h-[400px]">
-                          {activeFeatureTab === 'founders' && <RoleBasedDashboards.FounderDashboard />}
-                          {activeFeatureTab === 'investors' && <RoleBasedDashboards.InvestorDashboard />}
-                          {activeFeatureTab === 'partners' && <RoleBasedDashboards.PartnerDashboard />}
-                          {activeFeatureTab === 'lenders' && <RoleBasedDashboards.LenderDashboard />}
+                          <div className="text-gray-400">Interactive metrics visualization</div>
                         </div>
                       </div>
                     </div>
@@ -826,11 +805,7 @@ export default function App() {
   return (
     <ThemeProvider>
       <SectorThemeProvider>
-        <Switch>
-          <Route path="/dashboard-demo" component={DashboardDemo} />
-          <Route path="/ecosystem-demo" component={EcosystemDemo} />
-          <Route path="/" component={AppContent} />
-        </Switch>
+        <AppContent />
       </SectorThemeProvider>
     </ThemeProvider>
   );

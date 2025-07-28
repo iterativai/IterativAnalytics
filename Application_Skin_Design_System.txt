@@ -1,3 +1,4 @@
+
 # Iterativ Analytics - Application Skin & Design System Documentation
 
 ## Table of Contents
@@ -57,25 +58,7 @@ Design Tokens
 --primary-900: #002d6b;  /* Headings, strong emphasis */
 ```
 
-### Module-Specific Colors
-```css
-/* Ventures Module - Blue */
---ventures-primary: #667eea;
---ventures-secondary: #5a67d8;
---ventures-accent: #4c51bf;
-
-/* Xchange Module - Purple */
---xchange-primary: #764ba2;
---xchange-secondary: #9f7aea;
---xchange-accent: #805ad5;
-
-/* Sourcing Module - Green */
---sourcing-primary: #48bb78;
---sourcing-secondary: #38a169;
---sourcing-accent: #2f855a;
-```
-
-### Semantic Colors
+### Secondary Colors
 ```css
 /* Success Green */
 --success-500: #10b981;
@@ -108,6 +91,12 @@ Design Tokens
 --neutral-800: #262626;
 --neutral-900: #171717;
 ```
+
+### Logo & Iconography
+- **Logo**: Combination mark with BarChart3 icon in gradient container
+- **Icon Style**: Lucide React icons for consistency
+- **Icon Sizes**: 16px, 20px, 24px, 32px (4px increments)
+- **Icon Colors**: Inherit text color or use semantic colors
 
 ---
 
@@ -173,37 +162,6 @@ Design Tokens
 .btn-ghost:hover {
   background: var(--neutral-100);
   color: var(--neutral-900);
-}
-
-/* Glass Button Skin */
-.btn-glass {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  border-radius: 0.75rem;
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.btn-glass:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-/* Module-Specific Button Skins */
-.btn-ventures {
-  background: linear-gradient(135deg, var(--ventures-primary), var(--ventures-secondary));
-}
-
-.btn-xchange {
-  background: linear-gradient(135deg, var(--xchange-primary), var(--xchange-secondary));
-}
-
-.btn-sourcing {
-  background: linear-gradient(135deg, var(--sourcing-primary), var(--sourcing-secondary));
 }
 ```
 
@@ -275,70 +233,6 @@ Design Tokens
   align-items: center;
   justify-content: center;
   color: var(--primary-600);
-}
-
-/* Enhanced Card Skin */
-.card-enhanced {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-}
-
-.card-enhanced:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-  border-color: rgba(103, 126, 234, 0.3);
-}
-
-/* Dashboard Card Skin */
-.dashboard-card {
-  background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.1), 
-    rgba(255, 255, 255, 0.05)
-  );
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  backdrop-filter: blur(10px);
-}
-
-/* Module Preview Cards */
-.module-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 1rem;
-  transition: all 0.3s ease;
-}
-
-.module-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.module-card.ventures::before {
-  background: var(--ventures-primary);
-}
-
-.module-card.xchange::before {
-  background: var(--xchange-primary);
-}
-
-.module-card.sourcing::before {
-  background: var(--sourcing-primary);
-}
-
-.module-card:hover::before {
-  opacity: 1;
 }
 ```
 
@@ -438,36 +332,6 @@ Design Tokens
   background: var(--primary-500);
   border-radius: 50%;
 }
-
-/* Glass Navigation */
-.nav-glass {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
-
-/* Dark Theme Navigation */
-.dark .nav-glass {
-  background: rgba(0, 0, 0, 0.9);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Navigation Links */
-.nav-link {
-  color: var(--neutral-700);
-  font-weight: 500;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  transition: all 0.2s ease;
-}
-
-.nav-link:hover {
-  background: rgba(103, 126, 234, 0.1);
-  color: var(--ventures-primary);
-}
 ```
 
 ---
@@ -477,64 +341,77 @@ Design Tokens
 ### CSS Custom Properties Structure
 ```css
 :root {
-  /* Core Brand Colors */
+  /* Colors */
   --color-primary: 210 100% 50%;
   --color-primary-foreground: 210 40% 98%;
-
-  /* Module Colors */
-  --ventures-gradient: linear-gradient(135deg, #667eea, #764ba2);
-  --xchange-gradient: linear-gradient(135deg, #764ba2, #667eea);
-  --sourcing-gradient: linear-gradient(135deg, #48bb78, #38a169);
-
-  /* Spacing System */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-2xl: 3rem;
-  --spacing-3xl: 4rem;
-
+  --color-secondary: 210 40% 96%;
+  --color-secondary-foreground: 210 40% 8%;
+  --color-background: 0 0% 100%;
+  --color-foreground: 210 40% 8%;
+  --color-muted: 210 40% 96%;
+  --color-muted-foreground: 210 40% 45%;
+  --color-border: 210 40% 89%;
+  --color-input: 210 40% 89%;
+  --color-ring: 210 100% 50%;
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;    /* 4px */
+  --spacing-sm: 0.5rem;     /* 8px */
+  --spacing-md: 1rem;       /* 16px */
+  --spacing-lg: 1.5rem;     /* 24px */
+  --spacing-xl: 2rem;       /* 32px */
+  --spacing-2xl: 3rem;      /* 48px */
+  --spacing-3xl: 4rem;      /* 64px */
+  
   /* Typography */
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 1.875rem;
-  --font-size-4xl: 2.25rem;
-
+  --font-size-xs: 0.75rem;      /* 12px */
+  --font-size-sm: 0.875rem;     /* 14px */
+  --font-size-base: 1rem;       /* 16px */
+  --font-size-lg: 1.125rem;     /* 18px */
+  --font-size-xl: 1.25rem;      /* 20px */
+  --font-size-2xl: 1.5rem;      /* 24px */
+  --font-size-3xl: 1.875rem;    /* 30px */
+  --font-size-4xl: 2.25rem;     /* 36px */
+  
   /* Borders */
   --border-radius-sm: 0.375rem;  /* 6px */
   --border-radius-md: 0.5rem;    /* 8px */
   --border-radius-lg: 0.75rem;   /* 12px */
   --border-radius-xl: 1rem;      /* 16px */
-
-  /* Glass Morphism */
-  --glass-bg: rgba(255, 255, 255, 0.1);
-  --glass-border: rgba(255, 255, 255, 0.2);
-  --glass-backdrop: blur(10px);
-
+  
   /* Shadows */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
-  --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.2);
-
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.1);
+  
   /* Transitions */
   --transition-fast: 0.15s ease-out;
   --transition-normal: 0.25s ease-out;
   --transition-slow: 0.4s ease-out;
 }
+```
 
+### Dark Theme Overrides
+```css
 .dark {
-  --glass-bg: rgba(0, 0, 0, 0.2);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --color-background: 210 40% 2%;
+  --color-foreground: 210 40% 98%;
+  --color-primary: 210 100% 60%;
+  --color-primary-foreground: 210 40% 8%;
+  --color-secondary: 210 40% 8%;
+  --color-secondary-foreground: 210 40% 98%;
+  --color-muted: 210 40% 8%;
+  --color-muted-foreground: 210 40% 65%;
+  --color-border: 210 40% 14%;
+  --color-input: 210 40% 14%;
+  --color-ring: 210 100% 60%;
+  
+  /* Dark mode shadows */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
   --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.4);
-  --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.4);
 }
 ```
 
@@ -883,71 +760,7 @@ Design Tokens
 .feature-grid .card:nth-child(3) { animation-delay: 0.3s; }
 ```
 
-### Micro-Interactions
-```css
-/* Hover Animations */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-4px); }
-}
-
-.float-animation {
-  animation: float 3s ease-in-out infinite;
-}
-
-/* Button Press Animation */
-.btn-press {
-  transition: transform 0.1s ease;
-}
-
-.btn-press:active {
-  transform: scale(0.98);
-}
-
-/* Card Hover Effects */
-.card-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card-hover:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
-/* Loading Animations */
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200px 0; }
-  100% { background-position: calc(200px + 100%) 0; }
-}
-
-.loading-shimmer {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200px 100%;
-  animation: shimmer 1.5s infinite;
-}
-```
-
-### Page Transitions
-```css
-/* Fade In Up */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.6---
+---
 
 ## 8. RESPONSIVE SKIN PATTERNS
 
@@ -971,7 +784,7 @@ Design Tokens
     flex-direction: row;
     width: auto;
   }
-
+  
   .btn-group .btn {
     width: auto;
     min-width: 140px;
@@ -1049,73 +862,6 @@ Design Tokens
 }
 ```
 
-### Mobile-First Approach
-```css
-/* Base mobile styles */
-.container {
-  padding: 1rem;
-  max-width: 100%;
-}
-
-/* Tablet and up */
-@media (min-width: 768px) {
-  .container {
-    padding: 2rem;
-    max-width: 768px;
-    margin: 0 auto;
-  }
-}
-
-/* Desktop and up */
-@media (min-width: 1024px) {
-  .container {
-    padding: 3rem;
-    max-width: 1200px;
-  }
-}
-
-/* Large desktop */
-@media (min-width: 1280px) {
-  .container {
-    max-width: 1280px;
-  }
-}
-```
-
-### Responsive Component Patterns
-```css
-/* Responsive Grid */
-.responsive-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-}
-
-@media (min-width: 640px) {
-  .responsive-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .responsive-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-  }
-}
-
-/* Responsive Typography */
-.responsive-heading {
-  font-size: clamp(1.5rem, 4vw, 3rem);
-  line-height: 1.2;
-}
-
-.responsive-body {
-  font-size: clamp(0.875rem, 2vw, 1.125rem);
-  line-height: 1.6;
-}
-```
-
 ---
 
 ## 9. DARK MODE IMPLEMENTATION
@@ -1176,16 +922,16 @@ Design Tokens
 ```css
 /* Light mode gradient */
 .gradient-bg {
-  background: linear-gradient(135deg,
-    hsl(var(--color-primary) / 0.1),
+  background: linear-gradient(135deg, 
+    hsl(var(--color-primary) / 0.1), 
     hsl(var(--color-primary) / 0.05)
   );
 }
 
 /* Dark mode gradient */
 .dark .gradient-bg {
-  background: linear-gradient(135deg,
-    hsl(var(--color-primary) / 0.2),
+  background: linear-gradient(135deg, 
+    hsl(var(--color-primary) / 0.2), 
     hsl(var(--color-primary) / 0.1)
   );
 }
@@ -1199,8 +945,8 @@ Design Tokens
 ```css
 .hero-section {
   padding: var(--spacing-3xl) var(--spacing-md);
-  background: linear-gradient(135deg,
-    hsl(var(--color-background)),
+  background: linear-gradient(135deg, 
+    hsl(var(--color-background)), 
     hsl(var(--color-primary) / 0.05)
   );
   position: relative;
@@ -1231,8 +977,8 @@ Design Tokens
   font-weight: 700;
   line-height: 1.1;
   margin-bottom: var(--spacing-lg);
-  background: linear-gradient(135deg,
-    hsl(var(--color-foreground)),
+  background: linear-gradient(135deg, 
+    hsl(var(--color-foreground)), 
     hsl(var(--color-primary))
   );
   -webkit-background-clip: text;
@@ -1309,8 +1055,8 @@ Design Tokens
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg,
-    hsl(var(--color-primary)),
+  background: linear-gradient(90deg, 
+    hsl(var(--color-primary)), 
     hsl(var(--color-primary) / 0.6)
   );
 }
@@ -1333,8 +1079,8 @@ Design Tokens
 .card-icon {
   width: 3rem;
   height: 3rem;
-  background: linear-gradient(135deg,
-    hsl(var(--color-primary) / 0.1),
+  background: linear-gradient(135deg, 
+    hsl(var(--color-primary) / 0.1), 
     hsl(var(--color-primary) / 0.2)
   );
   border-radius: var(--border-radius-lg);
@@ -1386,8 +1132,8 @@ Design Tokens
 .navbar-logo-icon {
   width: 2rem;
   height: 2rem;
-  background: linear-gradient(135deg,
-    hsl(var(--color-primary)),
+  background: linear-gradient(135deg, 
+    hsl(var(--color-primary)), 
     hsl(var(--color-primary) / 0.8)
   );
   border-radius: var(--border-radius-md);
@@ -1443,131 +1189,27 @@ Design Tokens
 }
 ```
 
-### Hero Section Skin
-```css
-.hero-section {
-  background: linear-gradient(135deg,
-    rgba(15, 23, 42, 0.9),
-    rgba(30, 58, 138, 0.8)
-  );
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60'...") repeat;
-  opacity: 0.1;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-.hero-title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, #ffffff, #e2e8f0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-```
-
-### Dashboard Preview Skin
-```css
-.dashboard-preview {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
-  padding: 2rem;
-  backdrop-filter: blur(20px);
-  position: relative;
-  overflow: hidden;
-}
-
-.dashboard-preview::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--ventures-gradient);
-}
-
-.dashboard-metrics {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.metric-card {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0.75rem;
-  padding: 1.5rem;
-  text-align: center;
-}
-
-.metric-value {
-  font-size: 2rem;
-  font-weight: 700;
-  color: white;
-  margin-bottom: 0.5rem;
-}
-
-.metric-label {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.7);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-```
-
----
-
-## 9. QUALITY ASSURANCE
-
-### Design System Checklist
-- [ ] All components use consistent spacing (4px base unit)
-- [ ] Color contrast ratios meet WCAG 2.1 AA standards
-- [ ] Interactive elements have clear hover/focus states
-- [ ] Components work across all breakpoints
-- [ ] Dark mode variants are properly implemented
-- [ ] Motion respects `prefers-reduced-motion`
-- [ ] Screen reader support is included
-- [ ] Keyboard navigation works throughout
-
-### Performance Guidelines
-1. Use CSS transforms for animations (GPU acceleration)
-2. Minimize DOM reflows with CSS containment
-3. Optimize background images and gradients
-4. Use CSS custom properties for theme switching
-5. Implement proper CSS loading strategies
-
 ---
 
 ## CONCLUSION
 
-This Application Skin & Design System provides comprehensive styling guidelines for the Iterativ Analytics ecosystem. It ensures consistent visual treatment across all modules (Ventures, Xchange, Sourcing) while maintaining flexibility for different themes, user types, and responsive layouts.
+This Application Skin & Design System provides comprehensive styling guidelines for the Iterativ Analytics platform. It ensures consistent visual treatment across all components while maintaining flexibility for different themes and responsive layouts.
 
-The system prioritizes accessibility, performance, and user experience while providing the foundation for a scalable, maintainable design system that can grow with the platform's needs.
+### Key Benefits:
+- **Consistency**: Unified visual language across all modules
+- **Maintainability**: CSS custom properties enable easy theme updates
+- **Accessibility**: High contrast ratios and focus management built-in
+- **Performance**: Optimized animations and lightweight styles
+- **Scalability**: Modular approach supports component library growth
+
+### Implementation Guidelines:
+1. Always use CSS custom properties for colors, spacing, and typography
+2. Follow mobile-first responsive patterns
+3. Include hover, focus, and active states for all interactive elements
+4. Test dark mode compatibility for all components
+5. Ensure WCAG 2.1 AA compliance for all styling choices
+
+For questions or style guide updates, refer to the design system documentation or contact the design team.
 
 Last Updated: January 2025
-Version: 2.0.0
+Version: 1.0.0

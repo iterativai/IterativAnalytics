@@ -69,16 +69,16 @@ const DashboardPreview = () => {
   const CurrentComponent = currentDashboard?.component || FounderDashboard;
 
   return (
-    <div className="w-full bg-white dark:bg-gray-900 rounded-xl overflow-hidden">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Dashboard Selector */}
-      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-        <div className="px-6 py-4">
+      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h4 className="text-xl font-bold text-gray-900 dark:text-white">
-                Choose Your Dashboard
-              </h4>
-              <p className="text-gray-600 dark:text-gray-400 text-sm">
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                Interactive Dashboard Preview
+              </h1>
+              <p className="text-gray-600 dark:text-gray-400">
                 Experience different user perspectives with real-time metrics
               </p>
             </div>
@@ -132,7 +132,6 @@ const DashboardPreview = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3 }}
-          className="max-h-[800px] overflow-y-auto"
         >
           <CurrentComponent />
         </motion.div>

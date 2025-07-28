@@ -1,9 +1,8 @@
-
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-import { Menu, X, BarChart3, ChevronDown, Sparkles } from "lucide-react";
+import { Menu, X, BarChart3, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
@@ -92,58 +91,52 @@ export const SimplifiedNavbar: React.FC = () => {
   };
 
   const handleSubItemClick = (subItemId: string) => {
+    // Handle navigation to specific solution modules
     scrollToSection('solutions');
+    // Additional logic for highlighting specific module
   };
 
   const NavDropdown: React.FC<{ item: NavItem }> = ({ item }) => {
     if (!item.subItems) {
       return (
-        <motion.button
+        <button
           onClick={() => scrollToSection(item.id)}
           className={cn(
-            "px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105",
-            activeSection === item.id
-              ? "text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg"
-              : "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-white/60 dark:hover:bg-gray-700/60"
+            "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors font-medium px-3 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-white/5",
+            activeSection === item.id && "text-blue-600 dark:text-cyan-400 bg-blue-50 dark:bg-white/5"
           )}
-          whileHover={{ y: -1 }}
-          whileTap={{ scale: 0.95 }}
         >
           {item.label}
-        </motion.button>
+        </button>
       );
     }
 
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <motion.button
+          <button
             className={cn(
-              "flex items-center gap-1 px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105",
-              activeSection === item.id
-                ? "text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg"
-                : "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-white/60 dark:hover:bg-gray-700/60"
+              "flex items-center gap-1 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors font-medium px-3 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-white/5",
+              activeSection === item.id && "text-blue-600 dark:text-cyan-400 bg-blue-50 dark:bg-white/5"
             )}
-            whileHover={{ y: -1 }}
           >
             {item.label}
             <ChevronDown className="h-4 w-4" />
-          </motion.button>
+          </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" className="w-80 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200/20 dark:border-gray-700/20 shadow-2xl">
+        <DropdownMenuContent align="start" className="w-72">
           {item.subItems.map((subItem) => (
             <DropdownMenuItem
               key={subItem.id}
               onClick={() => handleSubItemClick(subItem.id)}
-              className="cursor-pointer p-4 hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors"
+              className="cursor-pointer p-4"
             >
               <div>
-                <div className="font-medium text-gray-900 dark:text-gray-100 flex items-center space-x-2">
-                  <Sparkles className="h-4 w-4 text-blue-500" />
-                  <span>{subItem.label}</span>
+                <div className="font-medium text-gray-900 dark:text-gray-100">
+                  {subItem.label}
                 </div>
                 {subItem.description && (
-                  <div className="text-sm text-gray-500 dark:text-gray-400 mt-1 ml-6">
+                  <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                     {subItem.description}
                   </div>
                 )}
@@ -160,221 +153,136 @@ export const SimplifiedNavbar: React.FC = () => {
 
     if (!item.subItems) {
       return (
-        <motion.button
+        <button
           onClick={() => scrollToSection(item.id)}
-          className="block w-full text-left px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50/50 dark:hover:bg-gray-800/50 font-medium rounded-lg transition-colors"
-          whileTap={{ scale: 0.98 }}
+          className="block w-full text-left px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 font-medium"
         >
           {item.label}
-        </motion.button>
+        </button>
       );
     }
 
     return (
       <div>
-        <motion.button
+        <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center justify-between w-full px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50/50 dark:hover:bg-gray-800/50 font-medium rounded-lg transition-colors"
-          whileTap={{ scale: 0.98 }}
+          className="flex items-center justify-between w-full px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 font-medium"
         >
           {item.label}
-          <motion.div
-            animate={{ rotate: isOpen ? 180 : 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <ChevronDown className="h-4 w-4" />
-          </motion.div>
-        </motion.button>
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="bg-gray-50/50 dark:bg-gray-800/50 rounded-lg mt-1 overflow-hidden"
-            >
-              {item.subItems.map((subItem, index) => (
-                <motion.button
-                  key={subItem.id}
-                  onClick={() => {
-                    handleSubItemClick(subItem.id);
-                    setIsOpen(false);
-                  }}
-                  className="block w-full text-left px-6 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100/50 dark:hover:bg-gray-700/50 transition-colors"
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: index * 0.1 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <div className="font-medium flex items-center space-x-2">
-                    <Sparkles className="h-3 w-3 text-blue-500" />
-                    <span>{subItem.label}</span>
-                  </div>
-                  {subItem.description && (
-                    <div className="text-xs opacity-75 mt-1 ml-5">{subItem.description}</div>
-                  )}
-                </motion.button>
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
+          <ChevronDown className={cn("h-4 w-4 transition-transform", isOpen && "rotate-180")} />
+        </button>
+        {isOpen && (
+          <div className="bg-gray-50 dark:bg-gray-800">
+            {item.subItems.map((subItem) => (
+              <button
+                key={subItem.id}
+                onClick={() => {
+                  handleSubItemClick(subItem.id);
+                  setIsOpen(false);
+                }}
+                className="block w-full text-left px-8 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"
+              >
+                <div className="font-medium">{subItem.label}</div>
+                {subItem.description && (
+                  <div className="text-sm opacity-75 mt-1">{subItem.description}</div>
+                )}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     );
   };
 
   return (
     <>
-      <motion.nav 
-        className={cn(
-          "sticky top-0 z-50 transition-all duration-500 ease-out",
-          isScrolled 
-            ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow-lg border-b border-gray-200/20 dark:border-gray-700/20" 
-            : "bg-transparent"
-        )}
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-      >
+      <nav className={cn(
+        "sticky top-0 z-50 transition-all duration-300",
+        isScrolled ? "glass-panel shadow-lg" : "bg-transparent",
+      )}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            {/* Enhanced Logo */}
-            <motion.button 
+          <div className="flex justify-between items-center h-16">
+            {/* Logo */}
+            <button 
               onClick={() => scrollToSection('hero')} 
-              className="flex items-center space-x-3 hover:opacity-80 transition-all duration-300 group"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
             >
-              <div className="relative">
-                <div className="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 rounded-xl p-2.5 shadow-lg group-hover:shadow-xl transition-shadow duration-300">
-                  <BarChart3 className="h-7 w-7 text-white" />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-400 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
+              <div className="bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg p-2">
+                <BarChart3 className="h-6 w-6 text-white" />
               </div>
-              <div className="flex flex-col items-start">
-                <span className="font-bold text-xl text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  Iterativ Analytics
-                </span>
-                <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">
-                  Smart Business Solutions
-                </span>
-              </div>
-            </motion.button>
+              <span className="font-bold text-xl text-gray-900 dark:text-gray-100">
+                Iterativ Analytics
+              </span>
+            </button>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-1 bg-gray-50/50 dark:bg-gray-800/50 rounded-full px-2 py-1 backdrop-blur-sm border border-gray-200/20 dark:border-gray-700/20">
+            <div className="hidden lg:flex items-center space-x-2">
               {navItems.map(item => (
                 <NavDropdown key={item.id} item={item} />
               ))}
             </div>
 
             {/* Right Side Actions */}
-            <div className="flex items-center space-x-4">
-              {/* Theme Toggle */}
+            <div className="flex items-center space-x-3">
+              {/* Theme Toggle - Moved to be less prominent */}
               <div className="hidden md:block">
-                <div className="p-1 rounded-full bg-gray-100/50 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200/20 dark:border-gray-700/20">
-                  <ThemeToggle />
-                </div>
+                <ThemeToggle />
               </div>
 
               {/* Primary CTA */}
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <Button 
+                onClick={() => scrollToSection('get-started')}
+                size="sm"
+                className="hidden md:inline-flex bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
               >
-                <Button 
-                  onClick={() => scrollToSection('get-started')}
-                  size="lg"
-                  className="hidden md:inline-flex relative overflow-hidden bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:via-indigo-700 hover:to-purple-700 text-white font-semibold px-6 py-2.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 border-0"
-                >
-                  <span className="relative z-10 flex items-center space-x-2">
-                    <span>Try Free Demo</span>
-                    <motion.div
-                      animate={{ x: [0, 4, 0] }}
-                      transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-                    >
-                      <ChevronDown className="h-4 w-4 rotate-[-90deg]" />
-                    </motion.div>
-                  </span>
-                </Button>
-              </motion.div>
+                Try Free Demo
+              </Button>
 
               {/* Mobile Menu Toggle */}
-              <motion.button
+              <button
                 onClick={() => setShowMobileMenu(!showMobileMenu)}
-                className="lg:hidden p-2.5 rounded-full bg-gray-100/50 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200/20 dark:border-gray-700/20 transition-all duration-300 hover:bg-gray-200/60 dark:hover:bg-gray-700/60"
-                whileTap={{ scale: 0.95 }}
+                className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               >
-                <AnimatePresence mode="wait">
-                  {showMobileMenu ? (
-                    <motion.div
-                      key="close"
-                      initial={{ rotate: -90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: 90, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <X className="h-6 w-6 text-gray-700 dark:text-gray-300" />
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="menu"
-                      initial={{ rotate: 90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: -90, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <Menu className="h-6 w-6 text-gray-700 dark:text-gray-300" />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.button>
+                {showMobileMenu ? (
+                  <X className="h-6 w-6 text-gray-700 dark:text-gray-300" />
+                ) : (
+                  <Menu className="h-6 w-6 text-gray-700 dark:text-gray-300" />
+                )}
+              </button>
             </div>
           </div>
         </div>
+      </nav>
 
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {showMobileMenu && (
-            <motion.div
-              initial={{ opacity: 0, height: 0, y: -20 }}
-              animate={{ opacity: 1, height: 'auto', y: 0 }}
-              exit={{ opacity: 0, height: 0, y: -20 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="lg:hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-t border-gray-200/20 dark:border-gray-700/20 shadow-2xl"
-            >
-              <div className="px-6 py-6 space-y-2">
-                {navItems.map(item => (
-                  <MobileNavItem key={item.id} item={item} />
-                ))}
-                
-                {/* Mobile Actions */}
-                <div className="border-t border-gray-200/20 dark:border-gray-700/20 pt-4 space-y-4">
-                  <div className="flex justify-center">
-                    <div className="p-1 rounded-full bg-gray-100/50 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200/20 dark:border-gray-700/20">
-                      <ThemeToggle />
-                    </div>
-                  </div>
-                  <motion.div
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.3 }}
-                  >
-                    <Button 
-                      onClick={() => {
-                        scrollToSection('get-started');
-                        setShowMobileMenu(false);
-                      }}
-                      className="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:via-indigo-700 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                    >
-                      Try Free Demo
-                    </Button>
-                  </motion.div>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.nav>
+      {/* Mobile Menu */}
+      {showMobileMenu && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          className="lg:hidden bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-lg"
+        >
+          <div className="py-4">
+            {navItems.map(item => (
+              <MobileNavItem key={item.id} item={item} />
+            ))}
+            
+            {/* Mobile Actions */}
+            <div className="border-t border-gray-200 dark:border-gray-800 px-4 py-4 space-y-3">
+              <ThemeToggle />
+              <Button 
+                onClick={() => {
+                  scrollToSection('get-started');
+                  setShowMobileMenu(false);
+                }}
+                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+              >
+                Try Free Demo
+              </Button>
+            </div>
+          </div>
+        </motion.div>
+      )}
     </>
   );
 };
