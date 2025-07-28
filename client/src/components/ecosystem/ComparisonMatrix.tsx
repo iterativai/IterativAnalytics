@@ -704,14 +704,16 @@ export const ComparisonMatrix: React.FC = () => {
           <div className="flex flex-wrap justify-center gap-4">
             {selectedModules.map(moduleId => {
               const module = modules.find(m => m.id === moduleId);
+              if (!module) return null;
+              const IconComponent = module.icon;
               return (
                 <Button
                   key={moduleId}
-                  className={`bg-gradient-to-r ${module?.gradient} hover:opacity-90 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300`}
+                  className={`bg-gradient-to-r ${module.gradient} hover:opacity-90 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300`}
                   size="lg"
                 >
-                  <module?.icon className="h-5 w-5 mr-2" />
-                  Try {module?.shortName}
+                  <IconComponent className="h-5 w-5 mr-2" />
+                  Try {module.shortName}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               );

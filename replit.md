@@ -40,6 +40,8 @@ Iterativ Analytics is a comprehensive web platform that democratizes financial i
 - 🔄 Adding progressive disclosure hero section with role-based CTAs
 
 ## Recent Changes
+- **2025-07-28**: Fixed critical JSX syntax error in ComparisonMatrix.tsx causing app startup failure
+- **2025-07-28**: Resolved component icon rendering issue preventing Babel from parsing React components
 - **2025-07-23**: Implemented ecosystem landing page components following UI/UX guide
 - **2025-07-23**: Created ModuleSelector with interactive cards and status indicators
 - **2025-07-23**: Built ComparisonMatrix for feature comparison across modules
