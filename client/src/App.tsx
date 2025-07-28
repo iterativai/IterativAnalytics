@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import React from 'react';
 import { ArrowRight, BarChart3, CheckCircle2, Rocket, Sparkles, Star, TrendingUp, Zap, Brain, Coins, GitBranch } from 'lucide-react';
+import { RoleBasedDashboards } from '@/components/ui/role-based-dashboards';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -543,14 +544,28 @@ function AppContent() {
                 <div className="relative">
                   <div className="bg-gray-800/30 backdrop-blur rounded-2xl border border-gray-700/50 overflow-hidden">
                     <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-6">
-                      <div className="aspect-video bg-gradient-to-r from-cyan-900/20 to-blue-900/20 rounded-lg flex items-center justify-center">
-                        <div className="text-center">
-                          <div className="text-cyan-400 text-lg mb-2">
-                            {activeFeatureTab === 'founders' ? 'Founder Dashboard' : 
-                             activeFeatureTab === 'investors' ? 'Investor Dashboard' :
-                             activeFeatureTab === 'partners' ? 'Partner Dashboard' : 'Lender Dashboard'}
+                      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-lg p-6">
+                        <div className="flex items-center justify-between mb-6">
+                          <div>
+                            <h3 className="text-cyan-400 text-lg font-semibold mb-1">
+                              {activeFeatureTab === 'founders' ? 'Founder Dashboard' : 
+                               activeFeatureTab === 'investors' ? 'Investor Dashboard' :
+                               activeFeatureTab === 'partners' ? 'Partner Dashboard' : 'Lender Dashboard'}
+                            </h3>
+                            <p className="text-gray-400 text-sm">Real-time business intelligence</p>
                           </div>
-                          <div className="text-gray-400">Interactive metrics visualization</div>
+                          <div className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                            <span className="text-green-400 text-xs font-medium">Live</span>
+                          </div>
+                        </div>
+                        
+                        {/* Role-Based Interactive Dashboard */}
+                        <div className="min-h-[400px]">
+                          {activeFeatureTab === 'founders' && <RoleBasedDashboards.FounderDashboard />}
+                          {activeFeatureTab === 'investors' && <RoleBasedDashboards.InvestorDashboard />}
+                          {activeFeatureTab === 'partners' && <RoleBasedDashboards.PartnerDashboard />}
+                          {activeFeatureTab === 'lenders' && <RoleBasedDashboards.LenderDashboard />}
                         </div>
                       </div>
                     </div>
