@@ -10,24 +10,24 @@ import { DemoModal } from '@/components/modals/DemoModal';
 const HeroSection = () => {
   const [demoModalOpen, setDemoModalOpen] = useState(false);
   const { currentTheme } = useTheme();
-  
+
   // Dashboard metrics for the enhanced AI Business Intelligence element
   const [dashboardMetrics, setDashboardMetrics] = useState({
-    marketFit: 0,
-    investorReadiness: 0,
-    financialHealth: 0
+    analysisProgress: 75,
+    feasibilityScore: 87,
+    aiInsightsReady: true
   });
-  
+
   useEffect(() => {
     // Animate metrics on component mount
     const timer = setTimeout(() => {
       setDashboardMetrics({
-        marketFit: 87,
-        investorReadiness: 92,
-        financialHealth: 78
+        analysisProgress: 87,
+        feasibilityScore: 92,
+        aiInsightsReady: true
       });
     }, 1000);
-    
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -134,7 +134,7 @@ const HeroSection = () => {
                     style={{ backgroundColor: currentTheme.colors.primary + '20' }}
                   ></div>
                 </div>
-                
+
                 <div className="relative z-10 bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/30 shadow-2xl hover:shadow-3xl transition-all duration-500">
                   <div className="flex items-center justify-between mb-8">
                     <div>
@@ -146,7 +146,7 @@ const HeroSection = () => {
                       <span className="text-green-400 text-xs font-medium">Live</span>
                     </div>
                   </div>
-                  
+
                   {/* Enhanced Metrics cards with progress bars */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     <motion.div 
@@ -155,67 +155,67 @@ const HeroSection = () => {
                       transition={{ duration: 0.2 }}
                     >
                       <div className="flex items-center justify-between mb-3">
-                        <span className="text-blue-200 text-sm font-medium">Market Fit Score</span>
+                        <span className="text-blue-200 text-sm font-medium">Analysis Progress</span>
                         <TrendingUp className="w-5 h-5 text-blue-400" />
                       </div>
                       <div className="text-3xl font-bold text-blue-400 mb-2">
-                        {Math.round(dashboardMetrics.marketFit)}%
+                        {Math.round(dashboardMetrics.analysisProgress)}%
                       </div>
                       <div className="w-full bg-blue-900/50 rounded-full h-2">
                         <motion.div 
                           className="bg-gradient-to-r from-blue-500 to-cyan-400 h-2 rounded-full"
                           initial={{ width: 0 }}
-                          animate={{ width: `${dashboardMetrics.marketFit}%` }}
+                          animate={{ width: `${dashboardMetrics.analysisProgress}%` }}
                           transition={{ duration: 1.5, ease: "easeOut" }}
                         />
                       </div>
                     </motion.div>
-                    
+
                     <motion.div 
                       className="bg-gradient-to-br from-violet-500/20 to-purple-500/20 rounded-xl p-5 border border-violet-400/30"
                       whileHover={{ scale: 1.02 }}
                       transition={{ duration: 0.2 }}
                     >
                       <div className="flex items-center justify-between mb-3">
-                        <span className="text-violet-200 text-sm font-medium">Investor Readiness</span>
+                        <span className="text-violet-200 text-sm font-medium">Feasibility Score</span>
                         <Target className="w-5 h-5 text-violet-400" />
                       </div>
                       <div className="text-3xl font-bold text-violet-400 mb-2">
-                        {Math.round(dashboardMetrics.investorReadiness)}%
+                        {Math.round(dashboardMetrics.feasibilityScore)}%
                       </div>
                       <div className="w-full bg-violet-900/50 rounded-full h-2">
                         <motion.div 
                           className="bg-gradient-to-r from-violet-500 to-purple-400 h-2 rounded-full"
                           initial={{ width: 0 }}
-                          animate={{ width: `${dashboardMetrics.investorReadiness}%` }}
+                          animate={{ width: `${dashboardMetrics.feasibilityScore}%` }}
                           transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
                         />
                       </div>
                     </motion.div>
-                    
+
                     <motion.div 
                       className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-xl p-5 border border-green-400/30"
                       whileHover={{ scale: 1.02 }}
                       transition={{ duration: 0.2 }}
                     >
                       <div className="flex items-center justify-between mb-3">
-                        <span className="text-green-200 text-sm font-medium">Financial Health</span>
+                        <span className="text-green-200 text-sm font-medium">Azure AI Insights</span>
                         <DollarSign className="w-5 h-5 text-green-400" />
                       </div>
                       <div className="text-3xl font-bold text-green-400 mb-2">
-                        {Math.round(dashboardMetrics.financialHealth)}%
+                        {dashboardMetrics.aiInsightsReady ? 'Ready' : 'Processing'}
                       </div>
                       <div className="w-full bg-green-900/50 rounded-full h-2">
                         <motion.div 
-                          className="bg-gradient-to-r from-green-500 to-emerald-400 h-2 rounded-full"
+                          className={`h-2 rounded-full ${dashboardMetrics.aiInsightsReady ? 'bg-gradient-to-r from-green-500 to-emerald-400' : 'bg-gradient-to-r from-orange-500 to-yellow-400'}`}
                           initial={{ width: 0 }}
-                          animate={{ width: `${dashboardMetrics.financialHealth}%` }}
+                          animate={{ width: '100%' }}
                           transition={{ duration: 1.5, ease: "easeOut", delay: 0.4 }}
                         />
                       </div>
                     </motion.div>
                   </div>
-                  
+
                   {/* Enhanced AI Status */}
                   <div className="text-center bg-white/5 rounded-xl p-4">
                     <div className="flex items-center justify-center space-x-2 mb-3">

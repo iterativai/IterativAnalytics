@@ -1,19 +1,25 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
-import { TrendingUp, Target, DollarSign, Brain } from 'lucide-react';
+import { TrendingUp, Target, DollarSign, Brain, ChartLine, CheckCircle, Lightbulb, TriangleAlert } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardContent } from './ui/card'; // Assuming you have a Card component
 
 interface DashboardMetrics {
-  marketFit: number;
-  investorReadiness: number;
-  financialHealth: number;
+  analysisProgress: number;
+  feasibilityScore: number;
+  aiInsightsReady: boolean;
 }
 
 interface EnhancedDashboardPreviewProps {
   metrics: DashboardMetrics;
 }
 
-export const EnhancedDashboardPreview: React.FC<EnhancedDashboardPreviewProps> = ({ metrics }) => {
+const EnhancedDashboardPreview: React.FC<EnhancedDashboardPreviewProps> = ({ 
+  metrics = { 
+    analysisProgress: 75, 
+    feasibilityScore: 87, 
+    aiInsightsReady: true 
+  } 
+}) => {
   return (
     <motion.div 
       className="relative"
@@ -33,72 +39,137 @@ export const EnhancedDashboardPreview: React.FC<EnhancedDashboardPreviewProps> =
           </div>
         </div>
 
-        {/* Enhanced Metrics cards with progress bars */}
+        {/* Enhanced Dashboard Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <motion.div 
-            className="bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-xl p-5 border border-blue-400/30"
+          {/* Analysis Progress Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
             whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
           >
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-blue-200 text-sm font-medium">Market Fit Score</span>
-              <TrendingUp className="w-5 h-5 text-blue-400" />
-            </div>
-            <div className="text-3xl font-bold text-blue-400 mb-2">
-              {Math.round(metrics.marketFit)}%
-            </div>
-            <div className="w-full bg-blue-900/50 rounded-full h-2">
-              <motion.div 
-                className="bg-gradient-to-r from-blue-500 to-cyan-400 h-2 rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: `${metrics.marketFit}%` }}
-                transition={{ duration: 1.5, ease: "easeOut" }}
-              />
-            </div>
+            <Card className="bg-slate-800/50 border-white/10 h-full">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-lg text-white">Analysis Progress</CardTitle>
+                  <ChartLine className="h-5 w-5 text-blue-400" />
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-400">Document Processing</span>
+                  <span className="text-green-400">Complete</span>
+                </div>
+                <div className="w-full bg-slate-700 rounded-full h-2">
+                  <motion.div 
+                    className="bg-gradient-to-r from-blue-500 to-cyan-400 h-2 rounded-full"
+                    initial={{ width: 0 }}
+                    animate={{ width: "100%" }}
+                    transition={{ duration: 1.5, ease: "easeOut" }}
+                  />
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-400">Market Analysis</span>
+                  <span className="text-yellow-400">In Progress</span>
+                </div>
+                <div className="w-full bg-slate-700 rounded-full h-2">
+                  <motion.div 
+                    className="bg-gradient-to-r from-blue-500 to-cyan-400 h-2 rounded-full"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${metrics.analysisProgress}%` }}
+                    transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
+                  />
+                </div>
+              </CardContent>
+            </Card>
           </motion.div>
 
-          <motion.div 
-            className="bg-gradient-to-br from-violet-500/20 to-purple-500/20 rounded-xl p-5 border border-violet-400/30"
+          {/* Feasibility Score Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
           >
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-violet-200 text-sm font-medium">Investor Readiness</span>
-              <Target className="w-5 h-5 text-violet-400" />
-            </div>
-            <div className="text-3xl font-bold text-violet-400 mb-2">
-              {Math.round(metrics.investorReadiness)}%
-            </div>
-            <div className="w-full bg-violet-900/50 rounded-full h-2">
-              <motion.div 
-                className="bg-gradient-to-r from-violet-500 to-purple-400 h-2 rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: `${metrics.investorReadiness}%` }}
-                transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
-              />
-            </div>
+            <Card className="bg-slate-800/50 border-white/10 h-full">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-lg text-white">Feasibility Score</CardTitle>
+                  <Target className="h-5 w-5 text-purple-400" />
+                </div>
+              </CardHeader>
+              <CardContent className="text-center">
+                <motion.div 
+                  className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-2"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                >
+                  {metrics.feasibilityScore}/100
+                </motion.div>
+                <div className="text-sm text-slate-400 mb-4">High Potential</div>
+                <div className="grid grid-cols-3 gap-2 text-xs">
+                  <div className="text-center">
+                    <div className="text-green-400 font-semibold">92</div>
+                    <div className="text-slate-500">Market</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-blue-400 font-semibold">85</div>
+                    <div className="text-slate-500">Tech</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-purple-400 font-semibold">84</div>
+                    <div className="text-slate-500">Finance</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </motion.div>
 
-          <motion.div 
-            className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-xl p-5 border border-green-400/30"
+          {/* Azure AI Insights Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
           >
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-green-200 text-sm font-medium">Financial Health</span>
-              <DollarSign className="w-5 h-5 text-green-400" />
-            </div>
-            <div className="text-3xl font-bold text-green-400 mb-2">
-              {Math.round(metrics.financialHealth)}%
-            </div>
-            <div className="w-full bg-green-900/50 rounded-full h-2">
-              <motion.div 
-                className="bg-gradient-to-r from-green-500 to-emerald-400 h-2 rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: `${metrics.financialHealth}%` }}
-                transition={{ duration: 1.5, ease: "easeOut", delay: 0.4 }}
-              />
-            </div>
+            <Card className="bg-slate-800/50 border-white/10 h-full">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-lg text-white">Azure AI Insights</CardTitle>
+                  <div className="w-4 h-4 bg-blue-500 rounded"></div>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-3 text-sm">
+                <motion.div 
+                  className="flex items-start gap-2"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                >
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-1 flex-shrink-0" />
+                  <span className="text-slate-300">Strong market opportunity identified in East Africa</span>
+                </motion.div>
+                <motion.div 
+                  className="flex items-start gap-2"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                >
+                  <Lightbulb className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                  <span className="text-slate-300">Consider B2B pivot for faster growth</span>
+                </motion.div>
+                <motion.div 
+                  className="flex items-start gap-2"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.6 }}
+                >
+                  <TriangleAlert className="h-4 w-4 text-orange-400 mt-1 flex-shrink-0" />
+                  <span className="text-slate-300">Regulatory compliance review needed</span>
+                </motion.div>
+              </CardContent>
+            </Card>
           </motion.div>
         </div>
 
@@ -153,3 +224,5 @@ export const EnhancedDashboardPreview: React.FC<EnhancedDashboardPreviewProps> =
     </motion.div>
   );
 };
+
+export default EnhancedDashboardPreview;
