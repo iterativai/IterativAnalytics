@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { featuresList } from "@/lib/constants";
+import DashboardPreview from "@/components/dashboards/DashboardPreview";
 
 // Animation variants
 const containerVariants = {
@@ -244,6 +245,26 @@ const FeaturesSection = () => {
           {filteredFeatures.map((feature, index) => (
             <FeatureCard key={`${activeTab}-${startupOption}-${index}`} feature={feature} index={index} />
           ))}
+        </motion.div>
+
+        {/* Interactive Dashboard Preview */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mt-16"
+        >
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold mb-4">Interactive Dashboard Preview</h3>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Experience the power of our platform with interactive dashboards tailored for each user type.
+              Explore real-time metrics and insights designed for your specific needs.
+            </p>
+          </div>
+          <div className="bg-gray-50 rounded-2xl p-8 border border-gray-200">
+            <DashboardPreview />
+          </div>
         </motion.div>
 
         {/* General Features */}
