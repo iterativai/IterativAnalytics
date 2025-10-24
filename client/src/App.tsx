@@ -22,6 +22,9 @@ import { SectorThemeProvider, ThemeSelectorButton, ThemeSelectionModal, useTheme
 import { ThemeProvider } from '@/context/ThemeContext';
 import HeroSection from '@/components/sections/HeroSection';
 import { AboutSection } from '@/components/sections/AboutSection';
+import { PWAInstallPrompt } from '@/components/PWAInstallPrompt';
+import { PWAUpdatePrompt } from '@/components/PWAUpdatePrompt';
+import { OfflineIndicator } from '@/components/OfflineIndicator';
 
 function AppContent() {
   const [activeFeatureTab, setActiveFeatureTab] = useState('founders');
@@ -125,6 +128,9 @@ function AppContent() {
       <ScrollIndicator />
       <SectionNavigationDots />
       <FloatingActionBubble />
+      <PWAInstallPrompt />
+      <PWAUpdatePrompt />
+      <OfflineIndicator />
       <div id="hero" className={isScrolled ? "pt-16" : ""}>
         <Navbar />
 
