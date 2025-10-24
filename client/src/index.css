@@ -1,5 +1,6 @@
 
 @import './styles/accessibility-improvements.css';
+@import './styles/mobile-first.css';
 
 @tailwind base;
 @tailwind components;
