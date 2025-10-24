@@ -1,18 +1,15 @@
+
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Palette, 
   Briefcase, 
-  Heart, 
-  Cpu, 
-  Leaf, 
-  GraduationCap, 
-  Utensils,
-  Car,
-  Building,
+  TrendingUp, 
+  Users, 
+  Building2,
   Coins,
-  Smartphone,
-  Plane
+  Lightbulb,
+  Handshake
 } from 'lucide-react';
 
 export interface SectorTheme {
@@ -35,8 +32,42 @@ export interface SectorTheme {
 
 export const sectorThemes: SectorTheme[] = [
   {
-    id: 'fintech',
-    name: 'FinTech',
+    id: 'founder',
+    name: 'Founder',
+    icon: Lightbulb,
+    colors: {
+      primary: '#F59E0B', // amber-500
+      secondary: '#D97706', // amber-600
+      accent: '#FBBF24', // amber-400
+      gradient: 'from-amber-500 to-orange-600',
+      textPrimary: '#FFFBEB', // amber-50
+      textSecondary: '#FED7AA', // amber-200
+      background: 'from-amber-950 via-orange-950 to-black',
+      surface: 'amber-800/20',
+      border: 'amber-500/30'
+    },
+    description: 'Bold and innovative color scheme for founders'
+  },
+  {
+    id: 'investor',
+    name: 'Investor',
+    icon: TrendingUp,
+    colors: {
+      primary: '#1E3A8A', // blue-900 (navy)
+      secondary: '#1E40AF', // blue-800
+      accent: '#3B82F6', // blue-500
+      gradient: 'from-blue-900 to-blue-700',
+      textPrimary: '#DBEAFE', // blue-100
+      textSecondary: '#93C5FD', // blue-300
+      background: 'from-blue-950 via-slate-950 to-black',
+      surface: 'blue-900/20',
+      border: 'blue-700/30'
+    },
+    description: 'Professional navy theme for investors'
+  },
+  {
+    id: 'lender',
+    name: 'Lender',
     icon: Coins,
     colors: {
       primary: '#10B981', // emerald-500
@@ -49,80 +80,12 @@ export const sectorThemes: SectorTheme[] = [
       surface: 'emerald-800/20',
       border: 'emerald-500/30'
     },
-    description: 'Financial technology and digital banking'
+    description: 'Trust-building green scheme for lenders'
   },
   {
-    id: 'healthcare',
-    name: 'HealthTech',
-    icon: Heart,
-    colors: {
-      primary: '#EF4444', // red-500
-      secondary: '#DC2626', // red-600
-      accent: '#F87171', // red-400
-      gradient: 'from-red-500 to-pink-600',
-      textPrimary: '#FEF2F2', // red-50
-      textSecondary: '#FECACA', // red-200
-      background: 'from-red-950 via-pink-950 to-black',
-      surface: 'red-800/20',
-      border: 'red-500/30'
-    },
-    description: 'Healthcare and medical technology'
-  },
-  {
-    id: 'tech',
-    name: 'Technology',
-    icon: Cpu,
-    colors: {
-      primary: '#3B82F6', // blue-500
-      secondary: '#2563EB', // blue-600
-      accent: '#60A5FA', // blue-400
-      gradient: 'from-blue-500 to-cyan-600',
-      textPrimary: '#EFF6FF', // blue-50
-      textSecondary: '#BFDBFE', // blue-200
-      background: 'from-blue-950 via-cyan-950 to-black',
-      surface: 'blue-800/20',
-      border: 'blue-500/30'
-    },
-    description: 'Software and technology solutions'
-  },
-  {
-    id: 'investor',
-    name: 'Investor Navy',
-    icon: Coins,
-    colors: {
-      primary: '#1E3A8A', // blue-800 (navy)
-      secondary: '#1E40AF', // blue-700
-      accent: '#3B82F6', // blue-500
-      gradient: 'from-blue-800 to-blue-600',
-      textPrimary: '#DBEAFE', // blue-100
-      textSecondary: '#93C5FD', // blue-300
-      background: 'from-blue-950 via-slate-950 to-black',
-      surface: 'blue-900/20',
-      border: 'blue-700/30'
-    },
-    description: 'Classic navy theme for investors'
-  },
-  {
-    id: 'sustainability',
-    name: 'Sustainability',
-    icon: Leaf,
-    colors: {
-      primary: '#22C55E', // green-500
-      secondary: '#16A34A', // green-600
-      accent: '#4ADE80', // green-400
-      gradient: 'from-green-500 to-emerald-600',
-      textPrimary: '#F0FDF4', // green-50
-      textSecondary: '#BBF7D0', // green-200
-      background: 'from-green-950 via-emerald-950 to-black',
-      surface: 'green-800/20',
-      border: 'green-500/30'
-    },
-    description: 'Environmental and sustainable solutions'
-  },
-  {
-    id: 'education',
-    name: 'EdTech',
-    icon: GraduationCap,
+    id: 'partner',
+    name: 'Partner',
+    icon: Handshake,
     colors: {
       primary: '#8B5CF6', // violet-500
       secondary: '#7C3AED', // violet-600
@@ -134,46 +97,12 @@ export const sectorThemes: SectorTheme[] = [
       surface: 'violet-800/20',
       border: 'violet-500/30'
     },
-    description: 'Educational technology and learning'
+    description: 'Collaborative purple theme for partners'
   },
   {
-    id: 'foodtech',
-    name: 'FoodTech',
-    icon: Utensils,
-    colors: {
-      primary: '#F59E0B', // amber-500
-      secondary: '#D97706', // amber-600
-      accent: '#FBD966', // amber-400
-      gradient: 'from-amber-500 to-orange-600',
-      textPrimary: '#FFFBEB', // amber-50
-      textSecondary: '#FED7AA', // amber-200
-      background: 'from-amber-950 via-orange-950 to-black',
-      surface: 'amber-800/20',
-      border: 'amber-500/30'
-    },
-    description: 'Food and beverage technology'
-  },
-  {
-    id: 'mobility',
-    name: 'Mobility',
-    icon: Car,
-    colors: {
-      primary: '#06B6D4', // cyan-500
-      secondary: '#0891B2', // cyan-600
-      accent: '#22D3EE', // cyan-400
-      gradient: 'from-cyan-500 to-blue-600',
-      textPrimary: '#ECFEFF', // cyan-50
-      textSecondary: '#A5F3FC', // cyan-200
-      background: 'from-cyan-950 via-blue-950 to-black',
-      surface: 'cyan-800/20',
-      border: 'cyan-500/30'
-    },
-    description: 'Transportation and mobility solutions'
-  },
-  {
-    id: 'proptech',
-    name: 'PropTech',
-    icon: Building,
+    id: 'enterprise',
+    name: 'Enterprise',
+    icon: Building2,
     colors: {
       primary: '#64748B', // slate-500
       secondary: '#475569', // slate-600
@@ -185,7 +114,58 @@ export const sectorThemes: SectorTheme[] = [
       surface: 'slate-800/20',
       border: 'slate-500/30'
     },
-    description: 'Real estate and property technology'
+    description: 'Corporate gray theme for enterprise users'
+  },
+  {
+    id: 'analyst',
+    name: 'Analyst',
+    icon: Briefcase,
+    colors: {
+      primary: '#06B6D4', // cyan-500
+      secondary: '#0891B2', // cyan-600
+      accent: '#22D3EE', // cyan-400
+      gradient: 'from-cyan-500 to-blue-600',
+      textPrimary: '#ECFEFF', // cyan-50
+      textSecondary: '#A5F3FC', // cyan-200
+      background: 'from-cyan-950 via-blue-950 to-black',
+      surface: 'cyan-800/20',
+      border: 'cyan-500/30'
+    },
+    description: 'Data-focused cyan theme for analysts'
+  },
+  {
+    id: 'advisor',
+    name: 'Advisor',
+    icon: Users,
+    colors: {
+      primary: '#EF4444', // red-500
+      secondary: '#DC2626', // red-600
+      accent: '#F87171', // red-400
+      gradient: 'from-red-500 to-pink-600',
+      textPrimary: '#FEF2F2', // red-50
+      textSecondary: '#FECACA', // red-200
+      background: 'from-red-950 via-pink-950 to-black',
+      surface: 'red-800/20',
+      border: 'red-500/30'
+    },
+    description: 'Attention-grabbing red theme for advisors'
+  },
+  {
+    id: 'mentor',
+    name: 'Mentor',
+    icon: Lightbulb,
+    colors: {
+      primary: '#14B8A6', // teal-500
+      secondary: '#0D9488', // teal-600
+      accent: '#2DD4BF', // teal-400
+      gradient: 'from-teal-500 to-cyan-600',
+      textPrimary: '#F0FDFA', // teal-50
+      textSecondary: '#99F6E4', // teal-200
+      background: 'from-teal-950 via-cyan-950 to-black',
+      surface: 'teal-800/20',
+      border: 'teal-500/30'
+    },
+    description: 'Supportive teal theme for mentors'
   }
 ];
 
@@ -209,7 +189,7 @@ export const useTheme = () => {
 
 // Theme Provider
 export const SectorThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [currentTheme, setCurrentTheme] = useState<SectorTheme>(sectorThemes[0]); // Default to FinTech
+  const [currentTheme, setCurrentTheme] = useState<SectorTheme>(sectorThemes[0]); // Default to Founder
   const [isThemeModalOpen, setIsThemeModalOpen] = useState(false);
 
   const setTheme = (theme: SectorTheme) => {
@@ -330,8 +310,8 @@ export const ThemeSelectionModal = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="text-center mb-6">
-              <h2 className="text-2xl font-bold text-white mb-2">Choose Your Business Sector</h2>
-              <p className="text-gray-400">Select a theme that matches your industry focus</p>
+              <h2 className="text-2xl font-bold text-white mb-2">Choose Your User Type Theme</h2>
+              <p className="text-gray-400">Select a color scheme that matches your role</p>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
