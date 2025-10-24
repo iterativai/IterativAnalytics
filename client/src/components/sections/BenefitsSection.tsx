@@ -49,10 +49,10 @@ const BenefitsSection = () => {
             viewport={{ once: true }}
           >
             <div className="max-w-lg">
-              <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary font-medium text-sm mb-4">Benefits</span>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Why Businesses Choose Iterativ Planner</h2>
+              <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary font-medium text-sm mb-4">Real Results</span>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">Measurable Impact on Your Business</h2>
               <p className="text-lg text-gray-600 mb-8">
-                Our platform delivers tangible results that improve decision-making, save time, and drive business growth.
+                Join successful startups and investors who have transformed their business planning with data-driven insights.
               </p>
               
               <motion.div 

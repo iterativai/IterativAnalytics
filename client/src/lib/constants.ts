@@ -15,27 +15,27 @@ export const PLAN_TYPES = {
   MARKETING_PLAN: 'marketing_plan',
 };
 
-// Benefits for the landing page
+// Benefits for the landing page (outcome-focused)
 export const benefits = [
   {
-    title: "AI-Powered Analysis",
-    description: "Our intelligent algorithms analyze your business plans against thousands of successful models to provide actionable insights.",
-    icon: "fas fa-robot"
-  },
-  {
-    title: "Time Efficiency",
-    description: "Reduce planning time by 70% and focus on implementing your strategy rather than refining documents.",
+    title: "70% Faster Planning Cycles",
+    description: "Cut weeks of work into days. Our AI handles the heavy lifting while you focus on strategy and execution.",
     icon: "fas fa-clock"
   },
   {
-    title: "Investor-Ready Documents",
-    description: "Create professional, comprehensive business plans that meet investor expectations and increase funding potential.",
-    icon: "fas fa-file-invoice-dollar"
+    title: "3x Higher Funding Success",
+    description: "Companies using our platform secure funding 3 times more often than traditional approaches.",
+    icon: "fas fa-trophy"
   },
   {
-    title: "Continuous Optimization",
-    description: "Receive ongoing recommendations to keep your business plans current and optimized as markets evolve.",
+    title: "Real-Time Market Insights",
+    description: "Stay ahead with continuous benchmarking against industry standards and competitor analysis.",
     icon: "fas fa-chart-line"
+  },
+  {
+    title: "Investor-Grade Quality",
+    description: "Every document is optimized to meet investor expectations and pass due diligence with confidence.",
+    icon: "fas fa-award"
   }
 ];
 

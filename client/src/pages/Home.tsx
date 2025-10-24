@@ -5,7 +5,6 @@ import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/sections/HeroSection";
 import TrustedBySection from "@/components/sections/TrustedBySection";
 import FeaturesSection from "@/components/sections/FeaturesSection";
-import HowItWorksSection from "@/components/sections/HowItWorksSection";
 import BenefitsSection from "@/components/sections/BenefitsSection";
 import StatsSection from "@/components/sections/StatsSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
@@ -56,7 +55,6 @@ const Home = () => {
           <HeroSection />
           <TrustedBySection />
           <FeaturesSection />
-          <HowItWorksSection />
           <StatsSection />
           <BenefitsSection />
           <TestimonialsSection />

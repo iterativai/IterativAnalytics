@@ -95,23 +95,23 @@ const FeaturesSection = () => {
           >
             Features
           </motion.span>
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
             viewport={{ once: true }}
             className="text-3xl md:text-4xl font-bold mb-4"
           >
-            Everything You Need for Successful Business Planning
+            Powerful Tools for Every Stage
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
             className="text-lg text-gray-600"
           >
-            Our AI-powered platform provides all the tools you need to plan, model, and present your business with confidence.
+            Choose your path: upload existing plans for instant feedback, or build from scratch with AI guidance. Tailored solutions for startups, investors, and partners.
           </motion.p>
         </div>
 
@@ -247,22 +247,90 @@ const FeaturesSection = () => {
           ))}
         </motion.div>
 
+        {/* How It Works Quick Steps */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mt-20"
+        >
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-bold mb-4">How It Works</h3>
+            <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+              Get started in minutes with our intuitive, AI-powered workflow
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <div className="relative mb-6">
+                <div className="w-20 h-20 mx-auto bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
+                  <i className="fas fa-upload text-3xl text-white"></i>
+                </div>
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-sm">1</div>
+              </div>
+              <h4 className="text-xl font-bold mb-3">Upload Documents</h4>
+              <p className="text-gray-600">Upload your business plans, pitch decks, or financial models in seconds</p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <div className="relative mb-6">
+                <div className="w-20 h-20 mx-auto bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                  <i className="fas fa-brain text-3xl text-white"></i>
+                </div>
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-sm">2</div>
+              </div>
+              <h4 className="text-xl font-bold mb-3">AI Analysis</h4>
+              <p className="text-gray-600">Our AI analyzes your documents against industry benchmarks and investor expectations</p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <div className="relative mb-6">
+                <div className="w-20 h-20 mx-auto bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
+                  <i className="fas fa-chart-line text-3xl text-white"></i>
+                </div>
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-sm">3</div>
+              </div>
+              <h4 className="text-xl font-bold mb-3">Get Insights</h4>
+              <p className="text-gray-600">Receive actionable recommendations and track improvements in real-time</p>
+            </motion.div>
+          </div>
+        </motion.div>
+
         {/* Interactive Dashboard Preview */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mt-16"
+          className="mt-20"
         >
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold mb-4">Interactive Dashboard Preview</h3>
+            <h3 className="text-2xl font-bold mb-4">See It In Action</h3>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Experience the power of our platform with interactive dashboards tailored for each user type.
-              Explore real-time metrics and insights designed for your specific needs.
+              Experience the power of our platform with interactive dashboards tailored for each user type
             </p>
           </div>
-          <div className="bg-gray-50 rounded-2xl p-8 border border-gray-200">
+          <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm">
             <DashboardPreview />
           </div>
         </motion.div>
