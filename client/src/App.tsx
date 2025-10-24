@@ -21,6 +21,7 @@ import { DarkModeToggle, ParallaxBackground, ScrollIndicator, EnhancedButton, Re
 import { SectorThemeProvider, ThemeSelectorButton, ThemeSelectionModal, useTheme } from '@/components/ui/sector-theme-selector';
 import { ThemeProvider } from '@/context/ThemeContext';
 import HeroSection from '@/components/sections/HeroSection';
+import { AboutSection } from '@/components/sections/AboutSection';
 
 function AppContent() {
   const [activeFeatureTab, setActiveFeatureTab] = useState('founders');
@@ -134,39 +135,8 @@ function AppContent() {
       <FloatingUrgencyBanner />
       <CountdownBanner />
 
-      {/* What Is Iterativ Section */}
-      <div id="about">
-        <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-900/50 backdrop-blur">
-          <div className="max-w-7xl mx-auto">
-            <FadeIn>
-              <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                  <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                    Transforming Venture Intelligence & Inclusion
-                  </span>
-                </h2>
-                <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                  The complete African startup ecosystem platform integrating three specialized modules: AI-powered business planning, blockchain capital markets, and intelligent supply chain management.
-                </p>
-              </div>
-            </FadeIn>
-
-            <Stagger staggerDelay={0.2}>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {features.map((feature, index) => (
-                  <FeatureCard
-                    key={index}
-                    icon={feature.icon}
-                    title={feature.title}
-                    description={feature.description}
-                    variant="glass"
-                  />
-                ))}
-              </div>
-            </Stagger>
-          </div>
-        </section>
-      </div>
+      {/* About Section */}
+      <AboutSection />
 
       {/* Solutions Section */}
       <div id="solutions">

@@ -213,6 +213,22 @@ export const SectorThemeProvider = ({ children }: { children: React.ReactNode })
       // Apply default theme
       applyThemeToCSS(currentTheme);
     }
+
+    // Listen for user type theme changes
+    const handleUserTypeThemeChange = (event: CustomEvent) => {
+      const { themeId } = event.detail;
+      const newTheme = sectorThemes.find(theme => theme.id === themeId);
+      if (newTheme) {
+        setCurrentTheme(newTheme);
+        applyThemeToCSS(newTheme);
+      }
+    };
+
+    window.addEventListener('userTypeThemeChange', handleUserTypeThemeChange as EventListener);
+    
+    return () => {
+      window.removeEventListener('userTypeThemeChange', handleUserTypeThemeChange as EventListener);
+    };
   }, []);
 
   const applyThemeToCSS = (theme: SectorTheme) => {

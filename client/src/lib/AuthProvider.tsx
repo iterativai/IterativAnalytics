@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 import { auth, formatFirebaseUser, handleRedirectResult, handleSignOut } from './firebase';
 import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useToast } from '@/hooks/use-toast';
+import { sectorThemes } from '@/components/ui/sector-theme-selector';
 
 // Define the User type
 export type User = {
@@ -32,13 +33,26 @@ const AuthContext = createContext<AuthContextType>({
   logout: async () => { throw new Error('AuthContext not initialized') },
 });
 
+// Map user types to theme IDs
+const userTypeToThemeMap: Record<string, string> = {
+  'startup': 'founder',
+  'founder': 'founder',
+  'investor': 'investor',
+  'partner': 'partner',
+  'lender': 'lender',
+  'enterprise': 'enterprise',
+  'analyst': 'analyst',
+  'advisor': 'advisor',
+  'mentor': 'mentor'
+};
+
 // Create a provider component
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
-  
+
   // Login with email and password
   const login = async (email: string, password: string): Promise<void> => {
     try {
@@ -49,28 +63,38 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       throw error;
     }
   };
-  
+
   // Register a new user
   const register = async (email: string, password: string, userType: string): Promise<void> => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const displayName = email.split('@')[0]; // Use part of email as display name
-      
+
       // Update the user profile with display name and custom claims
       await updateProfile(userCredential.user, {
         displayName: displayName
       });
-      
+
       // Store user type in localStorage for now (ideally would be stored in database)
       localStorage.setItem(`userType_${userCredential.user.uid}`, userType);
-      
+
+      // Auto-select theme based on user type
+      const themeId = userTypeToThemeMap[userType.toLowerCase()] || 'founder';
+      const selectedTheme = sectorThemes.find(theme => theme.id === themeId);
+
+      if (selectedTheme) {
+        localStorage.setItem('preferred-sector-theme', themeId);
+        // Dispatch custom event to notify theme selector
+        window.dispatchEvent(new CustomEvent('userTypeThemeChange', { detail: { themeId } }));
+      }
+
       // Auth state change will be handled by the onAuthStateChanged listener
     } catch (error: any) {
       console.error('Registration error:', error);
       throw error;
     }
   };
-  
+
   // Logout function
   const logout = async (): Promise<void> => {
     try {
@@ -100,7 +124,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           // Convert Firebase user to our app's user format
           const formattedUser = formatFirebaseUser(firebaseUser);
           setUser(formattedUser);
-          
+
           // Only show welcome toast when user is new or just logged in
           // To prevent showing on every page refresh
           const lastLoginTime = sessionStorage.getItem('lastLoginTime');
@@ -115,12 +139,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         } else {
           setUser(null);
         }
-        
+
         setLoading(false);
       },
       (error: any) => {
         console.error("Auth state change error:", error);
-        
+
         // Format more user-friendly error messages
         let errorMessage = "Authentication error. Please try again.";
         if (error.code === 'auth/unauthorized-domain') {
@@ -128,14 +152,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         } else if (error.code === 'auth/internal-error') {
           errorMessage = "Authentication service is experiencing issues. Please try again later.";
         }
-        
+
         setError(errorMessage);
         toast({
           title: "Authentication Error",
           description: errorMessage,
           variant: "destructive",
         });
-        
+
         setLoading(false);
       }
     );
