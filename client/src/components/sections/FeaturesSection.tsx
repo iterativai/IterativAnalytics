@@ -480,7 +480,7 @@ const FeaturesSection = () => {
               Experience the power of our platform with interactive dashboards tailored for each user type
             </motion.p>
           </div>
-          <div className="bg-gradient-to-br from-white to-gray-50/50 dark:from-gray-900 dark:to-gray-800/50 rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 border border-gray-200/50 dark:border-gray-700/50 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+          <div className="rounded-xl sm:rounded-2xl md:rounded-3xl overflow-hidden">
             <DashboardPreview />
           </div>
         </motion.div>

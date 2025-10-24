@@ -1,235 +1,342 @@
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { TrendingUp, Target, DollarSign, Brain, ChartLine, CheckCircle, Lightbulb, TriangleAlert, MapPin } from 'lucide-react';
-import { Card, CardHeader, CardTitle, CardContent } from './card';
+import { useState, useEffect } from 'react';
+import { TrendingUp, Target, DollarSign, Brain, LineChart, CheckCircle, Lightbulb, TriangleAlert, MapPin, Zap, ArrowUpRight, Activity, Sparkles } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
-interface DashboardMetrics {
-  analysisProgress: number;
-  feasibilityScore: number;
-  aiInsightsReady: boolean;
-}
-
-interface EnhancedDashboardPreviewProps {
-  metrics: DashboardMetrics;
-}
-
-const EnhancedDashboardPreview: React.FC<EnhancedDashboardPreviewProps> = ({ 
+const EnhancedDashboardPreview = ({ 
   metrics = { 
     analysisProgress: 75, 
     feasibilityScore: 87, 
     aiInsightsReady: true 
   } 
 }) => {
+  const [animatedScore, setAnimatedScore] = useState(0);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [pulseIndex, setPulseIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (animatedScore < metrics.feasibilityScore) {
+        setAnimatedScore(prev => Math.min(prev + 1, metrics.feasibilityScore));
+      }
+    }, 20);
+    return () => clearTimeout(timer);
+  }, [animatedScore, metrics.feasibilityScore]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPulseIndex(prev => (prev + 1) % 3);
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
+
+  const insights = [
+    { icon: CheckCircle, color: 'text-green-400', bg: 'bg-green-400/10', text: 'Strong market opportunity identified in East Africa', trend: '+24%' },
+    { icon: MapPin, color: 'text-yellow-400', bg: 'bg-yellow-400/10', text: 'Consider B2B pivot for faster growth', trend: '3x ROI' },
+    { icon: TriangleAlert, color: 'text-orange-400', bg: 'bg-orange-400/10', text: 'Regulatory compliance review needed', trend: 'Priority' }
+  ];
+
+  const metrics_data = [
+    { label: 'Market', value: 92, color: 'text-green-400', gradient: 'from-green-400 to-emerald-500' },
+    { label: 'Tech', value: 85, color: 'text-blue-400', gradient: 'from-blue-400 to-cyan-500' },
+    { label: 'Finance', value: 84, color: 'text-purple-400', gradient: 'from-purple-400 to-pink-500' }
+  ];
+
   return (
-    <motion.div 
-      className="relative"
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.8, delay: 0.3 }}
-    >
-      <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/30 shadow-2xl hover:shadow-3xl transition-all duration-500">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h3 className="text-xl font-bold text-white mb-1">AI Business Intelligence</h3>
-            <p className="text-white/60 text-sm">Live Analytics Dashboard</p>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-            <span className="text-green-400 text-xs font-medium">Live</span>
-          </div>
+    <>
+      <style>{`
+        @keyframes shimmer {
+          0% { background-position: -1000px 0; }
+          100% { background-position: 1000px 0; }
+        }
+        
+        @keyframes glow {
+          0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+          50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.6); }
+        }
+        
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes slideInRight {
+          from { opacity: 0; transform: translateX(20px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .shimmer-effect {
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+          background-size: 1000px 100%;
+          animation: shimmer 3s infinite;
+        }
+        
+        .glow-effect {
+          animation: glow 2s ease-in-out infinite;
+        }
+        
+        .float-animation {
+          animation: float 3s ease-in-out infinite;
+        }
+        
+        .slide-in {
+          animation: slideInRight 0.8s ease-out forwards;
+        }
+        
+        .gradient-border {
+          position: relative;
+          background: linear-gradient(145deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
+        }
+        
+        .gradient-border::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: 1rem;
+          padding: 1px;
+          background: linear-gradient(145deg, rgba(59, 130, 246, 0.3), rgba(147, 51, 234, 0.3));
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+        }
+      `}</style>
+      
+      <div 
+        className="relative slide-in"
+        style={{ animationDelay: '0.3s' }}
+      >
+        {/* Background gradient orbs */}
+        <div className="absolute inset-0 overflow-hidden rounded-3xl pointer-events-none">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl float-animation" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl float-animation" style={{ animationDelay: '1.5s' }} />
         </div>
 
-        {/* Enhanced Dashboard Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {/* Analysis Progress Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            whileHover={{ scale: 1.02 }}
-            className="bg-slate-800/80 backdrop-blur border border-slate-700/50 rounded-2xl p-6 h-full"
-          >
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-white text-lg font-semibold">Analysis Progress</h3>
-              <div className="w-6 h-6 bg-blue-500 rounded flex items-center justify-center">
-                <ChartLine className="h-4 w-4 text-white" />
+        <div className="relative bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl hover:border-white/20 transition-all duration-500">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-6 sm:mb-8">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <Sparkles className="w-5 h-5 text-blue-400" />
+                <h3 className="text-lg sm:text-xl font-bold text-white">AI Business Intelligence</h3>
               </div>
+              <p className="text-white/60 text-xs sm:text-sm">Real-time Analytics Dashboard</p>
             </div>
-            
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-slate-300 text-sm">Document Processing</span>
-                  <span className="text-green-400 text-sm font-medium">Complete</span>
-                </div>
-                <div className="w-full bg-slate-700 rounded-full h-2">
-                  <motion.div 
-                    className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full"
-                    initial={{ width: 0 }}
-                    animate={{ width: "100%" }}
-                    transition={{ duration: 1.5, ease: "easeOut" }}
-                  />
-                </div>
-              </div>
-              
-              <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-slate-300 text-sm">Market Analysis</span>
-                  <span className="text-yellow-400 text-sm font-medium">In Progress</span>
-                </div>
-                <div className="w-full bg-slate-700 rounded-full h-2">
-                  <motion.div 
-                    className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full"
-                    initial={{ width: 0 }}
-                    animate={{ width: "75%" }}
-                    transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
-                  />
-                </div>
-              </div>
+            <div className="flex items-center space-x-2 px-3 py-1.5 bg-green-500/10 rounded-full border border-green-500/20">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+              <span className="text-green-400 text-xs font-medium">Live</span>
             </div>
-          </motion.div>
-
-          {/* Feasibility Score Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            whileHover={{ scale: 1.02 }}
-            className="bg-slate-800/80 backdrop-blur border border-slate-700/50 rounded-2xl p-6 h-full"
-          >
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-white text-lg font-semibold">Feasibility Score</h3>
-              <div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center">
-                <Target className="h-4 w-4 text-white" />
-              </div>
-            </div>
-            
-            <div className="text-center space-y-4">
-              <motion.div 
-                className="text-5xl font-bold text-blue-400"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-              >
-                87<span className="text-3xl text-slate-400">/100</span>
-              </motion.div>
-              
-              <div className="text-slate-300 text-sm font-medium">High Potential</div>
-              
-              <div className="grid grid-cols-3 gap-4 mt-6">
-                <div className="text-center">
-                  <div className="text-green-400 font-bold text-lg">92</div>
-                  <div className="text-slate-400 text-xs">Market</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-blue-400 font-bold text-lg">85</div>
-                  <div className="text-slate-400 text-xs">Tech</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-purple-400 font-bold text-lg">84</div>
-                  <div className="text-slate-400 text-xs">Finance</div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Azure AI Insights Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            whileHover={{ scale: 1.02 }}
-            className="bg-slate-800/80 backdrop-blur border border-slate-700/50 rounded-2xl p-6 h-full"
-          >
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-white text-lg font-semibold">Azure AI Insights</h3>
-              <div className="w-6 h-6 bg-blue-500 rounded"></div>
-            </div>
-            
-            <div className="space-y-4">
-              <motion.div 
-                className="flex items-start gap-3"
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-              >
-                <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-slate-300 text-sm leading-relaxed">Strong market opportunity identified in East Africa</span>
-              </motion.div>
-              
-              <motion.div 
-                className="flex items-start gap-3"
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-              >
-                <MapPin className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                <span className="text-slate-300 text-sm leading-relaxed">Consider B2B pivot for faster growth</span>
-              </motion.div>
-              
-              <motion.div 
-                className="flex items-start gap-3"
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-              >
-                <TriangleAlert className="h-5 w-5 text-orange-400 mt-0.5 flex-shrink-0" />
-                <span className="text-slate-300 text-sm leading-relaxed">Regulatory compliance review needed</span>
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Enhanced AI Status */}
-        <div className="text-center bg-white/5 rounded-xl p-4">
-          <div className="flex items-center justify-center space-x-2 mb-3">
-            <Brain className="w-5 h-5 text-orange-400" />
-            <p className="text-white/80 font-medium">AI Engine Processing</p>
           </div>
-          <div className="flex justify-center space-x-2">
-            <motion.div 
-              className="w-3 h-3 bg-orange-400 rounded-full"
-              animate={{ 
-                scale: [1, 1.2, 1],
-                opacity: [0.7, 1, 0.7]
+
+          {/* Dashboard Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+            {/* Analysis Progress Card */}
+            <div
+              onMouseEnter={() => setHoveredCard(0)}
+              onMouseLeave={() => setHoveredCard(null)}
+              className="gradient-border rounded-2xl p-4 sm:p-6 h-full transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              style={{
+                transform: hoveredCard === 0 ? 'translateY(-4px)' : 'translateY(0)'
               }}
-              transition={{ 
-                duration: 1.5, 
-                repeat: Infinity,
-                repeatType: "loop"
+            >
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
+                <h3 className="text-white text-sm sm:text-lg font-semibold">Analysis Progress</h3>
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center shadow-lg">
+                  <LineChart className="h-4 w-4 text-white" />
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-300 text-xs sm:text-sm">Document Processing</span>
+                    <span className="text-green-400 text-xs sm:text-sm font-medium flex items-center gap-1">
+                      <CheckCircle className="w-3 h-3" />
+                      Complete
+                    </span>
+                  </div>
+                  <div className="w-full bg-slate-700/50 rounded-full h-2 overflow-hidden">
+                    <div 
+                      className="bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 h-2 rounded-full shimmer-effect"
+                      style={{ width: '100%' }}
+                    />
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-300 text-xs sm:text-sm">Market Analysis</span>
+                    <span className="text-yellow-400 text-xs sm:text-sm font-medium flex items-center gap-1">
+                      <Activity className="w-3 h-3 animate-pulse" />
+                      In Progress
+                    </span>
+                  </div>
+                  <div className="w-full bg-slate-700/50 rounded-full h-2 overflow-hidden">
+                    <div 
+                      className="bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 h-2 rounded-full shimmer-effect"
+                      style={{ width: '75%' }}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-300 text-xs sm:text-sm">Financial Modeling</span>
+                    <span className="text-slate-400 text-xs sm:text-sm font-medium">Queued</span>
+                  </div>
+                  <div className="w-full bg-slate-700/50 rounded-full h-2">
+                    <div className="bg-slate-600 h-2 rounded-full" style={{ width: '0%' }} />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Feasibility Score Card */}
+            <div
+              onMouseEnter={() => setHoveredCard(1)}
+              onMouseLeave={() => setHoveredCard(null)}
+              className="gradient-border rounded-2xl p-4 sm:p-6 h-full transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              style={{
+                transform: hoveredCard === 1 ? 'translateY(-4px)' : 'translateY(0)'
               }}
-            />
-            <motion.div 
-              className="w-3 h-3 bg-pink-400 rounded-full"
-              animate={{ 
-                scale: [1, 1.2, 1],
-                opacity: [0.7, 1, 0.7]
+            >
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
+                <h3 className="text-white text-sm sm:text-lg font-semibold">Feasibility Score</h3>
+                <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center shadow-lg">
+                  <Target className="h-4 w-4 text-white" />
+                </div>
+              </div>
+              
+              <div className="text-center space-y-4">
+                <div className="relative inline-block">
+                  <div className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+                    {animatedScore}<span className="text-2xl sm:text-3xl text-slate-400">/100</span>
+                  </div>
+                  {hoveredCard === 1 && (
+                    <div className="absolute -right-6 top-0">
+                      <TrendingUp className="w-5 h-5 text-green-400 animate-bounce" />
+                    </div>
+                  )}
+                </div>
+                
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-500/10 rounded-full border border-green-500/20">
+                  <div className="w-2 h-2 bg-green-400 rounded-full" />
+                  <span className="text-green-400 text-xs sm:text-sm font-medium">High Potential</span>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-4 sm:mt-6">
+                  {metrics_data.map((metric, idx) => (
+                    <div key={idx} className="text-center group">
+                      <div className={`${metric.color} font-bold text-base sm:text-lg mb-1 group-hover:scale-110 transition-transform`}>
+                        {metric.value}
+                      </div>
+                      <div className="text-slate-400 text-xs mb-2">{metric.label}</div>
+                      <div className="w-full bg-slate-700/50 rounded-full h-1.5 overflow-hidden">
+                        <div 
+                          className={`bg-gradient-to-r ${metric.gradient} h-1.5 rounded-full`}
+                          style={{ width: `${metric.value}%` }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Azure AI Insights Card */}
+            <div
+              onMouseEnter={() => setHoveredCard(2)}
+              onMouseLeave={() => setHoveredCard(null)}
+              className="gradient-border rounded-2xl p-4 sm:p-6 h-full transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              style={{
+                transform: hoveredCard === 2 ? 'translateY(-4px)' : 'translateY(0)'
               }}
-              transition={{ 
-                duration: 1.5, 
-                repeat: Infinity,
-                repeatType: "loop",
-                delay: 0.3
-              }}
-            />
-            <motion.div 
-              className="w-3 h-3 bg-blue-400 rounded-full"
-              animate={{ 
-                scale: [1, 1.2, 1],
-                opacity: [0.7, 1, 0.7]
-              }}
-              transition={{ 
-                duration: 1.5, 
-                repeat: Infinity,
-                repeatType: "loop",
-                delay: 0.6
-              }}
-            />
+            >
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
+                <h3 className="text-white text-sm sm:text-lg font-semibold">AI Insights</h3>
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-lg flex items-center justify-center shadow-lg">
+                  <Zap className="h-4 w-4 text-white" />
+                </div>
+              </div>
+              
+              <div className="space-y-3 sm:space-y-4">
+                {insights.map((insight, idx) => {
+                  const Icon = insight.icon;
+                  return (
+                    <div 
+                      key={idx}
+                      className="flex items-start gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-300 group cursor-pointer"
+                      style={{
+                        opacity: 0,
+                        animation: `slideInRight 0.5s ease-out ${0.4 + idx * 0.1}s forwards`
+                      }}
+                    >
+                      <div className={`${insight.bg} p-2 rounded-lg flex-shrink-0`}>
+                        <Icon className={`h-4 w-4 ${insight.color}`} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <span className="text-slate-300 text-xs sm:text-sm leading-relaxed block">{insight.text}</span>
+                        <span className={`${insight.color} text-xs font-medium mt-1 inline-flex items-center gap-1`}>
+                          {insight.trend}
+                          <ArrowUpRight className="w-3 h-3" />
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* Enhanced AI Status Bar */}
+          <div className="relative overflow-hidden bg-gradient-to-r from-slate-800/80 via-slate-700/80 to-slate-800/80 rounded-xl p-4 border border-white/5">
+            <div className="absolute inset-0 shimmer-effect" />
+            <div className="relative flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-pink-500 rounded-lg flex items-center justify-center shadow-lg">
+                  <Brain className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-white font-medium text-sm sm:text-base">AI Engine Processing</p>
+                  <p className="text-slate-400 text-xs">Analyzing business model...</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center space-x-2">
+                {[0, 1, 2].map((idx) => (
+                  <div 
+                    key={idx}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      pulseIndex === idx 
+                        ? 'bg-gradient-to-r from-orange-400 to-pink-400 scale-125' 
+                        : 'bg-slate-600 scale-100'
+                    }`}
+                    style={{
+                      boxShadow: pulseIndex === idx ? '0 0 20px rgba(251, 146, 60, 0.6)' : 'none'
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Stats Footer */}
+          <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-6">
+            <div className="text-center p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-all cursor-pointer group">
+              <div className="text-blue-400 font-bold text-lg sm:text-xl group-hover:scale-110 transition-transform">24</div>
+              <div className="text-slate-400 text-xs mt-1">Insights</div>
+            </div>
+            <div className="text-center p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-all cursor-pointer group">
+              <div className="text-purple-400 font-bold text-lg sm:text-xl group-hover:scale-110 transition-transform">12</div>
+              <div className="text-slate-400 text-xs mt-1">Reports</div>
+            </div>
+            <div className="text-center p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-all cursor-pointer group">
+              <div className="text-green-400 font-bold text-lg sm:text-xl group-hover:scale-110 transition-transform">8</div>
+              <div className="text-slate-400 text-xs mt-1">Actions</div>
+            </div>
           </div>
         </div>
       </div>
-    </motion.div>
+    </>
   );
 };
 
