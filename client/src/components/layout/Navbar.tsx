@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -52,11 +51,11 @@ export const Navbar = () => {
 
   return (
     <>
-      <motion.nav 
+      <motion.nav
         className={cn(
           "sticky top-0 z-50 transition-all duration-500 ease-out",
-          isScrolled 
-            ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow-lg border-b border-gray-200/20 dark:border-gray-700/20" 
+          isScrolled
+            ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow-lg border-b border-gray-200/20 dark:border-gray-700/20"
             : "bg-transparent"
         )}
         initial={{ y: -100 }}
@@ -66,8 +65,8 @@ export const Navbar = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             {/* Enhanced Logo */}
-            <motion.button 
-              onClick={() => scrollToSection('hero')} 
+            <motion.button
+              onClick={() => scrollToSection('hero')}
               className="flex items-center space-x-3 hover:opacity-80 transition-all duration-300 group"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -92,13 +91,13 @@ export const Navbar = () => {
             <div className="hidden lg:flex items-center justify-center flex-1 mx-12">
               <div className="flex items-center space-x-1 bg-gray-50/50 dark:bg-gray-800/50 rounded-full px-2 py-1 backdrop-blur-sm border border-gray-200/20 dark:border-gray-700/20">
                 {navItems.map((item, index) => (
-                  <motion.button 
+                  <motion.button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
                     className={cn(
                       "relative px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105",
-                      activeSection === item.id 
-                        ? "text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg" 
+                      activeSection === item.id
+                        ? "text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg"
                         : "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-white/60 dark:hover:bg-gray-700/60"
                     )}
                     whileHover={{ y: -1 }}
@@ -135,7 +134,7 @@ export const Navbar = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Button 
+                <Button
                   onClick={() => scrollToSection('waitlist')}
                   size="lg"
                   className="hidden md:inline-flex relative overflow-hidden bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:via-indigo-700 hover:to-purple-700 text-white font-semibold px-6 py-2.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 border-0"
@@ -200,13 +199,13 @@ export const Navbar = () => {
             >
               <div className="px-6 py-6 space-y-4">
                 {navItems.map((item, index) => (
-                  <motion.button 
+                  <motion.button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
                     className={cn(
                       "w-full text-left py-3 px-4 rounded-xl font-medium transition-all duration-300 hover:scale-[1.02]",
-                      activeSection === item.id 
-                        ? "text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg" 
+                      activeSection === item.id
+                        ? "text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg"
                         : "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100/60 dark:hover:bg-gray-800/60"
                     )}
                     initial={{ x: -50, opacity: 0 }}
@@ -217,7 +216,7 @@ export const Navbar = () => {
                     {item.label}
                   </motion.button>
                 ))}
-                
+
                 {/* Mobile Actions */}
                 <div className="border-t border-gray-200/20 dark:border-gray-700/20 pt-4 space-y-4">
                   <div className="flex justify-center">
@@ -230,7 +229,7 @@ export const Navbar = () => {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.4 }}
                   >
-                    <Button 
+                    <Button
                       onClick={() => {
                         scrollToSection('waitlist');
                         setShowMobileMenu(false);
