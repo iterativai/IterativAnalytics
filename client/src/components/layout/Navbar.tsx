@@ -80,7 +80,7 @@ export const Navbar = () => {
               </div>
               <div className="flex flex-col items-start">
                 <span className="font-bold text-xl text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  Iterativ Analytics
+                  IterativAnalytics
                 </span>
                 <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">
                   AI-Powered Insights

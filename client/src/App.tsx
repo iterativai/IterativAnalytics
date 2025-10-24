@@ -40,7 +40,7 @@ function AppContent() {
   const features = [
     {
       icon: <Brain className="h-6 w-6 text-cyan-400" />,
-      title: "Iterativ Ventures",
+      title: "Iterativ Startups",
       description: "AI-powered business intelligence & planning with CoFounder AI integration, real-time financial modeling, and investor readiness scoring."
     },
     {
@@ -162,13 +162,13 @@ function AppContent() {
                     <div className="bg-purple-600 rounded-xl p-3 mr-4">
                       <Rocket className="h-8 w-8 text-white" />
                     </div>
-                    <h3 className="text-2xl font-bold text-white">Iterativ Ventures</h3>
+                    <h3 className="text-2xl font-bold text-white">Iterativ Startups</h3>
                   </div>
-                  
+
                   <p className="text-white/70 mb-6 text-lg">
                     AI-powered business intelligence & planning with CoFounder AI integration, multi-format plan upload, real-time financial modeling, and investor readiness scoring for African entrepreneurs.
                   </p>
-                  
+
                   <div className="space-y-3 mb-8">
                     <div className="flex items-center text-white/80">
                       <CheckCircle2 className="h-5 w-5 text-purple-400 mr-3 flex-shrink-0" />
@@ -187,14 +187,14 @@ function AppContent() {
                       <span>Application selection automation</span>
                     </div>
                   </div>
-                  
+
                   <Button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold py-3 rounded-lg shadow-lg hover:shadow-purple-500/25 transition-all duration-300">
                     Explore Startup Solutions
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </div>
               </FadeIn>
-              
+
               <FadeIn delay={0.4}>
                 <div className="bg-gradient-to-br from-pink-500/10 to-red-500/10 backdrop-blur-xl rounded-3xl p-8 border border-pink-400/30 hover:border-pink-400/50 transition-all duration-300">
                   <div className="flex items-center mb-6">
@@ -203,11 +203,11 @@ function AppContent() {
                     </div>
                     <h3 className="text-2xl font-bold text-white">Iterativ Xchange</h3>
                   </div>
-                  
+
                   <p className="text-white/70 mb-6 text-lg">
                     Blockchain-powered capital markets with equity tokenization, African Equity Exchange (AEX), crowdfunding infrastructure, secondary market trading, and integrated supply chain finance solutions.
                   </p>
-                  
+
                   <div className="space-y-3 mb-8">
                     <div className="flex items-center text-white/80">
                       <CheckCircle2 className="h-5 w-5 text-pink-400 mr-3 flex-shrink-0" />
@@ -226,14 +226,14 @@ function AppContent() {
                       <span>Supply chain finance marketplace</span>
                     </div>
                   </div>
-                  
+
                   <Button className="w-full bg-gradient-to-r from-pink-600 to-red-600 hover:from-pink-500 hover:to-red-500 text-white font-semibold py-3 rounded-lg shadow-lg hover:shadow-pink-500/25 transition-all duration-300">
                     Discover Xchange Platform
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </div>
               </FadeIn>
-              
+
               <FadeIn delay={0.6}>
                 <div className="bg-gradient-to-br from-green-500/10 to-teal-500/10 backdrop-blur-xl rounded-3xl p-8 border border-green-400/30 hover:border-green-400/50 transition-all duration-300">
                   <div className="flex items-center mb-6">
@@ -242,11 +242,11 @@ function AppContent() {
                     </div>
                     <h3 className="text-2xl font-bold text-white">Iterativ Sourcing</h3>
                   </div>
-                  
+
                   <p className="text-white/70 mb-6 text-lg">
                     Intelligent supply chain management platform with AI-powered supplier matching, procurement optimization, performance analytics, and automated payment management.
                   </p>
-                  
+
                   <div className="space-y-3 mb-8">
                     <div className="flex items-center text-white/80">
                       <CheckCircle2 className="h-5 w-5 text-green-400 mr-3 flex-shrink-0" />
@@ -265,7 +265,7 @@ function AppContent() {
                       <span>Risk intelligence & verification</span>
                     </div>
                   </div>
-                  
+
                   <Button className="w-full bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-500 hover:to-teal-500 text-white font-semibold py-3 rounded-lg shadow-lg hover:shadow-green-500/25 transition-all duration-300">
                     Explore Sourcing Platform
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -529,7 +529,7 @@ function AppContent() {
                             <span className="text-green-400 text-xs font-medium">Live</span>
                           </div>
                         </div>
-                        
+
                         {/* Role-Based Interactive Dashboard */}
                         <div className="min-h-[400px]">
                           {activeFeatureTab === 'founders' && <RoleBasedDashboards.FounderDashboard />}
@@ -746,7 +746,7 @@ function AppContent() {
                   <BarChart3 className="h-6 w-6 text-white" />
                 </div>
                 <span className="font-bold text-xl bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                  Iterativ Analytics
+                  IterativAnalytics
                 </span>
               </div>
               <p className="text-gray-400 mb-4 max-w-md">
@@ -778,7 +778,7 @@ function AppContent() {
           </div>
 
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
-            © 2025 Iterativ Analytics. All rights reserved.
+            © 2025 IterativAnalytics. All rights reserved.
           </div>
         </div>
       </footer>

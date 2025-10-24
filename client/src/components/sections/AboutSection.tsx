@@ -105,7 +105,7 @@ export const AboutSection = () => {
                     <li className="flex items-start">
                       <span className="text-cyan-400 mr-3 mt-1">✓</span>
                       <div>
-                        <strong className="text-white">Iterativ Ventures:</strong> AI-driven business intelligence and planning
+                        <strong className="text-white">Iterativ Startups:</strong> AI-driven business intelligence and planning
                       </div>
                     </li>
                     <li className="flex items-start">

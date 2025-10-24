@@ -10,9 +10,9 @@ const Footer = () => {
               <div className="bg-gradient-to-r from-primary/80 to-[#10B981] w-8 h-8 rounded flex items-center justify-center text-white font-bold">
                 IP
               </div>
-              <span className="text-xl font-bold text-white">Iterativ Planner</span>
+              <span className="text-xl font-bold text-white">IterativAnalytics</span>
             </div>
-            <p className="mb-4">AI-powered business planning for modern companies. Transform your financial modeling and investor readiness.</p>
+            <p className="mb-4">Democratizing financial intelligence, capital access, and operational efficiency for African startups through integrated AI and blockchain solutions.</p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
                 <i className="fab fa-twitter"></i>
@@ -64,7 +64,7 @@ const Footer = () => {
         </div>
         
         <div className="mt-12 pt-8 border-t border-gray-800 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} Iterativ Planner. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} IterativAnalytics. All rights reserved.</p>
         </div>
       </div>
     </footer>

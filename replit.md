@@ -1,9 +1,9 @@
-# Iterativ Analytics - African Startup Ecosystem Platform
+# IterativAnalytics - African Startup Ecosystem Platform
 
 ## Overview
-Iterativ Analytics is a comprehensive web platform that democratizes financial intelligence, capital access, and operational efficiency for African startups through integrated AI and blockchain solutions. The platform serves as a central hub integrating three specialized modules:
+IterativAnalytics is a comprehensive web platform that democratizes financial intelligence, capital access, and operational efficiency for African startups through integrated AI and blockchain solutions. The platform serves as a central hub integrating three specialized modules:
 
-1. **Iterativ Ventures** - AI-powered business intelligence and planning
+1. **Iterativ Startups** - AI-powered business intelligence and planning
 2. **Iterativ Xchange** - Blockchain-powered capital markets and supply chain finance  
 3. **Iterativ Sourcing** - Intelligent supply chain management platform
 

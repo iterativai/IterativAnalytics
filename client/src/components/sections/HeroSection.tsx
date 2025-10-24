@@ -71,19 +71,14 @@ const HeroSection = () => {
               </FadeIn>
 
               <FadeIn delay={0.4}>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight drop-shadow-2xl">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight">
                   <span 
-                    className="font-bold bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent"
-                    style={{
-                      textShadow: '0 0 30px rgba(6, 182, 212, 0.4)'
-                    }}
+                    className="block mb-3 font-bold bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400 bg-clip-text text-transparent"
                   >
                     Democratising Financial Intelligence
                   </span>
-                  <br />
-                  <span className="text-white/90">Capital Access & Operations</span>
-                  <br />
-                  <span className="text-3xl md:text-4xl lg:text-5xl text-white/80">for African Startups</span>
+                  <span className="block text-white/95 text-3xl md:text-4xl lg:text-5xl mb-2">Capital Access & Operations</span>
+                  <span className="block text-2xl md:text-3xl lg:text-4xl text-cyan-300/90">for African Startups</span>
                 </h1>
               </FadeIn>
 
@@ -95,10 +90,10 @@ const HeroSection = () => {
               </FadeIn>
 
               <FadeIn delay={0.8}>
-                <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mt-8">
                   <Button
                     onClick={() => setDemoModalOpen(true)}
-                    className="px-8 py-4 text-lg group"
+                    className="px-10 py-6 text-lg font-semibold group shadow-xl hover:shadow-2xl transition-all"
                     size="lg"
                     style={{
                       background: `linear-gradient(135deg, ${currentTheme.colors.primary}, ${currentTheme.colors.accent})`,
@@ -112,10 +107,10 @@ const HeroSection = () => {
                   <Button 
                     variant="outline" 
                     size="lg" 
-                    className="px-8 py-4 text-lg border-2 text-white hover:bg-white/10"
+                    className="px-10 py-6 text-lg font-medium border-2 text-white hover:bg-white/10 backdrop-blur-sm transition-all"
                     style={{ borderColor: currentTheme.colors.primary }}
                   >
-                    Get Investor Deck
+                    View Features
                   </Button>
                 </div>
               </FadeIn>
