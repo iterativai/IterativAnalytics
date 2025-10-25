@@ -349,7 +349,40 @@ function AppContent() {
             </FadeIn>
 
             {/* Tab Content */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-12">
+              <FadeIn delay={0.4}>
+                <div className="relative">
+                  <div className="bg-gray-800/30 backdrop-blur rounded-2xl border border-gray-700/50 overflow-hidden">
+                    <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-6">
+                      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-lg p-6">
+                        <div className="flex items-center justify-between mb-6">
+                          <div>
+                            <h3 className="text-cyan-400 text-lg font-semibold mb-1">
+                              {activeFeatureTab === 'founders' ? 'Founder Dashboard' :
+                               activeFeatureTab === 'investors' ? 'Investor Dashboard' :
+                               activeFeatureTab === 'partners' ? 'Partner Dashboard' : 'Lender Dashboard'}
+                            </h3>
+                            <p className="text-gray-400 text-sm">Real-time business intelligence</p>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                            <span className="text-green-400 text-xs font-medium">Live</span>
+                          </div>
+                        </div>
+
+                        {/* Role-Based Interactive Dashboard */}
+                        <div className="min-h-[400px]">
+                          {activeFeatureTab === 'founders' && <RoleBasedDashboards.FounderDashboard />}
+                          {activeFeatureTab === 'investors' && <RoleBasedDashboards.InvestorDashboard />}
+                          {activeFeatureTab === 'partners' && <RoleBasedDashboards.PartnerDashboard />}
+                          {activeFeatureTab === 'lenders' && <RoleBasedDashboards.LenderDashboard />}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
+
               {activeFeatureTab === 'founders' ? (
                 <FadeIn delay={0.3}>
                   <div className="glass-panel rounded-xl p-8 border border-gray-700/50 hover:border-cyan-500/30 transition-all duration-300">
@@ -515,39 +548,6 @@ function AppContent() {
                   </div>
                 </FadeIn>
               )}
-
-              <FadeIn delay={0.4}>
-                <div className="relative">
-                  <div className="bg-gray-800/30 backdrop-blur rounded-2xl border border-gray-700/50 overflow-hidden">
-                    <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-6">
-                      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-lg p-6">
-                        <div className="flex items-center justify-between mb-6">
-                          <div>
-                            <h3 className="text-cyan-400 text-lg font-semibold mb-1">
-                              {activeFeatureTab === 'founders' ? 'Founder Dashboard' : 
-                               activeFeatureTab === 'investors' ? 'Investor Dashboard' :
-                               activeFeatureTab === 'partners' ? 'Partner Dashboard' : 'Lender Dashboard'}
-                            </h3>
-                            <p className="text-gray-400 text-sm">Real-time business intelligence</p>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                            <span className="text-green-400 text-xs font-medium">Live</span>
-                          </div>
-                        </div>
-
-                        {/* Role-Based Interactive Dashboard */}
-                        <div className="min-h-[400px]">
-                          {activeFeatureTab === 'founders' && <RoleBasedDashboards.FounderDashboard />}
-                          {activeFeatureTab === 'investors' && <RoleBasedDashboards.InvestorDashboard />}
-                          {activeFeatureTab === 'partners' && <RoleBasedDashboards.PartnerDashboard />}
-                          {activeFeatureTab === 'lenders' && <RoleBasedDashboards.LenderDashboard />}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </FadeIn>
             </div>
           </div>
         </section>
