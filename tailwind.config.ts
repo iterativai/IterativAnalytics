@@ -147,7 +147,50 @@ export default {
         "apple-fade-in": "apple-fade-in 0.4s ease-out",
         "apple-scale-in": "apple-scale-in 0.3s ease-out",
       },
+      // Custom perspective utilities for 3D effects
+      perspective: {
+        none: 'none',
+        '500': '500px',
+        '1000': '1000px',
+        '1500': '1500px',
+        '2000': '2000px',
+      },
+      // Background gradients for radial
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
+  plugins: [
+    require("tailwindcss-animate"), 
+    require("@tailwindcss/typography"),
+    // Custom plugin for 3D utilities
+    function({ addUtilities }: any) {
+      const newUtilities = {
+        '.perspective-none': {
+          perspective: 'none',
+        },
+        '.perspective-500': {
+          perspective: '500px',
+        },
+        '.perspective-1000': {
+          perspective: '1000px',
+        },
+        '.perspective-1500': {
+          perspective: '1500px',
+        },
+        '.perspective-2000': {
+          perspective: '2000px',
+        },
+        '.transform-style-3d': {
+          'transform-style': 'preserve-3d',
+        },
+        '.backface-hidden': {
+          'backface-visibility': 'hidden',
+        },
+      };
+      addUtilities(newUtilities);
+    },
+  ],
 } satisfies Config;

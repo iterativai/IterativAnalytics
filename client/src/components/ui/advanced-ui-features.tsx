@@ -1,30 +1,132 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { Moon, Sun, Palette, Eye, Sparkles } from 'lucide-react';
+import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
+import { Moon, Sun, Palette, Eye, Sparkles, Monitor } from 'lucide-react';
+import { useTheme } from '@/context/ThemeContext';
+import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
 
-// Dark Mode Toggle
+// Enhanced Dark Mode Toggle with Light/Dark/System modes
 export const DarkModeToggle = () => {
-  const [isDark, setIsDark] = useState(true);
+  const { theme, setTheme, resolvedTheme, toggleTheme } = useTheme();
+  const [showMenu, setShowMenu] = useState(false);
 
-  const toggleDarkMode = () => {
-    setIsDark(!isDark);
-    document.documentElement.classList.toggle('dark');
-  };
+  // Keyboard shortcut: Ctrl/Cmd + Shift + T to toggle theme
+  useKeyboardShortcut(
+    { key: 't', ctrl: true, shift: true },
+    () => toggleTheme()
+  );
+
+  const themeOptions = [
+    { value: 'light' as const, icon: Sun, label: 'Light' },
+    { value: 'dark' as const, icon: Moon, label: 'Dark' },
+    { value: 'system' as const, icon: Monitor, label: 'System' },
+  ];
+
+  const currentOption = themeOptions.find(opt => opt.value === theme) || themeOptions[2];
+  const CurrentIcon = currentOption.icon;
 
   return (
-    <motion.button
-      onClick={toggleDarkMode}
-      className="fixed top-4 right-32 z-50 p-3 rounded-full bg-orange-500/20 backdrop-blur-sm border border-orange-400/30 text-orange-400 hover:text-orange-300 transition-colors"
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.9 }}
-    >
-      <motion.div
-        animate={{ rotate: isDark ? 0 : 180 }}
-        transition={{ duration: 0.3 }}
+    <div className="fixed top-4 right-32 z-50 group">
+      <motion.button
+        onClick={() => setShowMenu(!showMenu)}
+        className="relative p-3 rounded-full bg-gray-800/80 dark:bg-gray-700/80 backdrop-blur-sm border border-gray-600/30 text-gray-300 hover:text-white hover:border-gray-500/50 transition-all shadow-lg"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        aria-label="Toggle theme"
       >
-        {isDark ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
-      </motion.div>
-    </motion.button>
+        <motion.div
+          key={theme}
+          initial={{ rotate: -180, opacity: 0 }}
+          animate={{ rotate: 0, opacity: 1 }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
+        >
+          <CurrentIcon className="h-5 w-5" />
+        </motion.div>
+        
+        {/* Active theme indicator */}
+        <motion.div
+          className="absolute -bottom-1 -right-1 w-3 h-3 rounded-full border-2 border-gray-900 dark:border-gray-800"
+          style={{
+            backgroundColor: resolvedTheme === 'dark' ? '#6366f1' : '#f59e0b'
+          }}
+          layoutId="theme-indicator"
+        />
+      </motion.button>
+
+      {/* Tooltip with keyboard shortcut */}
+      <div className="absolute bottom-full mb-2 right-0 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200">
+        <div className="bg-gray-900 text-white text-xs px-3 py-2 rounded-lg shadow-xl whitespace-nowrap">
+          <div className="font-medium mb-1">Theme: {currentOption.label}</div>
+          <div className="text-gray-400 flex items-center gap-1">
+            <kbd className="px-1.5 py-0.5 bg-gray-800 rounded text-[10px]">⌃⇧T</kbd>
+            <span>to cycle</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Theme selection menu */}
+      <AnimatePresence>
+        {showMenu && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-40"
+              onClick={() => setShowMenu(false)}
+            />
+            
+            {/* Menu */}
+            <motion.div
+              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
+              className="absolute top-full mt-2 right-0 bg-gray-800/95 dark:bg-gray-700/95 backdrop-blur-xl border border-gray-600/30 rounded-xl shadow-2xl overflow-hidden min-w-[160px]"
+            >
+              {themeOptions.map((option) => {
+                const Icon = option.icon;
+                const isActive = theme === option.value;
+                
+                return (
+                  <motion.button
+                    key={option.value}
+                    onClick={() => {
+                      setTheme(option.value);
+                      setShowMenu(false);
+                    }}
+                    className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${
+                      isActive
+                        ? 'bg-blue-500/20 text-blue-400'
+                        : 'text-gray-300 hover:bg-gray-700/50 hover:text-white'
+                    }`}
+                    whileHover={{ x: 4 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Icon className="h-4 w-4" />
+                    <span className="text-sm font-medium">{option.label}</span>
+                    {isActive && (
+                      <motion.div
+                        layoutId="active-theme"
+                        className="ml-auto w-2 h-2 rounded-full bg-blue-400"
+                        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                      />
+                    )}
+                  </motion.button>
+                );
+              })}
+              
+              {/* Current system preference indicator */}
+              {theme === 'system' && (
+                <div className="px-4 py-2 text-xs text-gray-500 border-t border-gray-600/30">
+                  Using: {resolvedTheme === 'dark' ? 'Dark' : 'Light'}
+                </div>
+              )}
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 
